@@ -1,35 +1,48 @@
-import GuestLayout from '@/Layouts/GuestLayout';
+import AppLayout from '@/Layouts/AppLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function Menu({ categories, user }) {
-    const [activeCategory, setActiveCategory] = useState(categories[0]?.id || null);
+export default function Menu({ categories, auth }) {
+    const user = auth?.user;
+
+    const [activeCategory, setActiveCategory] = useState(
+        categories[0]?.id || null
+    );
 
     const addToCart = (productId) => {
         if (!user) {
-            router.visit('/login'); // redirect guests to login
+            router.visit('/login');
             return;
         }
-        router.post('/cart', { product_id: productId, quantity: 1 });
+
+        router.post('/cart', {
+            product_id: productId,
+            quantity: 1,
+        });
     };
 
-    const Layout = user ? AuthenticatedLayout : GuestLayout;
-
     return (
-        <Layout header={user ? <h2>Menu</h2> : null}>
+        <AppLayout
+            header={
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                    🍽️ Our Menu
+                </h2>
+            }
+        >
             <Head title="Menu" />
 
-            <div className="min-h-screen p-4 md:p-8 bg-gray-100 dark:bg-gray-900">
-                {/* Category Tabs */}
-                <div className="flex gap-2 overflow-x-auto mb-6">
-                    {categories.map(cat => (
+            <div className="min-h-screen">
+
+                {/* ================= CATEGORY TABS ================= */}
+                <div className="flex gap-3 overflow-x-auto mb-8 pb-2">
+                    {categories.map((cat) => (
                         <button
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
-                            className={`px-4 py-2 rounded-full whitespace-nowrap ${
+                            className={`px-5 py-2 rounded-full text-sm font-medium transition ${
                                 activeCategory === cat.id
-                                    ? 'bg-black text-white dark:bg-white dark:text-black'
-                                    : 'bg-white dark:bg-gray-800'
+                                    ? 'bg-red-500 text-white shadow'
+                                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                             }`}
                         >
                             {cat.name}
@@ -37,29 +50,52 @@ export default function Menu({ categories, user }) {
                     ))}
                 </div>
 
-                {/* Products Grid */}
-                {categories.filter(cat => cat.id === activeCategory).map(cat => (
-                    <div key={cat.id} className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {cat.products.map(product => (
-                            <div key={product.id} className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 flex flex-col">
-                                <div className="h-40 bg-gray-200 dark:bg-gray-700 rounded mb-4" />
-                                <h2 className="font-semibold dark:text-white">{product.name}</h2>
-                                <p className="text-sm text-gray-500 dark:text-gray-400 flex-grow">{product.description}</p>
+                {/* ================= PRODUCTS ================= */}
+                {categories
+                    .filter((cat) => cat.id === activeCategory)
+                    .map((cat) => (
+                        <div
+                            key={cat.id}
+                            className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                        >
+                            {cat.products.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col"
+                                >
+                                    {/* Image Placeholder */}
+                                    <div className="h-40 bg-gray-200 dark:bg-gray-700" />
 
-                                <div className="flex justify-between mt-4">
-                                    <span className="font-bold dark:text-white">${product.price}</span>
-                                    <button
-                                        onClick={() => addToCart(product.id)}
-                                        className="bg-black dark:bg-white text-white dark:text-black px-3 py-1 rounded-lg"
-                                    >
-                                        {user ? 'Add' : 'Login to Order'}
-                                    </button>
+                                    <div className="p-4 flex flex-col flex-grow">
+                                        <h3 className="text-lg font-semibold dark:text-white">
+                                            {product.name}
+                                        </h3>
+
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex-grow">
+                                            {product.description}
+                                        </p>
+
+                                        {/* Price + Button */}
+                                        <div className="flex items-center justify-between mt-4">
+                                            <span className="text-lg font-bold text-red-500">
+                                                ${product.price}
+                                            </span>
+
+                                            <button
+                                                onClick={() =>
+                                                    addToCart(product.id)
+                                                }
+                                                className="px-3 py-1.5 text-sm rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+                                            >
+                                                {user ? 'Add to Cart' : 'Login'}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                ))}
+                            ))}
+                        </div>
+                    ))}
             </div>
-        </Layout>
+        </AppLayout>
     );
 }

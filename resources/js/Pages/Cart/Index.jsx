@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/AppLayout.jsx';
 import { Head, router } from '@inertiajs/react';
 
 export default function Cart({ cart, total }) {

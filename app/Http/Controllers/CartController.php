@@ -18,7 +18,7 @@ public function index(Request $request)
 {
 $cart = $this->cartService->getCartWithItems($request->user());
 
-return inertia('Cart', [
+return inertia('Cart/Index', [
 'cart' => $cart,
 'total' => $this->cartService->calculateTotal($cart),
 ]);

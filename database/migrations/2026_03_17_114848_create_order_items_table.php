@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->integer('quantity');
             $table->decimal('price', 10, 2); // snapshot price
-
+            $table->foreignId('product_variant_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

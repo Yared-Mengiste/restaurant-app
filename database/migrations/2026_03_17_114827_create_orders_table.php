@@ -37,6 +37,8 @@ return new class extends Migration
             ])->default('pending');
 
             $table->timestamps();
+            $table->index('user_id');
+            $table->index('status');
         });
     }
 

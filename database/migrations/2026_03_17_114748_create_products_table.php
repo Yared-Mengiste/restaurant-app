@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->boolean('is_featured')->default(false);
             $table->decimal('price', 10, 2);
             $table->boolean('is_available')->default(true);
+            $table->boolean('has_variants')->default(false);
             $table->string('image')->nullable();
             $table->timestamps();
         });

@@ -1,6 +1,7 @@
 import AppLayout from '@/Layouts/AppLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
+import ProductCard from "@/Components/ProductCard.jsx";
 
 export default function Menu({ categories, auth }) {
     const user = auth?.user;
@@ -61,36 +62,8 @@ export default function Menu({ categories, auth }) {
                             {cat.products.map((product) => (
                                 <div
                                     key={product.id}
-                                    className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col"
                                 >
-                                    {/* Image Placeholder */}
-                                    <div className="h-40 bg-gray-200 dark:bg-gray-700" />
-
-                                    <div className="p-4 flex flex-col flex-grow">
-                                        <h3 className="text-lg font-semibold dark:text-white">
-                                            {product.name}
-                                        </h3>
-
-                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex-grow">
-                                            {product.description}
-                                        </p>
-
-                                        {/* Price + Button */}
-                                        <div className="flex items-center justify-between mt-4">
-                                            <span className="text-lg font-bold text-red-500">
-                                                ${product.price}
-                                            </span>
-
-                                            <button
-                                                onClick={() =>
-                                                    addToCart(product.id)
-                                                }
-                                                className="px-3 py-1.5 text-sm rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
-                                            >
-                                                {user ? 'Add to Cart' : 'Login'}
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <ProductCard product={product}/>
                                 </div>
                             ))}
                         </div>

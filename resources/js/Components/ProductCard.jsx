@@ -1,7 +1,7 @@
 import { Link, router } from '@inertiajs/react';
 
 export default function ProductCard({ product, auth}) {
-    const defaultImage = "https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?q=80&w=800&auto=format&fit=crop";
+    const defaultImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuBixsKQpMDnDqNYWkE_TS9GzIVGy9k8VszLKdiI-fZR0HcPit6KuaHSPSTa6H1_rK45Dku9CV0JTIJawfs2cqLdwB1VP2-0PGAvITdOKYJ_tRJ0M37YVKOzdiuNHJrtYIun7TybxrGQsATCpuEWp5_--RjZDounDkvnsJOG6BxStm1S6fAPUW4LHUaKhpnbNifLv7zlY8bdZnyauXLQ_7ljsD_9O-JSlC3pUh0yaesFwhw_WJ0liMxkO2YwcKZwR3cSmkNsEbM9wF3P";
 
     const handleProductClick = (e) => {
         if (!auth?.user) {

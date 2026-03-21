@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed-variant": "#574400",
+              "on-tertiary-fixed": "#00174b",
+              "outline": "#99907c",
+              "on-error": "#690005",
+              "surface": "#111316",
+              "on-secondary-container": "#b6b5b4",
+              "background": "#111316",
+              "secondary-fixed": "#e4e2e1",
+              "on-secondary": "#303030",
+              "tertiary-container": "#97b0ff",
+              "surface-dim": "#111316",
+              "tertiary-fixed-dim": "#b4c5ff",
+              "error-container": "#93000a",
+              "secondary": "#c8c6c5",
+              "on-surface": "#e2e2e6",
+              "on-tertiary": "#082b72",
+              "on-surface-variant": "#d0c5af",
+              "tertiary-fixed": "#dbe1ff",
+              "surface-container-low": "#1a1c1f",
+              "primary-container": "#d9ae00",
+              "inverse-on-surface": "#2f3034",
+              "on-tertiary-fixed-variant": "#27438a",
+              "error": "#ffb4ab",
+              "surface-container-highest": "#333538",
+              "surface-container": "#1e2023",
+              "primary": "#f8c927",
+              "surface-bright": "#37393d",
+              "on-primary-fixed": "#241a00",
+              "inverse-primary": "#745b00",
+              "secondary-container": "#474747",
+              "surface-container-high": "#282a2d",
+              "surface-container-lowest": "#0c0e11",
+              "primary-fixed-dim": "#efc11c",
+              "outline-variant": "#4d4635",
+              "on-primary-container": "#554300",
+              "inverse-surface": "#e2e2e6",
+              "on-secondary-fixed": "#1b1c1c",
+              "primary-fixed": "#ffe089",
+              "on-secondary-fixed-variant": "#474747",
+              "surface-tint": "#efc11c",
+              "on-error-container": "#ffdad6",
+              "surface-variant": "#333538",
+              "on-background": "#e2e2e6"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(51, 53, 56, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4d4635;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col bg-[#111316] dark:bg-[#111316] h-screen w-64 border-r border-[#4d4635]/20 z-50">
+<div class="p-8">
+<h1 class="text-2xl font-serif text-[#f8c927] tracking-wider mb-1">Lumière Reserve</h1>
+<p class="text-xs font-label uppercase tracking-widest text-gray-500">Admin Dashboard</p>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center space-x-3 text-gray-400 hover:text-[#f8c927] px-4 py-3 transition-colors hover:bg-[#1a1c1f] hover:backdrop-blur-xl rounded-lg group" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label uppercase tracking-tight text-sm">Orders</span>
+</a>
+<a class="flex items-center space-x-3 text-gray-400 hover:text-[#f8c927] px-4 py-3 transition-colors hover:bg-[#1a1c1f] hover:backdrop-blur-xl rounded-lg group" href="#">
+<span class="material-symbols-outlined">category</span>
+<span class="font-label uppercase tracking-tight text-sm">Categories</span>
+</a>
+<a class="flex items-center space-x-3 text-[#f8c927] font-bold bg-[#333538]/50 rounded-lg px-4 py-3 active:scale-95 duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label uppercase tracking-tight text-sm">Products</span>
+</a>
+</nav>
+<div class="px-6 py-6 border-t border-[#4d4635]/10">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary-container font-label uppercase tracking-widest text-xs py-4 rounded-full font-bold shadow-lg shadow-primary/10 hover:brightness-110 transition-all">
+                New Reservation
+            </button>
+</div>
+<div class="px-4 pb-8 space-y-2">
+<a class="flex items-center space-x-3 text-gray-400 hover:text-[#f8c927] px-4 py-3 transition-colors rounded-lg text-sm" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label uppercase tracking-tight">Settings</span>
+</a>
+<a class="flex items-center space-x-3 text-gray-400 hover:text-[#f8c927] px-4 py-3 transition-colors rounded-lg text-sm" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-label uppercase tracking-tight">Support</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-8 z-40 h-16 bg-[#111316]/80 backdrop-blur-lg border-b border-[#4d4635]/20 shadow-sm shadow-[#000000]/40">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-sm w-full focus:ring-1 focus:ring-primary text-on-surface placeholder-gray-600" placeholder="Search culinary inventory..." type="text"/>
+</div>
+</div>
+<nav class="flex items-center space-x-8 px-8">
+<a class="text-gray-400 hover:text-white transition-all font-label text-sm uppercase tracking-wide" href="#">Dashboard</a>
+<a class="text-gray-400 hover:text-white transition-all font-label text-sm uppercase tracking-wide" href="#">Analytics</a>
+<a class="text-gray-400 hover:text-white transition-all font-label text-sm uppercase tracking-wide" href="#">Staff</a>
+</nav>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-4 border-r border-[#4d4635]/20 pr-6">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+<button class="flex items-center space-x-3 group">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/30 group-hover:border-primary transition-colors">
+<img alt="Administrator Avatar" class="w-full h-full object-cover" data-alt="Professional chef portrait in uniform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtBUiXCpKM08Rw-kJbFtbqfx2NjCv_Qb8EvD7GG7LnCA_eRGLYtJ8yXRQQdoFHrG8d7ZUaK9DGhIb6-ddeM_231o-JdoCSxn84uoWUo6BWMzhzeDhaCFKia9ZYDNpLMK_SCLITHO2UJnWBsRMG4HSAWy-fjTMjNE4Uk8q6guDUrEVzX0Q2zWYxjVPOUorcUfOwVsScwAUrew_hjnIJeLBYWPzwYCGRmX5UIpzrC9_XDQa5x7S_uwzLHclL_SojRPa6NoTef_SiSFxN"/>
+</div>
+<span class="font-label text-xs uppercase tracking-widest font-bold text-primary group-hover:brightness-125 transition-all">Live View</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-12 px-8 min-h-screen bg-surface">
+<!-- Header & Action Row -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline text-5xl text-on-surface mb-2 tracking-tight italic">Product Management</h2>
+<p class="text-on-surface-variant font-body">Curate and manage the exquisite offerings of Lumière Reserve.</p>
+</div>
+<button class="group flex items-center space-x-3 bg-primary-container/20 border border-primary/30 px-6 py-4 rounded-full text-primary font-label uppercase tracking-widest text-xs font-bold hover:bg-primary-container hover:text-on-primary-container transition-all shadow-lg shadow-primary/5">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+<span>Add New Product</span>
+</button>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Product Form (The Comprehensive View) -->
+<div class="col-span-12 lg:col-span-5">
+<div class="glass-panel p-10 rounded-xl border border-outline-variant/20 sticky top-28">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline text-2xl text-primary">New Product Detail</h3>
+<span class="text-[10px] font-label uppercase tracking-widest text-outline bg-surface-container-highest px-3 py-1 rounded-full">Draft Mode</span>
+</div>
+<form class="space-y-8">
+<!-- Identity Section -->
+<div class="space-y-6">
+<div class="relative group">
+<label class="absolute -top-3 left-4 bg-surface px-2 text-[10px] font-label uppercase tracking-widest text-primary">Product Name</label>
+<input class="w-full bg-transparent border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 transition-colors py-4 px-4 text-on-surface" placeholder="e.g. Wagyu Beef Tartare" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="relative">
+<label class="absolute -top-3 left-4 bg-surface px-2 text-[10px] font-label uppercase tracking-widest text-outline">Category</label>
+<select class="w-full bg-transparent border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 transition-colors py-4 px-4 text-on-surface appearance-none">
+<option>Appetizers</option>
+<option>Main Courses</option>
+<option>Desserts</option>
+<option>Wine Cellar</option>
+</select>
+</div>
+<div class="relative">
+<label class="absolute -top-3 left-4 bg-surface px-2 text-[10px] font-label uppercase tracking-widest text-outline">Base Price</label>
+<div class="flex items-center border-b-2 border-outline-variant/30 focus-within:border-primary transition-colors">
+<span class="pl-4 text-outline">$</span>
+<input class="w-full bg-transparent border-none focus:ring-0 py-4 px-2 text-on-surface" placeholder="0.00" type="number"/>
+</div>
+</div>
+</div>
+<div class="relative">
+<label class="absolute -top-3 left-4 bg-surface px-2 text-[10px] font-label uppercase tracking-widest text-outline">Culinary Description</label>
+<textarea class="w-full bg-transparent border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 transition-colors py-4 px-4 text-on-surface resize-none" placeholder="Describe the flavor profile and key ingredients..." rows="3"></textarea>
+</div>
+</div>
+<!-- Image & Media -->
+<div class="p-6 rounded-lg bg-surface-container-lowest border-2 border-dashed border-outline-variant/20 group hover:border-primary/40 transition-colors text-center cursor-pointer">
+<span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:text-primary transition-colors">add_a_photo</span>
+<p class="text-xs font-label uppercase tracking-widest text-outline group-hover:text-on-surface">Upload High-Res Visual</p>
+</div>
+<!-- Product Variants -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h4 class="text-xs font-label uppercase tracking-widest text-primary font-bold">Product Variants</h4>
+<button class="text-[10px] font-label uppercase tracking-widest text-outline hover:text-primary transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-sm">add</span> Add Variant
+                                </button>
+</div>
+<div class="space-y-2">
+<div class="flex gap-4 items-center bg-surface-container-low p-3 rounded-lg border border-outline-variant/10">
+<input class="bg-transparent border-none focus:ring-0 text-sm flex-1" type="text" value="Standard Portion"/>
+<span class="text-outline text-xs">+$0.00</span>
+<button class="text-error/60 hover:text-error"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+<div class="flex gap-4 items-center bg-surface-container-low p-3 rounded-lg border border-outline-variant/10">
+<input class="bg-transparent border-none focus:ring-0 text-sm flex-1" type="text" value="Chef's Special Tasting Size"/>
+<span class="text-outline text-xs">+$25.00</span>
+<button class="text-error/60 hover:text-error"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Toggles -->
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-lg">
+<div class="flex items-center space-x-6">
+<label class="flex items-center cursor-pointer space-x-3">
+<div class="relative">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-outline-variant/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</div>
+<span class="text-xs font-label uppercase tracking-widest text-on-surface">Available</span>
+</label>
+<label class="flex items-center cursor-pointer space-x-3">
+<div class="relative">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-outline-variant/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</div>
+<span class="text-xs font-label uppercase tracking-widest text-on-surface">Featured</span>
+</label>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label uppercase tracking-widest py-5 rounded-full font-extrabold shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform">
+                            Save Product to Inventory
+                        </button>
+</form>
+</div>
+</div>
+<!-- Product Table & Filters -->
+<div class="col-span-12 lg:col-span-7 space-y-8">
+<!-- Filters Bar -->
+<div class="flex flex-wrap items-center gap-4 bg-surface-container-low p-2 rounded-full border border-outline-variant/10">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-label text-[10px] uppercase tracking-widest font-bold">All Products</button>
+<button class="px-6 py-2 rounded-full text-outline hover:text-on-surface font-label text-[10px] uppercase tracking-widest">In Stock</button>
+<button class="px-6 py-2 rounded-full text-outline hover:text-on-surface font-label text-[10px] uppercase tracking-widest">Out of Stock</button>
+<button class="px-6 py-2 rounded-full text-outline hover:text-on-surface font-label text-[10px] uppercase tracking-widest">Archived</button>
+<div class="ml-auto pr-4 flex items-center space-x-2">
+<span class="text-[10px] font-label text-outline uppercase">Sort By:</span>
+<select class="bg-transparent border-none text-[10px] font-label text-primary uppercase tracking-widest focus:ring-0 cursor-pointer">
+<option>Newest First</option>
+<option>Price: High-Low</option>
+<option>Popularity</option>
+</select>
+</div>
+</div>
+<!-- Products Grid/Table -->
+<div class="space-y-4">
+<!-- Item 1 -->
+<div class="group flex items-center p-6 bg-surface-container rounded-xl border border-transparent hover:border-primary/20 hover:bg-surface-container-high transition-all">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest">
+<img alt="Product Image" class="w-full h-full object-cover" data-alt="Close up of gourmet steak dish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfujqeO7O05YBBsUJTtKLbYrGK4F6ntFM1vRs_M7Wh0viRCbec5_umUqLun-mpYUOqQstD1p99CgYjb6l7IYW-nEkJ3XdSYbHQg2Y13XQlX7wqMbxXHHA7PakCoenhAH187WYB7xAK-aiTPf9lb0bkBnFuEsx3ZYV6INJQC-cXqZ9AbBpCCjKNlFdtgyxQt-V__0ZAMIC2IxBm07vGajJa79w1y1STdhmJsGWJho2FG5dyr-jQvnNQU7UhLS_HmZEyzwZUVAWf34mr"/>
+</div>
+<div class="ml-8 flex-1">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-headline text-xl text-on-surface group-hover:text-primary transition-colors">Roasted Marrow Bone</h4>
+<span class="text-primary font-body font-bold">$42.00</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-outline">Category: Appetizers</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<div class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] font-label uppercase tracking-widest text-primary">Featured</span>
+</div>
+</div>
+</div>
+<div class="ml-12 flex items-center space-x-4">
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-label uppercase tracking-widest text-primary font-bold">In Stock</span>
+<span class="text-[10px] font-label text-outline">18 Available</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant/30 hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="group flex items-center p-6 bg-surface-container rounded-xl border border-transparent hover:border-primary/20 hover:bg-surface-container-high transition-all">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest">
+<img alt="Product Image" class="w-full h-full object-cover" data-alt="Artisanal wood fired pizza" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPDctljTTb5tjvh3EydOPZWonM7gAk42Cq_UHwJnzVKF6GCZnVsEfcFzSTDTr-tYpsZffgP8eL6jbbduZL62DnscB1L8g6kE4ff43SU1W3ni6xL6h0mbSMExOYTMCqWjPTIsdnSn3yJT_KBfqW0QavMBeV3xFtfloyEp4pkzoyDq4k9SwB7Ok-ptmYeOff_3kcQxvuVdnqC_eiBfUW-ayrG76nRmO0mqvHVl35r2etZ7FD-Pr8fCsYUmh3cIKldyfWzOr9iokcuiPz"/>
+</div>
+<div class="ml-8 flex-1">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-headline text-xl text-on-surface group-hover:text-primary transition-colors">Truffle &amp; Honey Pizza</h4>
+<span class="text-primary font-body font-bold">$38.00</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-outline">Category: Wood Fired</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-[10px] font-label uppercase tracking-widest text-outline">3 Variants</span>
+</div>
+</div>
+<div class="ml-12 flex items-center space-x-4">
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-label uppercase tracking-widest text-primary font-bold">In Stock</span>
+<span class="text-[10px] font-label text-outline">Unlimited</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant/30 hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="group flex items-center p-6 bg-surface-container rounded-xl border border-transparent hover:border-primary/20 hover:bg-surface-container-high transition-all opacity-60">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest grayscale">
+<img alt="Product Image" class="w-full h-full object-cover" data-alt="Chilled white wine bottle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClNvkQf4h5zqUJDMfXLH0Eh-ZJSr7v0rxtuhEj4iwzjZWl5OjDtTs_3BCYIje0z2qSiaIUiKs3m1QKp1VavoF4vfxmJMBtPTeSzrbuCRrlLMVyrYapCj58cFFJVs5OGINcAh-IKP8vviGUzkweXh6AocFqo9zEs0joldrRYUBNBNrPRPfTKwOpITFKk2iSRIQzAhpq8opBQ9pFty26WzoBQzhUTMn21BlZsMwifGcyC0T-SoUphgA5PVkZS6T4qj-hvQ7d2cQksang"/>
+</div>
+<div class="ml-8 flex-1">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-headline text-xl text-on-surface group-hover:text-primary transition-colors">Reserve Chardonnay '18</h4>
+<span class="text-outline font-body font-bold">$125.00</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-outline">Category: Wine Cellar</span>
+</div>
+</div>
+<div class="ml-12 flex items-center space-x-4">
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-label uppercase tracking-widest text-error font-bold">Sold Out</span>
+<span class="text-[10px] font-label text-outline">Next restock: Mon</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant/30 hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="group flex items-center p-6 bg-surface-container rounded-xl border border-transparent hover:border-primary/20 hover:bg-surface-container-high transition-all">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-highest">
+<img alt="Product Image" class="w-full h-full object-cover" data-alt="Dark chocolate lava cake dessert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfaeHpQjJYncqjEYiSSix7SKYTYoLDF-avspb6jBJuqppBxOsx1JHBaHzEKy0b9G6RFxK5_Oj7aaGCh2qKJDGQixI97DgyiF35vBHpAYfrr6qJZCRZI38VcAryR5abTCq5Y_Ab51y6nyQISEDqdGqVMATGfzWw3Xv-q6-7TooZcB4lz7ZB79p1jEB_vx700GwGGYSMtFr8vFKrYp6ZJXgGQgVFe1yteVFPg4TNGT94ShhffbJagCsei3eBl8Sd6XkhFTWHjUo0u_JP"/>
+</div>
+<div class="ml-8 flex-1">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-headline text-xl text-on-surface group-hover:text-primary transition-colors">Midnight Chocolate Ganache</h4>
+<span class="text-primary font-body font-bold">$18.00</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-outline">Category: Desserts</span>
+</div>
+</div>
+<div class="ml-12 flex items-center space-x-4">
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-label uppercase tracking-widest text-primary font-bold">In Stock</span>
+<span class="text-[10px] font-label text-outline">12 Available</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant/30 hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State Suggestion (Subtle) -->
+<div class="py-12 flex flex-col items-center justify-center border-2 border-dashed border-outline-variant/10 rounded-xl">
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-outline mb-4">Displaying 4 of 124 Culinary Creations</p>
+<button class="text-primary text-xs font-bold font-label uppercase tracking-widest hover:underline">Load Full Inventory</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Decoration -->
+<footer class="ml-64 py-8 px-8 border-t border-outline-variant/10 flex justify-between items-center text-[10px] font-label uppercase tracking-widest text-outline">
+<div>© 2024 Lumière Reserve Group. Proprietary Administrative Portal.</div>
+<div class="flex space-x-6">
+<a class="hover:text-primary transition-colors" href="#">System Status</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Protocol</a>
+</div>
+</footer>
+</body></html>

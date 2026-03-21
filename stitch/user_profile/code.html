@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile | Lumière Reserve</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#37393d",
+              "surface-container-highest": "#333538",
+              "on-secondary-container": "#b6b5b4",
+              "secondary": "#c8c6c5",
+              "surface": "#111316",
+              "primary-container": "#d9ae00",
+              "on-tertiary-fixed": "#00174b",
+              "on-surface": "#e2e2e6",
+              "on-secondary-fixed-variant": "#474747",
+              "secondary-fixed-dim": "#c8c6c5",
+              "background": "#111316",
+              "primary-fixed": "#ffe089",
+              "on-error": "#690005",
+              "on-secondary-fixed": "#1b1c1c",
+              "on-primary-fixed": "#241a00",
+              "surface-container": "#1e2023",
+              "surface-variant": "#333538",
+              "secondary-fixed": "#e4e2e1",
+              "secondary-container": "#474747",
+              "on-surface-variant": "#d0c5af",
+              "tertiary-fixed": "#dbe1ff",
+              "on-primary-container": "#554300",
+              "primary": "#f8c927",
+              "outline": "#99907c",
+              "on-secondary": "#303030",
+              "on-primary-fixed-variant": "#574400",
+              "surface-container-high": "#282a2d",
+              "on-background": "#e2e2e6",
+              "tertiary-fixed-dim": "#b4c5ff",
+              "surface-tint": "#efc11c",
+              "on-tertiary-container": "#254188",
+              "error-container": "#93000a",
+              "surface-dim": "#111316",
+              "inverse-primary": "#745b00",
+              "primary-fixed-dim": "#efc11c",
+              "inverse-on-surface": "#2f3034",
+              "error": "#ffb4ab",
+              "tertiary": "#bfcdff",
+              "surface-container-lowest": "#0c0e11",
+              "on-tertiary-fixed-variant": "#27438a",
+              "on-tertiary": "#082b72",
+              "tertiary-container": "#97b0ff",
+              "on-error-container": "#ffdad6",
+              "on-primary": "#3d2f00",
+              "outline-variant": "#4d4635",
+              "surface-container-low": "#1a1c1f",
+              "inverse-surface": "#e2e2e6"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(51, 53, 56, 0.4);
+        backdrop-filter: blur(20px);
+      }
+      .hero-gradient {
+        background: linear-gradient(180deg, #111316 0%, rgba(17, 19, 22, 0.8) 50%, transparent 100%);
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen pb-32">
+<!-- Top Navigation -->
+<nav class="bg-[#111316] dark:bg-[#111316] flex justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto top-0 z-50">
+<div class="text-2xl font-bold text-[#f8c927] tracking-tighter font-['Noto_Serif'] uppercase tracking-widest">
+            Lumière Reserve
+        </div>
+<div class="hidden md:flex space-x-12">
+<a class="text-slate-400 font-medium hover:text-[#f8c927] transition-colors duration-300 font-['Noto_Serif'] uppercase tracking-widest" href="#">Menu</a>
+<a class="text-slate-400 font-medium hover:text-[#f8c927] transition-colors duration-300 font-['Noto_Serif'] uppercase tracking-widest" href="#">Private Dining</a>
+<a class="text-slate-400 font-medium hover:text-[#f8c927] transition-colors duration-300 font-['Noto_Serif'] uppercase tracking-widest" href="#">Our Story</a>
+</div>
+<div class="flex items-center space-x-6 text-[#f8c927]">
+<span class="material-symbols-outlined cursor-pointer hover:scale-95 duration-200">history</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-95 duration-200">favorite</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-95 duration-200 text-[#f8c927] border-b-2 border-[#f8c927] pb-1">person</span>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="max-w-7xl mx-auto px-6 mt-12">
+<!-- Profile Hero Section -->
+<section class="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Left Column: User Identity -->
+<div class="lg:col-span-5 space-y-12">
+<div class="flex flex-col items-center lg:items-start text-center lg:text-left">
+<div class="relative mb-8">
+<div class="w-48 h-48 rounded-xl overflow-hidden ring-4 ring-primary/20 p-1">
+<img class="w-full h-full object-cover rounded-xl" data-alt="Sophisticated portrait of a premium member" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvStTVHpGtKlqqE75ExBC-Gn_nFYRVenEkSZJIBB9jKFP0yRwHz-9wQREyAkyufV74q8ZLCw1u3xqnQlQcR-AixDQ8YrHoebfx09nqWDERbNXS03tKlDQ67sx__JzJESFpH8Nhff6uCS9nvAKP2nw7_SbpZO2ApSpEXxdSv2NTqBBeQipl1hKPutFCnTkhPTZ3QuXfhRXAKDFbbQSvm2TY0x9tQl3OYWNWEhcO1lXDzl3zkOdKtpA-UD-aL1eVnwjXsCTvxH7Vf2lC"/>
+</div>
+<div class="absolute -bottom-4 -right-4 bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest shadow-xl">
+                            Premium Member
+                        </div>
+</div>
+<h1 class="font-headline text-5xl text-on-surface mb-2">Julian Vane</h1>
+<p class="text-on-surface-variant font-body text-lg opacity-80">Member since October 2022</p>
+<div class="mt-8 flex flex-wrap gap-4">
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-3 rounded-full font-label text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span>
+                            Edit Profile
+                        </button>
+<button class="border border-outline-variant/20 text-on-surface px-8 py-3 rounded-full font-label text-xs font-bold uppercase tracking-widest hover:bg-surface-container-highest transition-all">
+                            Sign Out
+                        </button>
+</div>
+</div>
+<!-- Personal Details Bento -->
+<div class="space-y-6">
+<h2 class="font-headline text-2xl text-primary border-b border-outline-variant/10 pb-4">Personal Details</h2>
+<div class="grid grid-cols-1 gap-4">
+<div class="p-6 bg-surface-container-low rounded-xl flex items-center gap-6">
+<span class="material-symbols-outlined text-primary-fixed-dim bg-primary/10 p-3 rounded-lg">mail</span>
+<div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-label mb-1">Email Address</p>
+<p class="text-on-surface font-body font-medium">j.vane@lumiere-reserve.com</p>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl flex items-center gap-6">
+<span class="material-symbols-outlined text-primary-fixed-dim bg-primary/10 p-3 rounded-lg">phone_iphone</span>
+<div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-label mb-1">Phone Number</p>
+<p class="text-on-surface font-body font-medium">+1 (555) 892-0431</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Details & Preferences -->
+<div class="lg:col-span-7 space-y-12">
+<!-- Reservations Status (Empty State) -->
+<div class="glass-card p-10 rounded-xl border border-white/5 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-5">
+<span class="material-symbols-outlined text-9xl">calendar_month</span>
+</div>
+<h2 class="font-headline text-3xl mb-6">Upcoming Reservations</h2>
+<div class="flex flex-col items-center justify-center py-12 text-center">
+<span class="material-symbols-outlined text-5xl text-outline-variant mb-4">event_busy</span>
+<p class="text-on-surface-variant font-body mb-8 max-w-xs">You currently have no active reservations. Would you like to explore our seasonal menu?</p>
+<button class="text-primary font-label text-xs font-bold uppercase tracking-widest border-b-2 border-primary pb-1 hover:text-primary-container hover:border-primary-container transition-all">
+                            Book a Table
+                        </button>
+</div>
+</div>
+<!-- Saved Addresses -->
+<div class="space-y-6">
+<div class="flex justify-between items-end border-b border-outline-variant/10 pb-4">
+<h2 class="font-headline text-2xl text-primary">Saved Residences</h2>
+<button class="text-xs font-label uppercase tracking-widest font-bold text-on-surface-variant flex items-center gap-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span> Add New
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 bg-surface-container-low rounded-xl border border-transparent hover:border-primary/20 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary-fixed-dim">home</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-sm">edit</span>
+</div>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-1">Primary Residence</p>
+<p class="text-on-surface font-body font-medium leading-relaxed">
+                                742 Evergreen Terrace<br/>Springfield, OR 97403
+                            </p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-transparent hover:border-primary/20 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary-fixed-dim">apartment</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-sm">edit</span>
+</div>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-1">City Loft</p>
+<p class="text-on-surface font-body font-medium leading-relaxed">
+                                1202 Lexington Avenue<br/>New York, NY 10028
+                            </p>
+</div>
+</div>
+</div>
+<!-- Lifestyle Preferences -->
+<div class="space-y-6">
+<h2 class="font-headline text-2xl text-primary border-b border-outline-variant/10 pb-4">Dining Preferences</h2>
+<div class="flex flex-wrap gap-3">
+<span class="px-5 py-2 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold uppercase tracking-widest">Gluten-Free</span>
+<span class="px-5 py-2 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold uppercase tracking-widest">Corner Table</span>
+<span class="px-5 py-2 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold uppercase tracking-widest">Quiet Atmosphere</span>
+<span class="px-5 py-2 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold uppercase tracking-widest">Sparkling Water Only</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-8 pt-4 bg-[#111316]/90 backdrop-blur-xl border-t border-white/5 shadow-[0_-4px_40px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-slate-500 px-6 py-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">restaurant_menu</span>
+<span class="font-['Manrope'] text-[10px] font-semibold uppercase tracking-widest">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-6 py-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">room_service</span>
+<span class="font-['Manrope'] text-[10px] font-semibold uppercase tracking-widest">Private Dining</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f8c927]/10 text-[#f8c927] rounded-full px-6 py-2" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-['Manrope'] text-[10px] font-semibold uppercase tracking-widest">Profile</span>
+</a>
+</nav>
+</body></html>

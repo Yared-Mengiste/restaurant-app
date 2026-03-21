@@ -1,0 +1,733 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,700;1,300&amp;family=Manrope:wght@300;400;600;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#0c0e11",
+              "inverse-primary": "#745b00",
+              "on-secondary-fixed-variant": "#474747",
+              "on-surface-variant": "#d0c5af",
+              "on-tertiary-fixed": "#00174b",
+              "surface-container-high": "#282a2d",
+              "tertiary-fixed-dim": "#b4c5ff",
+              "on-primary-container": "#554300",
+              "on-surface": "#e2e2e6",
+              "inverse-on-surface": "#2f3034",
+              "surface-container-highest": "#333538",
+              tertiary: "#bfcdff",
+              "on-primary": "#3d2f00",
+              "on-secondary-fixed": "#1b1c1c",
+              "surface-container": "#1e2023",
+              "primary-fixed-dim": "#efc11c",
+              error: "#ffb4ab",
+              "on-primary-fixed-variant": "#574400",
+              "on-background": "#e2e2e6",
+              "primary-fixed": "#ffe089",
+              "tertiary-container": "#97b0ff",
+              "secondary-fixed": "#e4e2e1",
+              "on-primary-fixed": "#241a00",
+              background: "#111316",
+              "surface-variant": "#333538",
+              "surface-dim": "#111316",
+              "on-tertiary": "#082b72",
+              "on-secondary": "#303030",
+              "surface-container-low": "#1a1c1f",
+              "tertiary-fixed": "#dbe1ff",
+              "surface-bright": "#37393d",
+              "on-tertiary-container": "#254188",
+              secondary: "#c8c6c5",
+              "on-error": "#690005",
+              "error-container": "#93000a",
+              "outline-variant": "#4d4635",
+              surface: "#111316",
+              "on-error-container": "#ffdad6",
+              "on-secondary-container": "#b6b5b4",
+              "primary-container": "#d9ae00",
+              outline: "#99907c",
+              "secondary-fixed-dim": "#c8c6c5",
+              "on-tertiary-fixed-variant": "#27438a",
+              primary: "#f8c927",
+              "surface-tint": "#efc11c",
+              "secondary-container": "#474747",
+              "inverse-surface": "#e2e2e6",
+            },
+            fontFamily: {
+              headline: ["Noto Serif"],
+              body: ["Manrope"],
+              label: ["Manrope"],
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              lg: "2rem",
+              xl: "3rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 300,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body selection:bg-primary/30">
+    <!-- Header -->
+    <nav
+      class="sticky top-0 w-full z-50 bg-background/95 backdrop-blur-md border-b border-outline-variant/10"
+    >
+      <div
+        class="flex justify-between items-center px-6 md:px-12 py-4 max-w-[1920px] mx-auto"
+      >
+        <div class="flex items-center gap-8">
+          <div
+            class="text-2xl font-headline italic text-primary tracking-tighter cursor-pointer"
+          >
+            Lumière Reserve
+          </div>
+          <div
+            class="hidden lg:flex items-center gap-6 text-sm font-label uppercase tracking-widest text-on-surface-variant"
+          >
+            <a class="text-primary border-b border-primary pb-0.5" href="#"
+              >Home</a
+            >
+            <a class="hover:text-primary transition-colors" href="#"
+              >Private Dining</a
+            >
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="relative group hidden md:block">
+            <span
+              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg"
+              data-icon="search"
+              >search</span
+            >
+            <input
+              class="bg-surface-container-highest/30 border border-outline-variant/20 rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-64 outline-none text-white transition-all"
+              placeholder="Search our menu..."
+              type="text"
+            />
+          </div>
+          <div class="flex items-center gap-5 text-on-surface-variant">
+            <span
+              class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors"
+              data-icon="favorite"
+              >favorite</span
+            >
+            <div class="relative">
+              <span
+                class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors"
+                data-icon="shopping_bag"
+                >shopping_bag</span
+              >
+              <span
+                class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"
+                >2</span
+              >
+            </div>
+            <span
+              class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors"
+              data-icon="person"
+              >person</span
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <!-- Promotional Hero Banner -->
+      <section class="px-6 md:px-12 py-8 max-w-[1920px] mx-auto">
+        <div
+          class="relative w-full h-[400px] rounded-3xl overflow-hidden group"
+        >
+          <img
+            alt="Chef's Special Banner"
+            class="w-full h-full object-cover brightness-[0.7] group-hover:scale-105 transition-transform duration-[2s]"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo9LZFCgU8Cd9uzHiclQszPq-ffGP2qLeEbsD5EQAM47lyJ6zIxYIR3b9ePN9Psw4yF5ORoX2YBT-C_i0ItRBjHzUxwrPnJBhhsgwK5Rx-HthDFvlMuOOipZKLqE4qeUpUlvoNS6mIjenTrWvouv2Pi_oHmUGFg7kWiE7VOuiHf8F62i-HuyBk6BgboSBBOiM99mNHlh3nFrEwMX7bzf5leBCOQ5WMg2lPRULIkKYiPbviFfljhRMzBvP38UhYBe5DK3apIU3iLDR0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent flex flex-col justify-center px-12 md:px-24"
+          >
+            <div class="max-w-xl">
+              <span
+                class="inline-block bg-primary text-on-primary px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest mb-4"
+                >Limited Time Experience</span
+              >
+              <h2
+                class="font-headline text-4xl md:text-6xl text-white mb-4 leading-tight"
+              >
+                The Chef's <br /><span class="italic font-light"
+                  >Tasting Journey</span
+                >
+              </h2>
+              <p class="text-on-surface-variant mb-8 text-lg max-w-sm">
+                Enjoy a complimentary vintage pairing with our signature
+                7-course seasonal menu.
+              </p>
+            </div>
+          </div>
+          <div class="absolute bottom-8 right-12 flex gap-2">
+            <div class="w-2 h-2 rounded-full bg-primary"></div>
+            <div class="w-2 h-2 rounded-full bg-white/30"></div>
+            <div class="w-2 h-2 rounded-full bg-white/30"></div>
+          </div>
+        </div>
+      </section>
+      <!-- Categories -->
+      <section class="py-8 px-6 md:px-12 max-w-[1920px] mx-auto">
+        <h3 class="font-headline text-2xl text-white mb-8">Categories</h3>
+        <div class="flex overflow-x-auto no-scrollbar gap-8 md:gap-12 pb-4">
+          <!-- Category Item -->
+          <div
+            class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group"
+          >
+            <div
+              class="w-24 h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all p-1"
+            >
+              <img
+                alt="Appetizers"
+                class="w-full h-full object-cover rounded-full"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBixsKQpMDnDqNYWkE_TS9GzIVGy9k8VszLKdiI-fZR0HcPit6KuaHSPSTa6H1_rK45Dku9CV0JTIJawfs2cqLdwB1VP2-0PGAvITdOKYJ_tRJ0M37YVKOzdiuNHJrtYIun7TybxrGQsATCpuEWp5_--RjZDounDkvnsJOG6BxStm1S6fAPUW4LHUaKhpnbNifLv7zlY8bdZnyauXLQ_7ljsD_9O-JSlC3pUh0yaesFwhw_WJ0liMxkO2YwcKZwR3cSmkNsEbM9wF3P"
+              />
+            </div>
+            <span
+              class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors"
+              >Appetizers</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group"
+          >
+            <div
+              class="w-24 h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all p-1"
+            >
+              <img
+                alt="Pasta"
+                class="w-full h-full object-cover rounded-full"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKSrbtXAnMhBaMxFhfMz7Jj89r6G6fWZ340LLXuVNQT4FI562UD_z89FLddV64pImG9ZbjWwewY3shfVWQhx5lol1UBPOLSw-t74C9Bpnbsc3WOZg98xXWYQNmgauGAOL-OjJwzIVQv-kABDG065mL36CTz2qK3EDdAffG5vXsroBdybprakRugpYfCMPf29mnku4VF5OPp2s9CrQ_jVQoL3QmJ6WUcMibXT4iZLSJN5leQnoOm0TgwB553mVq8A1xqGEKfG5DRT1d"
+              />
+            </div>
+            <span
+              class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors"
+              >Pasta</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group"
+          >
+            <div
+              class="w-24 h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all p-1"
+            >
+              <img
+                alt="Entrées"
+                class="w-full h-full object-cover rounded-full"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWAvazZia9fkMhfK73SJK-bDPzNu8kYMgCTKPJE3STOaEJaP0Gx7gHWt7tb0HsQzUeyHY0Frl44I6_2T3ZQZlO65lyjE3r6-8g_uglFVXdXgCxNZBP_ttMEh_26RdDuGsp0Vr1EpT7B5iBkPJTGjn0vMBZPFjrr7pb-MIkN_LiVK8sIwru3RfN2ZJ_fn9Wh9tMzmKPd_p_yutGMA3Yloq0pTwlQ2xwHVjr_V7u3Ud_cFj7rY5De-utDibyRZAOXre2-QRDpVD-7H_k"
+              />
+            </div>
+            <span
+              class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors"
+              >Entrées</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group"
+          >
+            <div
+              class="w-24 h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all p-1"
+            >
+              <img
+                alt="Sides"
+                class="w-full h-full object-cover rounded-full"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM-omIqCWfIHxLkUULqlZDxtYqUvk2FNTrkKkh0_mik_W5Y7ApZyx9cOuXhpnTUYsA-qwXWKiKp7ysjkrVX5yeCViSBfTq5rn5UsUOui4k2BJ7SxCzgimqB702W6mQTOTY8Tm2bcb0Zl3a2nO-KZEbpQrKZKfxixudh6l2t03-oKvcmGlFsTmU44xp-dzvlOoCOAp1KY9cqsk7wC6gilRVIknLsexlrSyzXnqzk6KId4ZxREKTPUT4bR3jNO1nkK-ltsbyTHg32yCw"
+              />
+            </div>
+            <span
+              class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors"
+              >Sides</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group"
+          >
+            <div
+              class="w-24 h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all p-1"
+            >
+              <img
+                alt="Caviar"
+                class="w-full h-full object-cover rounded-full"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnE0thgQgjpGOlR9y0GBQR9IO5v0z8e1PPBPWzkXqjiEpVlBUYVSOAKUoTa-nibt9pkrnoatTbEUXZSGmSAsEWIPbra-sX3ugu09HtjTgVCwYPb6dI7LoPJlRUzf308wuKrGjBQGWPWD-Y_BJI30wL0a3mxaWwtJm3zkOwGTbSiJ7ybwxXsXy2dVYDb4NCYWpreftZ4UkRpttNi8XISYCHoQ94QHmhNriwN4HISTl4AusGovMMeoN34ltP3Buc7CcckkXvPOJlWtif"
+              />
+            </div>
+            <span
+              class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors"
+              >Caviar</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group"
+          >
+            <div
+              class="w-24 h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all p-1"
+            >
+              <img
+                alt="Cocktails"
+                class="w-full h-full object-cover rounded-full"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9nYKK8PqecB3cAzsEetvmgtcKWHISXwPnNoa4F1ZipqDPzmlFxUIPylcZKiyEpCnD_pYi4rXcJY8rA4WT4zZRYNHDhema3SoK53EHRk_L43uhjA9GKefdLwdPRn_xiBA7xfjl4QwaisOjuyot17W5n7A46md9GThqcC5yOT5qezKxGqnUvlVXsCHuTee5kHxx40bzUXrwJssQsE5iP28GnInC3i2mRRAlWZdpoouiYvbIMLtK0Nq-9svxfpsk_XlSgljEbiQwtzH-"
+              />
+            </div>
+            <span
+              class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors"
+              >Cocktails</span
+            >
+          </div>
+          <div
+            class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group"
+          >
+            <div
+              class="w-24 h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all p-1"
+            >
+              <img
+                alt="Desserts"
+                class="w-full h-full object-cover rounded-full"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsI8gkSZxsdKqrVFXvdcXdQlXcnTrRmQjI67q7YLCz-157wCJl2rnz5qsKaQ6y0R9epllxQAc_RKCKsZ8XhEGtF9cYyh9mTXrQ8thpikBpRXUr9e1Snqiv1xOTRAoA0vwU1V_NKum6E_0H-zuzMw6og1krbxn3jnlr1EDZ6UZoTW3A9N_CecYJOmeWFRARrKbfIDA3Dpq0jqvjc5AU-XjF-a7QyKoCCNGh18LeS5_-zrPQFcYKuryi3G9GxvtlB0pMMBpz7WNoL4YJ"
+              />
+            </div>
+            <span
+              class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors"
+              >Desserts</span
+            >
+          </div>
+        </div>
+      </section>
+      <!-- Featured Section -->
+      <section class="py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
+        <div class="flex justify-between items-center mb-10">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">✨</span>
+            <h3 class="font-headline text-3xl text-white">Featured</h3>
+          </div>
+          <a
+            class="text-primary font-label uppercase tracking-widest text-xs font-bold flex items-center gap-2 hover:opacity-70 transition-opacity"
+            href="#"
+          >
+            View all
+            <span class="material-symbols-outlined text-sm"
+              >arrow_forward_ios</span
+            >
+          </a>
+        </div>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12"
+        >
+          <!-- Card 1 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Heritage Wagyu"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBixsKQpMDnDqNYWkE_TS9GzIVGy9k8VszLKdiI-fZR0HcPit6KuaHSPSTa6H1_rK45Dku9CV0JTIJawfs2cqLdwB1VP2-0PGAvITdOKYJ_tRJ0M37YVKOzdiuNHJrtYIun7TybxrGQsATCpuEWp5_--RjZDounDkvnsJOG6BxStm1S6fAPUW4LHUaKhpnbNifLv7zlY8bdZnyauXLQ_7ljsD_9O-JSlC3pUh0yaesFwhw_WJ0liMxkO2YwcKZwR3cSmkNsEbM9wF3P"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="bg-primary/90 text-on-primary text-[10px] px-2 py-1 rounded font-bold uppercase tracking-widest"
+                  >Chef's Choice</span
+                >
+              </div>
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Heritage Wagyu Ribeye
+              </h4>
+              <span class="font-headline text-lg text-primary">$124</span>
+            </div>
+            <div
+              class="flex items-center gap-1 text-on-surface-variant text-sm"
+            >
+              <span
+                class="material-symbols-outlined text-primary text-sm"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >star</span
+              >
+              <span class="font-bold">4.9</span>
+              <span class="mx-1">•</span>
+              <span>45m prep</span>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Black Truffle Pasta"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKSrbtXAnMhBaMxFhfMz7Jj89r6G6fWZ340LLXuVNQT4FI562UD_z89FLddV64pImG9ZbjWwewY3shfVWQhx5lol1UBPOLSw-t74C9Bpnbsc3WOZg98xXWYQNmgauGAOL-OjJwzIVQv-kABDG065mL36CTz2qK3EDdAffG5vXsroBdybprakRugpYfCMPf29mnku4VF5OPp2s9CrQ_jVQoL3QmJ6WUcMibXT4iZLSJN5leQnoOm0TgwB553mVq8A1xqGEKfG5DRT1d"
+              />
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Black Truffle Tagliatelle
+              </h4>
+              <span class="font-headline text-lg text-primary">$68</span>
+            </div>
+            <div
+              class="flex items-center gap-1 text-on-surface-variant text-sm"
+            >
+              <span
+                class="material-symbols-outlined text-primary text-sm"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >star</span
+              >
+              <span class="font-bold">4.8</span>
+              <span class="mx-1">•</span>
+              <span>30m prep</span>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Wild Alaskan Salmon"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWAvazZia9fkMhfK73SJK-bDPzNu8kYMgCTKPJE3STOaEJaP0Gx7gHWt7tb0HsQzUeyHY0Frl44I6_2T3ZQZlO65lyjE3r6-8g_uglFVXdXgCxNZBP_ttMEh_26RdDuGsp0Vr1EpT7B5iBkPJTGjn0vMBZPFjrr7pb-MIkN_LiVK8sIwru3RfN2ZJ_fn9Wh9tMzmKPd_p_yutGMA3Yloq0pTwlQ2xwHVjr_V7u3Ud_cFj7rY5De-utDibyRZAOXre2-QRDpVD-7H_k"
+              />
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Wild Alaskan Salmon
+              </h4>
+              <span class="font-headline text-lg text-primary">$52</span>
+            </div>
+            <div
+              class="flex items-center gap-1 text-on-surface-variant text-sm"
+            >
+              <span
+                class="material-symbols-outlined text-primary text-sm"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >star</span
+              >
+              <span class="font-bold">4.7</span>
+              <span class="mx-1">•</span>
+              <span>35m prep</span>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Royal Oscietra Caviar"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnE0thgQgjpGOlR9y0GBQR9IO5v0z8e1PPBPWzkXqjiEpVlBUYVSOAKUoTa-nibt9pkrnoatTbEUXZSGmSAsEWIPbra-sX3ugu09HtjTgVCwYPb6dI7LoPJlRUzf308wuKrGjBQGWPWD-Y_BJI30wL0a3mxaWwtJm3zkOwGTbSiJ7ybwxXsXy2dVYDb4NCYWpreftZ4UkRpttNi8XISYCHoQ94QHmhNriwN4HISTl4AusGovMMeoN34ltP3Buc7CcckkXvPOJlWtif"
+              />
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Royal Oscietra Caviar
+              </h4>
+              <span class="font-headline text-lg text-primary">$210</span>
+            </div>
+            <div
+              class="flex items-center gap-1 text-on-surface-variant text-sm"
+            >
+              <span
+                class="material-symbols-outlined text-primary text-sm"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >star</span
+              >
+              <span class="font-bold">5.0</span>
+              <span class="mx-1">•</span>
+              <span>15m prep</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Our Menu Section -->
+      <section
+        class="py-12 px-6 md:px-12 max-w-[1920px] mx-auto border-t border-outline-variant/10"
+      >
+        <div class="flex justify-between items-center mb-10">
+          <div class="flex items-center gap-3">
+            <h3 class="font-headline text-3xl text-white">Our Menu</h3>
+          </div>
+          <div class="flex gap-4">
+            <button
+              class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest"
+            >
+              Main Courses
+            </button>
+            <button
+              class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+            >
+              Wine List
+            </button>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12"
+        >
+          <!-- Menu Card 1 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Seared Scallops"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM-omIqCWfIHxLkUULqlZDxtYqUvk2FNTrkKkh0_mik_W5Y7ApZyx9cOuXhpnTUYsA-qwXWKiKp7ysjkrVX5yeCViSBfTq5rn5UsUOui4k2BJ7SxCzgimqB702W6mQTOTY8Tm2bcb0Zl3a2nO-KZEbpQrKZKfxixudh6l2t03-oKvcmGlFsTmU44xp-dzvlOoCOAp1KY9cqsk7wC6gilRVIknLsexlrSyzXnqzk6KId4ZxREKTPUT4bR3jNO1nkK-ltsbyTHg32yCw"
+              />
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Diver Scallops
+              </h4>
+              <span class="font-headline text-lg text-primary">$48</span>
+            </div>
+            <p class="text-on-surface-variant text-sm line-clamp-2 mb-2">
+              Cauliflower purée, golden raisins, and caper brown butter.
+            </p>
+          </div>
+          <!-- Menu Card 2 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Duck Confit"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWAvazZia9fkMhfK73SJK-bDPzNu8kYMgCTKPJE3STOaEJaP0Gx7gHWt7tb0HsQzUeyHY0Frl44I6_2T3ZQZlO65lyjE3r6-8g_uglFVXdXgCxNZBP_ttMEh_26RdDuGsp0Vr1EpT7B5iBkPJTGjn0vMBZPFjrr7pb-MIkN_LiVK8sIwru3RfN2ZJ_fn9Wh9tMzmKPd_p_yutGMA3Yloq0pTwlQ2xwHVjr_V7u3Ud_cFj7rY5De-utDibyRZAOXre2-QRDpVD-7H_k"
+              />
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Roasted Duck Breast
+              </h4>
+              <span class="font-headline text-lg text-primary">$56</span>
+            </div>
+            <p class="text-on-surface-variant text-sm line-clamp-2 mb-2">
+              Honey-glazed with parsnip cream and cherry gastrique.
+            </p>
+          </div>
+          <!-- Menu Card 3 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Lobster"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKSrbtXAnMhBaMxFhfMz7Jj89r6G6fWZ340LLXuVNQT4FI562UD_z89FLddV64pImG9ZbjWwewY3shfVWQhx5lol1UBPOLSw-t74C9Bpnbsc3WOZg98xXWYQNmgauGAOL-OjJwzIVQv-kABDG065mL36CTz2qK3EDdAffG5vXsroBdybprakRugpYfCMPf29mnku4VF5OPp2s9CrQ_jVQoL3QmJ6WUcMibXT4iZLSJN5leQnoOm0TgwB553mVq8A1xqGEKfG5DRT1d"
+              />
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Butter Poached Lobster
+              </h4>
+              <span class="font-headline text-lg text-primary">$72</span>
+            </div>
+            <p class="text-on-surface-variant text-sm line-clamp-2 mb-2">
+              Maine lobster, saffron risotto, and preserved lemon.
+            </p>
+          </div>
+          <!-- Menu Card 4 -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-surface-container"
+            >
+              <img
+                alt="Vegetarian"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9nYKK8PqecB3cAzsEetvmgtcKWHISXwPnNoa4F1ZipqDPzmlFxUIPylcZKiyEpCnD_pYi4rXcJY8rA4WT4zZRYNHDhema3SoK53EHRk_L43uhjA9GKefdLwdPRn_xiBA7xfjl4QwaisOjuyot17W5n7A46md9GThqcC5yOT5qezKxGqnUvlVXsCHuTee5kHxx40bzUXrwJssQsE5iP28GnInC3i2mRRAlWZdpoouiYvbIMLtK0Nq-9svxfpsk_XlSgljEbiQwtzH-"
+              />
+            </div>
+            <div class="flex justify-between items-center mb-1">
+              <h4
+                class="font-headline text-lg text-white group-hover:text-primary transition-colors"
+              >
+                Forest Mushroom Tart
+              </h4>
+              <span class="font-headline text-lg text-primary">$38</span>
+            </div>
+            <p class="text-on-surface-variant text-sm line-clamp-2 mb-2">
+              Wild seasonal mushrooms, goat cheese, and truffle essence.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="w-full py-20 px-6 md:px-12 border-t border-outline-variant/10 bg-surface-container-lowest mt-12"
+    >
+      <div
+        class="grid grid-cols-1 md:grid-cols-4 gap-12 w-full max-w-7xl mx-auto"
+      >
+        <div>
+          <div class="font-headline text-primary text-2xl mb-4 italic">
+            Lumière Reserve
+          </div>
+          <p
+            class="text-on-surface-variant font-body text-sm leading-relaxed max-w-xs"
+          >
+            An odyssey of taste, where every ingredient tells a story of
+            heritage and passion.
+          </p>
+        </div>
+        <div>
+          <h5
+            class="text-white font-label uppercase tracking-widest text-xs mb-6"
+          >
+            Explore
+          </h5>
+          <div
+            class="flex flex-col gap-4 text-on-surface-variant font-body text-sm"
+          >
+            <a class="hover:text-primary transition-colors" href="#">Menu</a>
+            <a class="hover:text-primary transition-colors" href="#"
+              >Location</a
+            >
+            <a class="hover:text-primary transition-colors" href="#">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h5
+            class="text-white font-label uppercase tracking-widest text-xs mb-6"
+          >
+            Dining Hours
+          </h5>
+          <div
+            class="flex flex-col gap-2 text-on-surface-variant font-body text-sm"
+          >
+            <p>Mon - Thu: 5:00 PM - 11:00 PM</p>
+            <p>Fri - Sat: 5:00 PM - 1:00 AM</p>
+            <p>Sunday: 11:00 AM - 10:00 PM</p>
+          </div>
+        </div>
+        <div>
+          <h5
+            class="text-white font-label uppercase tracking-widest text-xs mb-6"
+          >
+            Newsletter
+          </h5>
+          <div class="flex flex-col gap-4">
+            <p class="text-on-surface-variant font-body text-sm">
+              Join our list for seasonal updates.
+            </p>
+            <div class="relative">
+              <input
+                class="bg-transparent border-b border-outline-variant/30 w-full py-2 text-sm focus:border-primary outline-none text-white transition-all"
+                placeholder="Email Address"
+                type="email"
+              />
+              <button class="absolute right-0 bottom-2 text-primary">
+                <span class="material-symbols-outlined text-sm"
+                  >arrow_forward</span
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 pt-8 border-t border-white/5 text-center">
+        <p
+          class="font-body text-[10px] text-on-surface-variant/50 uppercase tracking-[0.2em]"
+        >
+          © 2024 Lumière Reserve. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+    <!-- Mobile Navigation -->
+    <nav
+      class="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full bg-background/90 backdrop-blur-2xl border border-outline-variant/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex justify-around items-center z-50 px-6 py-4"
+    >
+      <a
+        class="flex flex-col items-center justify-center text-primary"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined"
+          style="font-variation-settings: &quot;FILL&quot; 1"
+          >home</span
+        >
+        <span class="font-label text-[10px] font-bold uppercase mt-1"
+          >Home</span
+        >
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-primary"
+        href="#"
+      >
+        <span class="material-symbols-outlined">favorite</span>
+        <span class="font-label text-[10px] font-bold uppercase mt-1"
+          >Likes</span
+        >
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-primary"
+        href="#"
+      >
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span class="font-label text-[10px] font-bold uppercase mt-1"
+          >Cart</span
+        >
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-primary"
+        href="#"
+      >
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-label text-[10px] font-bold uppercase mt-1"
+          >User</span
+        >
+      </a>
+    </nav>
+  </body>
+</html>

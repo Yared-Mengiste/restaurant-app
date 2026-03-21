@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order History | Lumière Reserve</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;800&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#37393d",
+              "surface-container-highest": "#333538",
+              "on-secondary-container": "#b6b5b4",
+              "secondary": "#c8c6c5",
+              "surface": "#111316",
+              "primary-container": "#d9ae00",
+              "on-tertiary-fixed": "#00174b",
+              "on-surface": "#e2e2e6",
+              "on-secondary-fixed-variant": "#474747",
+              "secondary-fixed-dim": "#c8c6c5",
+              "background": "#111316",
+              "primary-fixed": "#ffe089",
+              "on-error": "#690005",
+              "on-secondary-fixed": "#1b1c1c",
+              "on-primary-fixed": "#241a00",
+              "surface-container": "#1e2023",
+              "surface-variant": "#333538",
+              "secondary-fixed": "#e4e2e1",
+              "secondary-container": "#474747",
+              "on-surface-variant": "#d0c5af",
+              "tertiary-fixed": "#dbe1ff",
+              "on-primary-container": "#554300",
+              "primary": "#f8c927",
+              "outline": "#99907c",
+              "on-secondary": "#303030",
+              "on-primary-fixed-variant": "#574400",
+              "surface-container-high": "#282a2d",
+              "on-background": "#e2e2e6",
+              "tertiary-fixed-dim": "#b4c5ff",
+              "surface-tint": "#efc11c",
+              "on-tertiary-container": "#254188",
+              "error-container": "#93000a",
+              "surface-dim": "#111316",
+              "inverse-primary": "#745b00",
+              "primary-fixed-dim": "#efc11c",
+              "inverse-on-surface": "#2f3034",
+              "error": "#ffb4ab",
+              "tertiary": "#bfcdff",
+              "surface-container-lowest": "#0c0e11",
+              "on-tertiary-fixed-variant": "#27438a",
+              "on-tertiary": "#082b72",
+              "tertiary-container": "#97b0ff",
+              "on-error-container": "#ffdad6",
+              "on-primary": "#3d2f00",
+              "outline-variant": "#4d4635",
+              "surface-container-low": "#1a1c1f",
+              "inverse-surface": "#e2e2e6"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(51, 53, 56, 0.4);
+            backdrop-filter: blur(20px);
+        }
+        .editorial-gradient {
+            background: linear-gradient(to bottom, #111316, #1a1c1f);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-[#111316] dark:bg-[#111316] sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto">
+<div class="text-2xl font-bold text-[#f8c927] tracking-tighter font-['Noto_Serif'] uppercase tracking-widest">
+                Lumière Reserve
+            </div>
+<div class="hidden md:flex items-center space-gap-8 gap-12">
+<a class="text-[#f8c927] border-b-2 border-[#f8c927] pb-1 font-['Noto_Serif'] uppercase tracking-widest text-sm" href="#">Orders</a>
+<a class="text-slate-400 font-medium font-['Noto_Serif'] uppercase tracking-widest text-sm hover:text-[#f8c927] transition-colors duration-300" href="#">Menu</a>
+<a class="text-slate-400 font-medium font-['Noto_Serif'] uppercase tracking-widest text-sm hover:text-[#f8c927] transition-colors duration-300" href="#">Our Story</a>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#f8c927] cursor-pointer hover:scale-95 duration-200" data-icon="history">history</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-[#f8c927] hover:scale-95 duration-200" data-icon="favorite">favorite</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-[#f8c927] hover:scale-95 duration-200" data-icon="person">person</span>
+</div>
+</div>
+<div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/20 to-transparent"></div>
+</nav>
+<main class="max-w-7xl mx-auto px-6 py-12 md:py-20">
+<!-- Header Section -->
+<header class="mb-16">
+<h1 class="font-headline text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight mb-4">
+                Your <span class="text-primary italic">Epicurean</span> Journey
+            </h1>
+<p class="font-body text-on-surface-variant max-w-2xl text-lg font-light leading-relaxed">
+                A curated chronicle of your past experiences with Lumière Reserve. Relive the flavors of our seasonal collections.
+            </p>
+</header>
+<!-- Orders Grid -->
+<div class="flex flex-col gap-8">
+<!-- Active/Recent Order Card -->
+<div class="glass-card rounded-xl p-8 border border-outline-variant/10 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-6">
+<span class="px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-bold tracking-widest uppercase border border-primary/20">
+                        Preparing
+                    </span>
+</div>
+<div class="grid md:grid-cols-4 gap-8 items-center">
+<div class="space-y-1">
+<p class="text-xs font-bold text-outline uppercase tracking-[0.2em]">Order Identification</p>
+<h3 class="font-headline text-2xl text-on-surface">#LR-99281</h3>
+</div>
+<div class="space-y-1">
+<p class="text-xs font-bold text-outline uppercase tracking-[0.2em]">Gastronomic Date</p>
+<p class="text-lg text-on-surface">Oct 24, 2023</p>
+</div>
+<div class="space-y-1">
+<p class="text-xs font-bold text-outline uppercase tracking-[0.2em]">Total Investment</p>
+<p class="text-2xl font-headline text-primary">$342.00</p>
+</div>
+<div class="flex justify-end">
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-bold py-4 px-10 rounded-full uppercase text-xs tracking-widest hover:brightness-110 transition-all shadow-xl shadow-primary/10">
+                            View Status
+                        </button>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-outline-variant/10">
+<p class="text-sm text-on-surface-variant italic">Included: Truffle Degustation Set, Vintage Krug Champagne (2012), Wagyu A5 Carpaccio</p>
+</div>
+</div>
+<!-- Past Orders Table/List -->
+<div class="space-y-6">
+<h2 class="font-headline text-2xl text-on-surface-variant mb-4 pl-2">Previous Collections</h2>
+<!-- Order Item 1 -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-6 rounded-lg hover:bg-surface-container-low transition-all duration-300 gap-6">
+<div class="flex items-center gap-8">
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-highest">
+<img alt="Order Preview" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="High-end gourmet dish preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABL1uA7PpGEsnDrZsx0uZMOMktLrRQFe0Falgurx3neAKbzJNRvqP2kbuCXRHjBQBsSekRaDAx3_CcEvCiFfVub0pBiRYV1up21Z1GX1VMrtBxlIQIi8iOlh_xZV6PBhv4g0aqaL9wA_0JhHdPKriRWmZQolIBjabZqKZGZKwufLV1atLa2eo-CvMd9MegcgvGnMri3Kfv9vTAyUlpTNJmnHWqDrbICquPEg1bGQb3Xb3_WrBvZsQBsV25JPpaxprQOO5yX98Igzhg"/>
+</div>
+<div class="space-y-1">
+<h4 class="font-headline text-xl text-on-surface">#LR-88720</h4>
+<p class="text-xs font-medium text-outline uppercase tracking-widest">Sept 12, 2023 • Delivered</p>
+</div>
+</div>
+<div class="flex flex-col md:items-end gap-1">
+<p class="text-xl font-headline text-on-surface">$215.50</p>
+<p class="text-xs text-outline italic">2 Items • Dinner Service</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-xs font-bold uppercase tracking-widest hover:bg-surface-container-highest hover:text-primary transition-all">
+                            Reorder
+                        </button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Separator -->
+<div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/10 to-transparent"></div>
+<!-- Order Item 2 -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-6 rounded-lg hover:bg-surface-container-low transition-all duration-300 gap-6">
+<div class="flex items-center gap-8">
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-highest">
+<img alt="Order Preview" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Fine dining steak dish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVFNBc3bxa6lP1qEAX08CZKMQ2p_CJgCD7UlmbZ99MNM3zYsZ_lpYTiJ1mLGjCe6aI76AZ_au4xdEZ8SAFzirXikuMKSfE_DUKjhy1qtNpiAJ-ePu6KaJlC2Se1lkrIoCr0JKvFmbMbfefexsMOWgT3gfRfTUe-SFotWzcomES_stnmTTPOCqbpR6d3IKs3TI9JxD4qBTTk_3mniiDLsUVEM_MW-mPB6GQsCwysc__L7XkvNM_Y4YfsdM6zk7U3WLy8UeuTJboDC72"/>
+</div>
+<div class="space-y-1">
+<h4 class="font-headline text-xl text-on-surface">#LR-85412</h4>
+<p class="text-xs font-medium text-outline uppercase tracking-widest">Aug 28, 2023 • Delivered</p>
+</div>
+</div>
+<div class="flex flex-col md:items-end gap-1">
+<p class="text-xl font-headline text-on-surface">$189.00</p>
+<p class="text-xs text-outline italic">4 Items • Lunch Soiree</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-xs font-bold uppercase tracking-widest hover:bg-surface-container-highest hover:text-primary transition-all">
+                            Reorder
+                        </button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Separator -->
+<div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/10 to-transparent"></div>
+<!-- Order Item 3 (Cancelled State) -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-6 rounded-lg hover:bg-surface-container-low transition-all duration-300 gap-6 opacity-60">
+<div class="flex items-center gap-8">
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-highest grayscale">
+<img alt="Order Preview" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Artisanal cocktails and glassware" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPB0gYalE3_FFYDn2lPk_Zkq0w0YfJTLCJK4XUVFcaDSO9U9oRuUA3BBbx2gRQNaZqImO0hJXbTe02xRW33BBtSvhIECF1Ux_Ee9ouVsGfxdKKjH-9e7jjAOthvW0n-Oe9jsiZRjW8WkD_bAS_Ff_mtbbt50fVfaHFtBx81Ylpzf-9YeR_SDTPiJlLnESopyzE3niHagm5nO2cznvhyuMR5LxE84lL-QQu-6v1VyyrcHwczbwyj5REnij7g2D54LEDvJL8ebriQdJ3"/>
+</div>
+<div class="space-y-1">
+<h4 class="font-headline text-xl text-on-surface">#LR-79211</h4>
+<p class="text-xs font-medium text-error uppercase tracking-widest">July 15, 2023 • Cancelled</p>
+</div>
+</div>
+<div class="flex flex-col md:items-end gap-1">
+<p class="text-xl font-headline text-on-surface">$75.00</p>
+<p class="text-xs text-outline italic">Cocktail Selection</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-xs font-bold uppercase tracking-widest hover:bg-surface-container-highest hover:text-primary transition-all">
+                            Reorder
+                        </button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination/Load More -->
+<div class="mt-20 flex justify-center">
+<button class="group flex flex-col items-center gap-4">
+<span class="text-xs font-bold uppercase tracking-[0.3em] text-outline group-hover:text-primary transition-colors">Discover Previous Memories</span>
+<span class="material-symbols-outlined text-primary animate-bounce" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#111316]/90 backdrop-blur-xl dark:bg-[#111316]/90 shadow-[0_-4px_40px_rgba(0,0,0,0.5)] rounded-t-[3rem] border-t border-white/5 flex justify-around items-center px-6 pb-8 pt-4">
+<a class="flex flex-col items-center justify-center bg-[#f8c927]/10 text-[#f8c927] rounded-full px-6 py-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-['Manrope'] text-[10px] font-semibold uppercase tracking-widest mt-1">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-6 py-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="room_service">room_service</span>
+<span class="font-['Manrope'] text-[10px] font-semibold uppercase tracking-widest mt-1">Private Dining</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-6 py-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-['Manrope'] text-[10px] font-semibold uppercase tracking-widest mt-1">Our Story</span>
+</a>
+</nav>
+<!-- Spacing for BottomNav on mobile -->
+<div class="h-24 md:hidden"></div>
+</body></html>

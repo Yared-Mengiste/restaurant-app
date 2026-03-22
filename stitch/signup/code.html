@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#111316",
+              "primary-container": "#d9ae00",
+              "tertiary-container": "#97b0ff",
+              "error": "#ffb4ab",
+              "secondary-container": "#474747",
+              "tertiary": "#bfcdff",
+              "primary-fixed-dim": "#efc11c",
+              "on-tertiary-fixed": "#00174b",
+              "surface": "#111316",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#2f3034",
+              "surface-container-lowest": "#0c0e11",
+              "surface-container": "#1e2023",
+              "on-tertiary": "#082b72",
+              "surface-variant": "#333538",
+              "surface-bright": "#37393d",
+              "error-container": "#93000a",
+              "on-tertiary-fixed-variant": "#27438a",
+              "on-surface": "#e2e2e6",
+              "on-background": "#e2e2e6",
+              "on-secondary-fixed-variant": "#474747",
+              "surface-container-low": "#1a1c1f",
+              "primary": "#f8c927",
+              "surface-tint": "#efc11c",
+              "secondary-fixed-dim": "#c8c6c5",
+              "surface-container-high": "#282a2d",
+              "on-error": "#690005",
+              "on-primary-fixed-variant": "#574400",
+              "secondary-fixed": "#e4e2e1",
+              "on-surface-variant": "#d0c5af",
+              "on-secondary-fixed": "#1b1c1c",
+              "background": "#111316",
+              "outline": "#99907c",
+              "tertiary-fixed": "#dbe1ff",
+              "on-primary-container": "#554300",
+              "primary-fixed": "#ffe089",
+              "inverse-surface": "#e2e2e6",
+              "inverse-primary": "#745b00",
+              "on-tertiary-container": "#254188",
+              "on-secondary": "#303030",
+              "tertiary-fixed-dim": "#b4c5ff",
+              "on-primary": "#3d2f00",
+              "surface-container-highest": "#333538",
+              "on-primary-fixed": "#241a00",
+              "on-secondary-container": "#b6b5b4",
+              "secondary": "#c8c6c5",
+              "outline-variant": "#4d4635"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-gradient {
+            background: linear-gradient(180deg, rgba(17, 19, 22, 0) 0%, rgba(17, 19, 22, 0.9) 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation (Shell suppressed for Transactional focus, using simplified brand anchor) -->
+<header class="fixed top-0 w-full z-50 bg-[#111316]">
+<nav class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+<div class="font-serif italic text-2xl text-[#f8c927]">Lumière Reserve</div>
+<a class="font-sans font-medium tracking-tight text-gray-400 hover:text-[#f8c927] transition-colors duration-300" href="#">Help</a>
+</nav>
+</header>
+<main class="min-h-screen flex items-center justify-center px-4 pt-24 pb-12 overflow-hidden relative">
+<!-- Background Artistic Elements -->
+<div class="absolute inset-0 pointer-events-none">
+<div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]"></div>
+</div>
+<!-- Signup Container -->
+<div class="w-full max-w-xl relative z-10">
+<!-- Header Section -->
+<div class="text-center mb-12">
+<h1 class="font-headline text-5xl md:text-6xl mb-4 text-on-surface tracking-tight">Create Account</h1>
+<p class="font-body text-on-surface-variant tracking-wide uppercase text-xs opacity-70">Begin your bespoke culinary journey</p>
+</div>
+<!-- Card / Form Wrapper -->
+<div class="bg-surface-container-low/40 backdrop-blur-xl rounded-xl p-8 md:p-12 shadow-2xl border border-outline-variant/10">
+<!-- Social Sign Up -->
+<button class="w-full flex items-center justify-center gap-4 py-4 px-6 bg-surface-container-highest hover:bg-surface-bright transition-all duration-300 rounded-full group">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-label text-sm font-semibold tracking-wider text-on-surface group-hover:text-primary transition-colors">Sign up with Google</span>
+</button>
+<!-- Divider -->
+<div class="flex items-center my-10">
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+<span class="px-6 font-headline italic text-on-surface-variant text-sm">or</span>
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+</div>
+<!-- Registration Form -->
+<form class="space-y-8">
+<div class="grid grid-cols-1 gap-8">
+<!-- Full Name -->
+<div class="relative group">
+<label class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 ml-1 opacity-60">Full Name</label>
+<input class="w-full bg-transparent border-b-2 border-surface-variant focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/30 py-3 transition-all outline-none" placeholder="Julianne Vianchi" type="text"/>
+</div>
+<!-- Email -->
+<div class="relative group">
+<label class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 ml-1 opacity-60">Email Address</label>
+<input class="w-full bg-transparent border-b-2 border-surface-variant focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/30 py-3 transition-all outline-none" placeholder="julianne@reserve.com" type="email"/>
+</div>
+<!-- Password Cluster -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="relative group">
+<label class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 ml-1 opacity-60">Password</label>
+<input class="w-full bg-transparent border-b-2 border-surface-variant focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/30 py-3 transition-all outline-none" placeholder="••••••••" type="password"/>
+</div>
+<div class="relative group">
+<label class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 ml-1 opacity-60">Confirm Password</label>
+<input class="w-full bg-transparent border-b-2 border-surface-variant focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/30 py-3 transition-all outline-none" placeholder="••••••••" type="password"/>
+</div>
+</div>
+</div>
+<!-- Terms -->
+<p class="text-[11px] text-on-surface-variant/60 font-body leading-relaxed text-center px-4">
+                        By creating an account, you agree to our <a class="underline hover:text-primary transition-colors" href="#">Privacy Policy</a> and <a class="underline hover:text-primary transition-colors" href="#">Terms of Service</a>.
+                    </p>
+<!-- Submit Action -->
+<button class="w-full py-5 bg-gradient-to-r from-primary to-primary-container rounded-full text-on-primary font-label text-sm font-bold uppercase tracking-[0.15em] shadow-lg shadow-primary/10 hover:brightness-110 active:scale-95 transition-all" type="submit">
+                        Create Account
+                    </button>
+</form>
+<!-- Redirect to Sign In -->
+<div class="mt-10 text-center">
+<p class="font-body text-sm text-on-surface-variant">
+                        Already have an account? 
+                        <a class="ml-2 font-semibold text-primary hover:text-primary-fixed-dim transition-colors border-b border-primary/30 pb-0.5" href="#">Sign in</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 bg-[#1a1c1f]">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
+<div class="font-sans text-xs uppercase tracking-widest text-gray-500">
+                © 2024 Lumière Reserve. An Editorial Dining Experience.
+            </div>
+<div class="flex gap-8">
+<a class="font-sans text-xs uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Privacy Policy</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Terms of Service</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>

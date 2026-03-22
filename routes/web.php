@@ -8,10 +8,17 @@ use Inertia\Inertia;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SocialiteController;
 
 Route::resource('products', ProductController::class);
 // routes/web.php
 
+
+Route::get('auth/google', [SocialiteController::class, 'googleLogin'])
+    ->name('auth.google');
+
+Route::get('auth/google-callback', [SocialiteController::class, 'googleAuthentication'])
+    ->name('auth.google-callback');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 
@@ -31,9 +38,9 @@ Route::middleware('auth')->group(function () {
 //    ]);
 //});
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return Inertia::render('Dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

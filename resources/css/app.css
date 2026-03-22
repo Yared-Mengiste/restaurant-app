@@ -6,4 +6,15 @@
 @layer utilities {
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-card {
+        background: rgba(51, 53, 56, 0.4);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+    .editorial-gradient {
+        background: linear-gradient(180deg, rgba(17, 19, 22, 0) 0%, rgba(17, 19, 22, 0.9) 100%);
+    }
 }

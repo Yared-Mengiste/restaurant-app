@@ -75,4 +75,31 @@ return $cart->items->sum(function ($item) {
 return $item->product->price * $item->quantity;
 });
 }
+
+    public function getSummary()
+    {
+        $cart = Cart::with(['items.product', 'items.variant'])
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (!$cart) {
+            return [
+                'count' => 0,
+                'subtotal' => 0,
+            ];
+        }
+
+        $subtotal = $cart->items->sum(function ($item) {
+            $price = $item->variant
+                ? $item->variant->price
+                : $item->product->price;
+
+            return $price * $item->quantity;
+        });
+
+        return [
+            'count' => $cart->items->sum('quantity'),
+            'subtotal' => $subtotal,
+        ];
+    }
 }

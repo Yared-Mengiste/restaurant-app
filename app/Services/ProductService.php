@@ -24,6 +24,13 @@ class ProductService
     {
         return Product::with(['category', 'variants'])->findOrFail($id);
     }
+    public function getByIdWithRelations($id)
+    {
+        return Product::with([
+            'category:id,name',
+            'variants:id,product_id,name,price'
+        ])->findOrFail($id);
+    }
 
     public function create($data)
     {
@@ -76,5 +83,15 @@ class ProductService
     {
         $product = Product::findOrFail($id);
         return $product->delete();
+    }
+
+    public function getRelatedProducts($categoryId, $excludeId)
+    {
+        return Product::where('category_id', $categoryId)
+            ->where('id', '!=', $excludeId)
+            ->where('is_available', true)
+            ->latest()
+            ->take(6)
+            ->get();
     }
 }

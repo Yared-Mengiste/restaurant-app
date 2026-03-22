@@ -14,6 +14,7 @@ export default function Welcome({
                                 }) {
     // Now this check will never fail because filters is at least an empty object
     const isSearching = !!(filters?.search || filters?.category_id);
+    // console.log(products)
 
     return (
         <AppLayout auth={auth} filters={filters}>

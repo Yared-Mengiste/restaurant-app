@@ -17,4 +17,29 @@
     .editorial-gradient {
         background: linear-gradient(180deg, rgba(17, 19, 22, 0) 0%, rgba(17, 19, 22, 0.9) 100%);
     }
+    /*.material-symbols-outlined {*/
+    /*    font-variation-settings:*/
+    /*        "FILL" 0,*/
+    /*        "wght" 400,*/
+    /*        "GRAD" 0,*/
+    /*        "opsz" 24;*/
+    /*    display: inline-block;*/
+    /*    line-height: 1;*/
+    /*    text-transform: none;*/
+    /*    letter-spacing: normal;*/
+    /*    word-wrap: normal;*/
+    /*    white-space: nowrap;*/
+    /*    direction: ltr;*/
+    /*}*/
+    .tonal-transition-bottom {
+        background: linear-gradient(
+            to bottom,
+            var(--tw-bg-opacity) 0%,
+            transparent 100%
+        );
+    }
+    .glassmorphism-border {
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(77, 70, 53, 0.3);
+    }
 }

@@ -17,6 +17,7 @@ class ProductController extends Controller
     // GET /products
     public function index(Request $request)
     {
+
         return inertia('Products/Index', [
             'products' => $this->service->getAll($request->search),
             'filters' => [
@@ -59,8 +60,16 @@ class ProductController extends Controller
     // GET /products/{id}
     public function show($id)
     {
+        $product = $this->service->getByIdWithRelations($id);
+
+        $relatedProducts = $this->service->getRelatedProducts($product->category_id, $id);
+
+        $cartSummary = app(\App\Services\CartService::class)->getSummary();
+
         return inertia('Products/Show', [
-            'product' => $this->service->getById($id)
+            'product' => $product,
+            'relatedProducts' => $relatedProducts,
+            'cart' => $cartSummary,
         ]);
     }
 

@@ -64,12 +64,10 @@ class ProductController extends Controller
 
         $relatedProducts = $this->service->getRelatedProducts($product->category_id, $id);
 
-        $cartSummary = app(\App\Services\CartService::class)->getSummary();
 
         return inertia('Products/Show', [
             'product' => $product,
             'relatedProducts' => $relatedProducts,
-            'cart' => $cartSummary,
         ]);
     }
 

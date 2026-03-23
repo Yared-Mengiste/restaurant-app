@@ -1,318 +1,688 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Cart &amp; Checkout | Lumière Reserve</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&amp;family=Manrope:wght@200;400;600;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-        }
-        .tonal-transition-bottom {
-            background: linear-gradient(to bottom, var(--tw-gradient-from), transparent);
-        }
-        .glassmorphism-border {
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(77, 70, 53, 0.3);
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111316;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333538;
-            border-radius: 10px;
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              colors: {
-                "surface-container-lowest": "#0c0e11",
-                "inverse-primary": "#745b00",
-                "on-secondary-fixed-variant": "#474747",
-                "on-surface-variant": "#d0c5af",
-                "on-tertiary-fixed": "#00174b",
-                "surface-container-high": "#282a2d",
-                "tertiary-fixed-dim": "#b4c5ff",
-                "on-primary-container": "#554300",
-                "on-surface": "#e2e2e6",
-                "inverse-on-surface": "#2f3034",
-                "surface-container-highest": "#333538",
-                "tertiary": "#bfcdff",
-                "on-primary": "#3d2f00",
-                "on-secondary-fixed": "#1b1c1c",
-                "surface-container": "#1e2023",
-                "primary-fixed-dim": "#efc11c",
-                "error": "#ffb4ab",
-                "on-primary-fixed-variant": "#574400",
-                "on-background": "#e2e2e6",
-                "primary-fixed": "#ffe089",
-                "tertiary-container": "#97b0ff",
-                "secondary-fixed": "#e4e2e1",
-                "on-primary-fixed": "#241a00",
-                "background": "#111316",
-                "surface-variant": "#333538",
-                "surface-dim": "#111316",
-                "on-tertiary": "#082b72",
-                "on-secondary": "#303030",
-                "surface-container-low": "#1a1c1f",
-                "tertiary-fixed": "#dbe1ff",
-                "surface-bright": "#37393d",
-                "on-tertiary-container": "#254188",
-                "secondary": "#c8c6c5",
-                "on-error": "#690005",
-                "error-container": "#93000a",
-                "outline-variant": "#4d4635",
-                "surface": "#111316",
-                "on-error-container": "#ffdad6",
-                "on-secondary-container": "#b6b5b4",
-                "primary-container": "#d9ae00",
-                "outline": "#99907c",
-                "secondary-fixed-dim": "#c8c6c5",
-                "on-tertiary-fixed-variant": "#27438a",
-                "primary": "#f8c927",
-                "surface-tint": "#efc11c",
-                "secondary-container": "#474747",
-                "inverse-surface": "#e2e2e6"
-              },
-              fontFamily: {
-                "headline": ["Noto Serif"],
-                "body": ["Manrope"],
-                "label": ["Manrope"]
-              },
-              borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-            },
-          },
-        }
-    </script>
-</head>
-<body class="bg-background text-on-surface font-body selection:bg-primary/30">
-<nav class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-xl dark:bg-[#111316]/80 flex justify-between items-center px-6 md:px-12 py-6 max-w-[1920px] mx-auto">
-<div class="text-2xl font-['Noto_Serif'] italic text-[#f8c927] tracking-tighter">Lumière Reserve</div>
-<div class="hidden md:flex items-center gap-8 font-['Noto_Serif'] font-light tracking-wide">
-<a class="text-white/70 hover:text-[#f8c927] transition-colors" href="#">Menu</a>
-<a class="text-white/70 hover:text-[#f8c927] transition-colors" href="#">Private Dining</a>
-<a class="text-white/70 hover:text-[#f8c927] transition-colors" href="#">Our Story</a>
-</div>
-<div class="flex items-center gap-6">
-<button class="text-white/70 hover:text-[#f8c927] transition-colors flex items-center gap-1 scale-95 active:scale-90 duration-200">
-<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
-<span class="text-xs font-bold bg-primary text-on-primary rounded-full w-5 h-5 flex items-center justify-center">3</span>
-</button>
-<button class="text-white/70 hover:text-[#f8c927] transition-colors scale-95 active:scale-90 duration-200">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-</button>
-</div>
-</nav>
-<main class="pt-32 pb-40 px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
-<div class="lg:col-span-7 space-y-12">
-<header>
-<h1 class="font-headline text-5xl md:text-6xl text-on-surface font-light tracking-tight mb-4">Your Selection</h1>
-<p class="font-body text-on-surface-variant flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-sm" data-icon="auto_awesome">auto_awesome</span>
-                        Your cart is saved and will persist for your next visit.
-                    </p>
-</header>
-<div class="space-y-8">
-<div class="group flex flex-col md:flex-row gap-6 p-6 rounded-xl transition-all hover:bg-surface-container-low">
-<div class="w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
-<img alt="Dish image" class="w-full h-full object-cover" data-alt="Smoked Wagyu Ribeye with rosemary garnish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi3x-L9FGX8iG2cHJeJlnwXcimb3L1ze39R-vEbo9vFRMlEW2botG8osQkOvXdImwez0DSdzC4XH7wD8Pi1haoTAONLWz1eaWsH-SPz4z4tEK0meQkhoW7rNFehCzAg3_M-eWe4ySYCxqepiPAgsb_yDTS_fWAI2KgRVsShXcR-e8PZstdsMh2LnJFrfkKgQ2rzN-mJ23MLyuCGxeR2TzxY69Pjw8-dD6509z3m2q7vN5rvngAnJbjyuxKHuPkIsHKmmKBDh5Qtyw9"/>
-</div>
-<div class="flex-grow flex flex-col justify-between">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-xl font-headline text-on-surface">Smoked Wagyu Ribeye</h3>
-<p class="text-on-surface-variant text-sm mt-1 uppercase tracking-widest font-bold">Medium Rare • Truffle Butter</p>
-</div>
-<span class="font-headline text-xl text-primary">$124.00</span>
-</div>
-<div class="flex items-center justify-between mt-4">
-<div class="flex items-center gap-4 bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/20">
-<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="remove">remove</span></button>
-<span class="font-bold w-4 text-center">1</span>
-<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="add">add</span></button>
-</div>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-xs uppercase tracking-tighter">
-<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span> Remove
-                                </button>
-</div>
-</div>
-</div>
-<div class="group flex flex-col md:flex-row gap-6 p-6 rounded-xl transition-all hover:bg-surface-container-low">
-<div class="w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
-<img alt="Cocktail image" class="w-full h-full object-cover" data-alt="Artisanal cocktail with crystal clear ice" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJPjL-iR3WpovJKQerrcqzOwcjUnGJRVy4M5Ks3heQfc9AuewxdH61AlDvAVmaDV7lJ03kSiEBfEnYoJa0I4BfZsMuyKg54xQ1OVNrbm7gnwW_qnu2v_B6uNyFHK6ZCu9mfsaiQEXW-A7U6AKnoYDCL71t11lZtwTFjQrz7uiSMaBQFvwux2Xa1eoxLXCW0CzgeQEmphNmXPNuADZKs7RIlel-IdyFbfKteoV6A5K7UwfVzyds0WMwaKIojo_fmgNSDIOQWwjZpiO7"/>
-</div>
-<div class="flex-grow flex flex-col justify-between">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-xl font-headline text-on-surface">The Midnight Negroni</h3>
-<p class="text-on-surface-variant text-sm mt-1 uppercase tracking-widest font-bold">Aged 12 Years • Gold Flake Garnish</p>
-</div>
-<span class="font-headline text-xl text-primary">$32.00</span>
-</div>
-<div class="flex items-center justify-between mt-4">
-<div class="flex items-center gap-4 bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/20">
-<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="remove">remove</span></button>
-<span class="font-bold w-4 text-center">2</span>
-<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="add">add</span></button>
-</div>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-xs uppercase tracking-tighter">
-<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span> Remove
-                                </button>
-</div>
-</div>
-</div>
-</div>
-<div class="pt-12 border-t border-outline-variant/10">
-<h2 class="font-headline text-3xl mb-8">Service Method</h2>
-<div class="bg-surface-container-low p-2 rounded-full max-w-md">
-<button class="flex-1 py-3 px-6 rounded-full bg-primary text-on-primary font-bold uppercase text-xs tracking-widest transition-all w-full">
-                            Delivery
-                        </button>
-</div>
-<div class="mt-8 space-y-6">
-<div class="flex items-center justify-between">
-<h3 class="font-headline text-xl">Address Selection</h3>
-<button class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2">
-<span class="material-symbols-outlined text-sm" data-icon="add_location">add_location</span>
-                                Add New
-                            </button>
-</div>
-<div class="relative w-full h-[300px] rounded-xl overflow-hidden grayscale contrast-125 brightness-75 border border-outline-variant/30">
-<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80')] bg-cover bg-center" data-alt="Dark stylized map of city center" data-location="Paris, France" style=""></div>
-<div class="absolute inset-0 bg-background/20"></div>
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-<span class="material-symbols-outlined text-primary text-5xl drop-shadow-2xl" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
-</div>
-<div class="absolute bottom-6 left-6 right-6 bg-surface-container-highest/90 backdrop-blur-md p-4 rounded-lg flex items-center justify-between">
-<div>
-<p class="text-xs uppercase font-bold text-primary tracking-widest mb-1">Active Address</p>
-<p class="text-sm font-semibold">12 Rue de l'Amiral de Coligny, Paris</p>
-</div>
-<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<aside class="lg:col-span-5">
-<div class="sticky top-32 space-y-8">
-<div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
-<h2 class="font-headline text-3xl mb-8">Order Summary</h2>
-<div class="space-y-4 mb-8">
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant font-medium">Subtotal</span>
-<span class="font-headline text-lg">$188.00</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant font-medium">Delivery Fee</span>
-<span class="font-headline text-lg">$15.00</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-on-surface-variant font-medium">Service Charge (5%)</span>
-<span class="font-headline text-lg">$9.40</span>
-</div>
-<div class="pt-4 border-t border-outline-variant/10 flex justify-between items-center">
-<span class="text-on-surface text-xl font-headline">Total</span>
-<span class="text-primary text-3xl font-headline font-bold">$212.40</span>
-</div>
-</div>
-<div class="space-y-4 mb-8">
-<p class="text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-4">Payment Method</p>
-<div class="flex items-center gap-4 p-4 rounded-lg bg-surface-container-highest border border-primary/20">
-<span class="material-symbols-outlined text-primary" data-icon="credit_card">credit_card</span>
-<div class="flex-grow">
-<p class="text-sm font-bold">•••• •••• •••• 8842</p>
-<p class="text-[10px] text-on-surface-variant uppercase">Exp 12/26</p>
-</div>
-<button class="text-xs text-primary font-bold uppercase tracking-tighter">Change</button>
-</div>
-</div>
-<button class="w-full py-6 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold uppercase tracking-[0.2em] text-sm hover:brightness-110 transition-all active:scale-[0.98] shadow-[0_10px_30px_rgba(248,201,39,0.2)]">
-                            Proceed to Payment
-                        </button>
-<p class="text-[10px] text-center text-on-surface-variant mt-6 uppercase tracking-widest leading-relaxed">
-                            By clicking proceed, you agree to Lumière Reserve's <br/>
-<a class="underline underline-offset-4 hover:text-primary" href="#">Terms of Service</a> &amp; <br/>
-<a class="underline underline-offset-4 hover:text-primary" href="#">Privacy Policy</a>
-</p>
-</div>
-<div class="bg-surface-container-lowest/50 rounded-xl p-6 border border-outline-variant/10 flex items-center gap-4">
-<span class="material-symbols-outlined text-primary" data-icon="restaurant">restaurant</span>
-<p class="text-xs text-on-surface-variant italic">
-                            All main courses are prepared by Chef Julian Mercer and his elite culinary brigade. High demand may lead to 45-60 min delivery times.
+<html class="dark" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>Cart &amp; Checkout | Lumière Reserve</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&amp;family=Manrope:wght@200;400;600;800&amp;display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 300,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            .tonal-transition-bottom {
+                background: linear-gradient(
+                    to bottom,
+                    var(--tw-gradient-from),
+                    transparent
+                );
+            }
+            .glassmorphism-border {
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(77, 70, 53, 0.3);
+            }
+            ::-webkit-scrollbar {
+                width: 4px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #111316;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #333538;
+                border-radius: 10px;
+            }
+        </style>
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "surface-container-lowest": "#0c0e11",
+                            "inverse-primary": "#745b00",
+                            "on-secondary-fixed-variant": "#474747",
+                            "on-surface-variant": "#d0c5af",
+                            "on-tertiary-fixed": "#00174b",
+                            "surface-container-high": "#282a2d",
+                            "tertiary-fixed-dim": "#b4c5ff",
+                            "on-primary-container": "#554300",
+                            "on-surface": "#e2e2e6",
+                            "inverse-on-surface": "#2f3034",
+                            "surface-container-highest": "#333538",
+                            tertiary: "#bfcdff",
+                            "on-primary": "#3d2f00",
+                            "on-secondary-fixed": "#1b1c1c",
+                            "surface-container": "#1e2023",
+                            "primary-fixed-dim": "#efc11c",
+                            error: "#ffb4ab",
+                            "on-primary-fixed-variant": "#574400",
+                            "on-background": "#e2e2e6",
+                            "primary-fixed": "#ffe089",
+                            "tertiary-container": "#97b0ff",
+                            "secondary-fixed": "#e4e2e1",
+                            "on-primary-fixed": "#241a00",
+                            background: "#111316",
+                            "surface-variant": "#333538",
+                            "surface-dim": "#111316",
+                            "on-tertiary": "#082b72",
+                            "on-secondary": "#303030",
+                            "surface-container-low": "#1a1c1f",
+                            "tertiary-fixed": "#dbe1ff",
+                            "surface-bright": "#37393d",
+                            "on-tertiary-container": "#254188",
+                            secondary: "#c8c6c5",
+                            "on-error": "#690005",
+                            "error-container": "#93000a",
+                            "outline-variant": "#4d4635",
+                            surface: "#111316",
+                            "on-error-container": "#ffdad6",
+                            "on-secondary-container": "#b6b5b4",
+                            "primary-container": "#d9ae00",
+                            outline: "#99907c",
+                            "secondary-fixed-dim": "#c8c6c5",
+                            "on-tertiary-fixed-variant": "#27438a",
+                            primary: "#f8c927",
+                            "surface-tint": "#efc11c",
+                            "secondary-container": "#474747",
+                            "inverse-surface": "#e2e2e6",
+                        },
+                        fontFamily: {
+                            headline: ["Noto Serif"],
+                            body: ["Manrope"],
+                            label: ["Manrope"],
+                        },
+                        borderRadius: {
+                            DEFAULT: "1rem",
+                            lg: "2rem",
+                            xl: "3rem",
+                            full: "9999px",
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body
+        class="bg-background text-on-surface font-body selection:bg-primary/30"
+    >
+        <nav
+            class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-xl dark:bg-[#111316]/80 flex justify-between items-center px-6 md:px-12 py-6 max-w-[1920px] mx-auto"
+        >
+            <div
+                class="text-2xl font-['Noto_Serif'] italic text-[#f8c927] tracking-tighter"
+            >
+                Lumière Reserve
+            </div>
+            <div
+                class="hidden md:flex items-center gap-8 font-['Noto_Serif'] font-light tracking-wide"
+            >
+                <a
+                    class="text-white/70 hover:text-[#f8c927] transition-colors"
+                    href="#"
+                    >Menu</a
+                >
+                <a
+                    class="text-white/70 hover:text-[#f8c927] transition-colors"
+                    href="#"
+                    >Private Dining</a
+                >
+                <a
+                    class="text-white/70 hover:text-[#f8c927] transition-colors"
+                    href="#"
+                    >Our Story</a
+                >
+            </div>
+            <div class="flex items-center gap-6">
+                <button
+                    class="text-white/70 hover:text-[#f8c927] transition-colors flex items-center gap-1 scale-95 active:scale-90 duration-200"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        data-icon="shopping_bag"
+                        >shopping_bag</span
+                    >
+                    <span
+                        class="text-xs font-bold bg-primary text-on-primary rounded-full w-5 h-5 flex items-center justify-center"
+                        >3</span
+                    >
+                </button>
+                <button
+                    class="text-white/70 hover:text-[#f8c927] transition-colors scale-95 active:scale-90 duration-200"
+                >
+                    <span class="material-symbols-outlined" data-icon="person"
+                        >person</span
+                    >
+                </button>
+            </div>
+        </nav>
+        <main
+            class="pt-32 pb-40 px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen"
+        >
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                <div class="lg:col-span-7 space-y-12">
+                    <header>
+                        <h1
+                            class="font-headline text-5xl md:text-6xl text-on-surface font-light tracking-tight mb-4"
+                        >
+                            Your Selection
+                        </h1>
+                        <p
+                            class="font-body text-on-surface-variant flex items-center gap-2"
+                        >
+                            <span
+                                class="material-symbols-outlined text-primary text-sm"
+                                data-icon="auto_awesome"
+                                >auto_awesome</span
+                            >
+                            Your cart is saved and will persist for your next
+                            visit.
                         </p>
-</div>
-</div>
-</aside>
-</div>
-</main>
-<footer class="bg-[#0c0e11] dark:bg-[#0c0e11] w-full py-20 px-6 md:px-12 border-t border-[#4d4635]/10">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-12 w-full max-w-7xl mx-auto">
-<div class="col-span-1 md:col-span-1">
-<div class="font-['Noto_Serif'] text-[#f8c927] text-lg mb-4 italic">Lumière Reserve</div>
-<p class="font-['Manrope'] text-xs text-white/40 leading-relaxed uppercase tracking-widest">
-                    Exceptional dining experiences, delivered with precision.
+                    </header>
+                    <div class="space-y-8">
+                        <div
+                            class="group flex flex-col md:flex-row gap-6 p-6 rounded-xl transition-all hover:bg-surface-container-low"
+                        >
+                            <div
+                                class="w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0"
+                            >
+                                <img
+                                    alt="Dish image"
+                                    class="w-full h-full object-cover"
+                                    data-alt="Smoked Wagyu Ribeye with rosemary garnish"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi3x-L9FGX8iG2cHJeJlnwXcimb3L1ze39R-vEbo9vFRMlEW2botG8osQkOvXdImwez0DSdzC4XH7wD8Pi1haoTAONLWz1eaWsH-SPz4z4tEK0meQkhoW7rNFehCzAg3_M-eWe4ySYCxqepiPAgsb_yDTS_fWAI2KgRVsShXcR-e8PZstdsMh2LnJFrfkKgQ2rzN-mJ23MLyuCGxeR2TzxY69Pjw8-dD6509z3m2q7vN5rvngAnJbjyuxKHuPkIsHKmmKBDh5Qtyw9"
+                                />
+                            </div>
+                            <div
+                                class="flex-grow flex flex-col justify-between"
+                            >
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3
+                                            class="text-xl font-headline text-on-surface"
+                                        >
+                                            Smoked Wagyu Ribeye
+                                        </h3>
+                                        <p
+                                            class="text-on-surface-variant text-sm mt-1 uppercase tracking-widest font-bold"
+                                        >
+                                            Medium Rare • Truffle Butter
+                                        </p>
+                                    </div>
+                                    <span
+                                        class="font-headline text-xl text-primary"
+                                        >$124.00</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between mt-4"
+                                >
+                                    <div
+                                        class="flex items-center gap-4 bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/20"
+                                    >
+                                        <button
+                                            class="text-on-surface-variant hover:text-primary transition-colors"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined text-lg"
+                                                data-icon="remove"
+                                                >remove</span
+                                            >
+                                        </button>
+                                        <span class="font-bold w-4 text-center"
+                                            >1</span
+                                        >
+                                        <button
+                                            class="text-on-surface-variant hover:text-primary transition-colors"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined text-lg"
+                                                data-icon="add"
+                                                >add</span
+                                            >
+                                        </button>
+                                    </div>
+                                    <button
+                                        class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-xs uppercase tracking-tighter"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="delete"
+                                            >delete</span
+                                        >
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="group flex flex-col md:flex-row gap-6 p-6 rounded-xl transition-all hover:bg-surface-container-low"
+                        >
+                            <div
+                                class="w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0"
+                            >
+                                <img
+                                    alt="Cocktail image"
+                                    class="w-full h-full object-cover"
+                                    data-alt="Artisanal cocktail with crystal clear ice"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJPjL-iR3WpovJKQerrcqzOwcjUnGJRVy4M5Ks3heQfc9AuewxdH61AlDvAVmaDV7lJ03kSiEBfEnYoJa0I4BfZsMuyKg54xQ1OVNrbm7gnwW_qnu2v_B6uNyFHK6ZCu9mfsaiQEXW-A7U6AKnoYDCL71t11lZtwTFjQrz7uiSMaBQFvwux2Xa1eoxLXCW0CzgeQEmphNmXPNuADZKs7RIlel-IdyFbfKteoV6A5K7UwfVzyds0WMwaKIojo_fmgNSDIOQWwjZpiO7"
+                                />
+                            </div>
+                            <div
+                                class="flex-grow flex flex-col justify-between"
+                            >
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3
+                                            class="text-xl font-headline text-on-surface"
+                                        >
+                                            The Midnight Negroni
+                                        </h3>
+                                        <p
+                                            class="text-on-surface-variant text-sm mt-1 uppercase tracking-widest font-bold"
+                                        >
+                                            Aged 12 Years • Gold Flake Garnish
+                                        </p>
+                                    </div>
+                                    <span
+                                        class="font-headline text-xl text-primary"
+                                        >$32.00</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between mt-4"
+                                >
+                                    <div
+                                        class="flex items-center gap-4 bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/20"
+                                    >
+                                        <button
+                                            class="text-on-surface-variant hover:text-primary transition-colors"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined text-lg"
+                                                data-icon="remove"
+                                                >remove</span
+                                            >
+                                        </button>
+                                        <span class="font-bold w-4 text-center"
+                                            >2</span
+                                        >
+                                        <button
+                                            class="text-on-surface-variant hover:text-primary transition-colors"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined text-lg"
+                                                data-icon="add"
+                                                >add</span
+                                            >
+                                        </button>
+                                    </div>
+                                    <button
+                                        class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-xs uppercase tracking-tighter"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="delete"
+                                            >delete</span
+                                        >
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-12 border-t border-outline-variant/10">
+                        <h2 class="font-headline text-3xl mb-8">
+                            Service Method
+                        </h2>
+                        <div
+                            class="bg-surface-container-low p-2 rounded-full max-w-md"
+                        >
+                            <button
+                                class="flex-1 py-3 px-6 rounded-full bg-primary text-on-primary font-bold uppercase text-xs tracking-widest transition-all w-full"
+                            >
+                                Delivery
+                            </button>
+                        </div>
+                        <div class="mt-8 space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-headline text-xl">
+                                    Address Selection
+                                </h3>
+                                <button
+                                    class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-sm"
+                                        data-icon="add_location"
+                                        >add_location</span
+                                    >
+                                    Add New
+                                </button>
+                            </div>
+                            <div
+                                class="relative w-full h-[300px] rounded-xl overflow-hidden grayscale contrast-125 brightness-75 border border-outline-variant/30"
+                            >
+                                <div
+                                    class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80')] bg-cover bg-center"
+                                    data-alt="Dark stylized map of city center"
+                                    data-location="Paris, France"
+                                    style=""
+                                ></div>
+                                <div
+                                    class="absolute inset-0 bg-background/20"
+                                ></div>
+                                <div
+                                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-primary text-5xl drop-shadow-2xl"
+                                        data-icon="location_on"
+                                        style="
+                                            font-variation-settings: &quot;FILL&quot;
+                                                1;
+                                        "
+                                        >location_on</span
+                                    >
+                                </div>
+                                <div
+                                    class="absolute bottom-6 left-6 right-6 bg-surface-container-highest/90 backdrop-blur-md p-4 rounded-lg flex items-center justify-between"
+                                >
+                                    <div>
+                                        <p
+                                            class="text-xs uppercase font-bold text-primary tracking-widest mb-1"
+                                        >
+                                            Active Address
+                                        </p>
+                                        <p class="text-sm font-semibold">
+                                            12 Rue de l'Amiral de Coligny, Paris
+                                        </p>
+                                    </div>
+                                    <span
+                                        class="material-symbols-outlined text-primary"
+                                        data-icon="check_circle"
+                                        style="
+                                            font-variation-settings: &quot;FILL&quot;
+                                                1;
+                                        "
+                                        >check_circle</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="lg:col-span-5">
+                    <div class="sticky top-32 space-y-8">
+                        <div
+                            class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10"
+                        >
+                            <h2 class="font-headline text-3xl mb-8">
+                                Order Summary
+                            </h2>
+                            <div class="space-y-4 mb-8">
+                                <div class="flex justify-between items-center">
+                                    <span
+                                        class="text-on-surface-variant font-medium"
+                                        >Subtotal</span
+                                    >
+                                    <span class="font-headline text-lg"
+                                        >$188.00</span
+                                    >
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span
+                                        class="text-on-surface-variant font-medium"
+                                        >Delivery Fee</span
+                                    >
+                                    <span class="font-headline text-lg"
+                                        >$15.00</span
+                                    >
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span
+                                        class="text-on-surface-variant font-medium"
+                                        >Service Charge (5%)</span
+                                    >
+                                    <span class="font-headline text-lg"
+                                        >$9.40</span
+                                    >
+                                </div>
+                                <div
+                                    class="pt-4 border-t border-outline-variant/10 flex justify-between items-center"
+                                >
+                                    <span
+                                        class="text-on-surface text-xl font-headline"
+                                        >Total</span
+                                    >
+                                    <span
+                                        class="text-primary text-3xl font-headline font-bold"
+                                        >$212.40</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="space-y-4 mb-8">
+                                <p
+                                    class="text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-4"
+                                >
+                                    Payment Method
+                                </p>
+                                <div
+                                    class="flex items-center gap-4 p-4 rounded-lg bg-surface-container-highest border border-primary/20"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-primary"
+                                        data-icon="credit_card"
+                                        >credit_card</span
+                                    >
+                                    <div class="flex-grow">
+                                        <p class="text-sm font-bold">
+                                            •••• •••• •••• 8842
+                                        </p>
+                                        <p
+                                            class="text-[10px] text-on-surface-variant uppercase"
+                                        >
+                                            Exp 12/26
+                                        </p>
+                                    </div>
+                                    <button
+                                        class="text-xs text-primary font-bold uppercase tracking-tighter"
+                                    >
+                                        Change
+                                    </button>
+                                </div>
+                            </div>
+                            <button
+                                class="w-full py-6 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold uppercase tracking-[0.2em] text-sm hover:brightness-110 transition-all active:scale-[0.98] shadow-[0_10px_30px_rgba(248,201,39,0.2)]"
+                            >
+                                Proceed to Payment
+                            </button>
+                            <p
+                                class="text-[10px] text-center text-on-surface-variant mt-6 uppercase tracking-widest leading-relaxed"
+                            >
+                                By clicking proceed, you agree to Lumière
+                                Reserve's <br />
+                                <a
+                                    class="underline underline-offset-4 hover:text-primary"
+                                    href="#"
+                                    >Terms of Service</a
+                                >
+                                &amp; <br />
+                                <a
+                                    class="underline underline-offset-4 hover:text-primary"
+                                    href="#"
+                                    >Privacy Policy</a
+                                >
+                            </p>
+                        </div>
+                        <div
+                            class="bg-surface-container-lowest/50 rounded-xl p-6 border border-outline-variant/10 flex items-center gap-4"
+                        >
+                            <span
+                                class="material-symbols-outlined text-primary"
+                                data-icon="restaurant"
+                                >restaurant</span
+                            >
+                            <p class="text-xs text-on-surface-variant italic">
+                                All main courses are prepared by Chef Julian
+                                Mercer and his elite culinary brigade. High
+                                demand may lead to 45-60 min delivery times.
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+        <footer
+            class="bg-[#0c0e11] dark:bg-[#0c0e11] w-full py-20 px-6 md:px-12 border-t border-[#4d4635]/10"
+        >
+            <div
+                class="grid grid-cols-1 md:grid-cols-4 gap-12 w-full max-w-7xl mx-auto"
+            >
+                <div class="col-span-1 md:col-span-1">
+                    <div
+                        class="font-['Noto_Serif'] text-[#f8c927] text-lg mb-4 italic"
+                    >
+                        Lumière Reserve
+                    </div>
+                    <p
+                        class="font-['Manrope'] text-xs text-white/40 leading-relaxed uppercase tracking-widest"
+                    >
+                        Exceptional dining experiences, delivered with
+                        precision.
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <h4
+                        class="text-[#f8c927] text-xs font-bold uppercase tracking-widest"
+                    >
+                        Explore
+                    </h4>
+                    <div
+                        class="flex flex-col gap-2 font-['Manrope'] text-xs text-white/40"
+                    >
+                        <a class="hover:text-white transition-colors" href="#"
+                            >Menu</a
+                        >
+                        <a class="hover:text-white transition-colors" href="#"
+                            >Gift Cards</a
+                        >
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h4
+                        class="text-[#f8c927] text-xs font-bold uppercase tracking-widest"
+                    >
+                        Legal
+                    </h4>
+                    <div
+                        class="flex flex-col gap-2 font-['Manrope'] text-xs text-white/40"
+                    >
+                        <a class="hover:text-white transition-colors" href="#"
+                            >Privacy</a
+                        >
+                        <a class="hover:text-white transition-colors" href="#"
+                            >Terms</a
+                        >
+                        <a class="hover:text-white transition-colors" href="#"
+                            >Contact</a
+                        >
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h4
+                        class="text-[#f8c927] text-xs font-bold uppercase tracking-widest"
+                    >
+                        Contact
+                    </h4>
+                    <p class="font-['Manrope'] text-xs text-white/40">
+                        12 Rue de l'Amiral de Coligny<br />
+                        75001 Paris, France<br />
+                        +33 1 42 72 00 00
+                    </p>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-white/5 text-center">
+                <p
+                    class="font-['Manrope'] text-[10px] text-white/20 uppercase tracking-[0.3em]"
+                >
+                    © 2024 Lumière Reserve. All Rights Reserved.
                 </p>
-</div>
-<div class="space-y-4">
-<h4 class="text-[#f8c927] text-xs font-bold uppercase tracking-widest">Explore</h4>
-<div class="flex flex-col gap-2 font-['Manrope'] text-xs text-white/40">
-<a class="hover:text-white transition-colors" href="#">Menu</a>
-<a class="hover:text-white transition-colors" href="#">Gift Cards</a>
-</div>
-</div>
-<div class="space-y-4">
-<h4 class="text-[#f8c927] text-xs font-bold uppercase tracking-widest">Legal</h4>
-<div class="flex flex-col gap-2 font-['Manrope'] text-xs text-white/40">
-<a class="hover:text-white transition-colors" href="#">Privacy</a>
-<a class="hover:text-white transition-colors" href="#">Terms</a>
-<a class="hover:text-white transition-colors" href="#">Contact</a>
-</div>
-</div>
-<div class="space-y-4">
-<h4 class="text-[#f8c927] text-xs font-bold uppercase tracking-widest">Contact</h4>
-<p class="font-['Manrope'] text-xs text-white/40">
-                    12 Rue de l'Amiral de Coligny<br/>
-                    75001 Paris, France<br/>
-                    +33 1 42 72 00 00
-                </p>
-</div>
-</div>
-<div class="mt-20 pt-8 border-t border-white/5 text-center">
-<p class="font-['Manrope'] text-[10px] text-white/20 uppercase tracking-[0.3em]">
-                © 2024 Lumière Reserve. All Rights Reserved.
-            </p>
-</div>
-</footer>
-<nav class="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 bg-[#111316]/90 backdrop-blur-2xl">
-<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-[#4d4635]/30 flex justify-around items-center py-4 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-background/50 backdrop-blur-xl">
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-[#f8c927]" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-[#f8c927]" href="#">
-<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
-<span class="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Favs</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#f8c927] scale-110" href="#">
-<span class="material-symbols-outlined" data-icon="shopping_cart" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
-<span class="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Cart</span>
-</a>
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-[#f8c927]" href="#">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Profile</span>
-</a>
-</div>
-</nav>
-</body></html>
+            </div>
+        </footer>
+        <nav
+            class="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 bg-[#111316]/90 backdrop-blur-2xl"
+        >
+            <div
+                class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-[#4d4635]/30 flex justify-around items-center py-4 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-background/50 backdrop-blur-xl"
+            >
+                <a
+                    class="flex flex-col items-center justify-center text-white/40 hover:text-[#f8c927]"
+                    href="#"
+                >
+                    <span class="material-symbols-outlined" data-icon="home"
+                        >home</span
+                    >
+                    <span
+                        class="font-['Manrope'] text-[8px] font-bold uppercase mt-1"
+                        >Home</span
+                    >
+                </a>
+                <a
+                    class="flex flex-col items-center justify-center text-white/40 hover:text-[#f8c927]"
+                    href="#"
+                >
+                    <span class="material-symbols-outlined" data-icon="favorite"
+                        >favorite</span
+                    >
+                    <span
+                        class="font-['Manrope'] text-[8px] font-bold uppercase mt-1"
+                        >Favs</span
+                    >
+                </a>
+                <a
+                    class="flex flex-col items-center justify-center text-[#f8c927] scale-110"
+                    href="#"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        data-icon="shopping_cart"
+                        style="font-variation-settings: &quot;FILL&quot; 1"
+                        >shopping_cart</span
+                    >
+                    <span
+                        class="font-['Manrope'] text-[8px] font-bold uppercase mt-1"
+                        >Cart</span
+                    >
+                </a>
+                <a
+                    class="flex flex-col items-center justify-center text-white/40 hover:text-[#f8c927]"
+                    href="#"
+                >
+                    <span class="material-symbols-outlined" data-icon="person"
+                        >person</span
+                    >
+                    <span
+                        class="font-['Manrope'] text-[8px] font-bold uppercase mt-1"
+                        >Profile</span
+                    >
+                </a>
+            </div>
+        </nav>
+    </body>
+</html>

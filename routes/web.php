@@ -9,11 +9,13 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\PaymentController;
 
 Route::resource('products', ProductController::class);
 // routes/web.php
 
-
+Route::post('/pay', [PaymentController::class, 'pay'])->name('payment.pay');
+Route::get('/payment/callback/{reference}', [PaymentController::class, 'callback'])->name('payment.callback');
 Route::get('auth/google', [SocialiteController::class, 'googleLogin'])
     ->name('auth.google');
 

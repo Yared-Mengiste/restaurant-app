@@ -124,4 +124,25 @@ class CartService
             'total' => $subtotal + $deliveryFee + $serviceCharge,
         ];
     }
+    public function buildInvoice($user)
+    {
+        $cart = $this->getCartWithItems($user);
+
+        if (!$cart || $cart->items->isEmpty()) {
+            return [];
+        }
+
+        return $cart->items->map(function ($item) {
+            $name = $item->product->name;
+
+            if ($item->variant) {
+                $name .= " ({$item->variant->name})";
+            }
+
+            return [
+                'key' => $name,
+                'value' => $item->quantity . ' pcs'
+            ];
+        })->toArray();
+    }
 }

@@ -19,6 +19,14 @@ Route::get('/payment/callback/{reference}', [PaymentController::class, 'callback
 Route::get('auth/google', [SocialiteController::class, 'googleLogin'])
     ->name('auth.google');
 
+Route::get('/order/success/{order}', function ($orderId) {
+    return inertia('Order/OrderSuccess', ['orderId' => $orderId]);
+})->name('order.success');
+
+Route::get('/payment/failed', function () {
+    return inertia('Order/PaymentFailed');
+})->name('payment.failed');
+
 Route::get('auth/google-callback', [SocialiteController::class, 'googleAuthentication'])
     ->name('auth.google-callback');
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\ChapaService;
+use App\Services\OrderService;
 
 class PaymentController extends Controller
 {
@@ -46,10 +47,11 @@ class PaymentController extends Controller
 
         if (($data['status'] ?? '') === 'success') {
 
-            // 💰 Payment success – save order, update status, clear cart
-            return "Payment Successful";
+            $order = app(OrderService::class)->createOrderFromCart(auth()->user(), $reference);
+
+            return redirect()->route('order.success', ['order' => $order->id]);
         }
 
-        return "Payment Failed";
+        return redirect()->route('payment.failed');
     }
 }

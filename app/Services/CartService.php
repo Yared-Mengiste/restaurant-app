@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Setting;
+use function Laravel\Prompts\number;
 
 class CartService
 {
@@ -104,21 +106,28 @@ class CartService
             return [
                 'count' => 0,
                 'subtotal' => 0,
+                'delivery_type' => 'pickup',
                 'delivery_fee' => 0,
                 'service_charge' => 0,
                 'total' => 0,
             ];
         }
 
+        // subtotal from product items
         $subtotal = $this->calculateSubtotal($cart);
 
-        // 🔥 Business logic (customizable)
-        $deliveryFee = $subtotal > 0 ? 15 : 0;
+        // delivery fee depends on delivery_type
+        $deliveryFee = $cart->delivery_type === 'delivery'
+            ? (float)(Setting::where('key', 'base_delivery_fee')->value('value'))
+            : 0;
+
+        // example: service charge logic
         $serviceCharge = $subtotal * 0.05;
 
         return [
             'count' => $cart->items->sum('quantity'),
             'subtotal' => $subtotal,
+            'delivery_type' => $cart->delivery_type,
             'delivery_fee' => $deliveryFee,
             'service_charge' => $serviceCharge,
             'total' => $subtotal + $deliveryFee + $serviceCharge,

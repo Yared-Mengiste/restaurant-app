@@ -73,6 +73,18 @@ class CartController extends Controller
             $request->product_variant_id // ✅ FIXED
         );
 
-        return back()->with('success', 'Item removed');
+
+    }
+    public function updateDeliveryType(Request $request)
+    {
+        $user = $request->user();
+        $cart = $this->cartService->getCart($user);
+
+        $cart->delivery_type = $request->type;
+
+
+        $cart->save();
+
+        return back()->with('success', 'Updated delivery type');
     }
 }

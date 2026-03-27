@@ -48,7 +48,7 @@ class PaymentController extends Controller
             'email' => $user->email,
             'tx_ref' => $reference,
             'callback_url' => route('payment.callback', $reference),
-            'return_url' => route('cart.index'), // Where user goes after paying
+            'return_url' => route('payment.callback', $reference), // Where user goes after paying
             'first_name' => $user->name,
             'last_name' => '', // Split name if necessary
             'customization' => [
@@ -60,13 +60,24 @@ class PaymentController extends Controller
             ]
         ];
 
+//        $response = $this->chapa->initPayment($data);
+//
+//        if (($response['status'] ?? '') !== 'success') {
+//            return back()->with('error', 'Payment initialization failed');
+//        }
+//
+//        return redirect()->away($response['data']['checkout_url']);
         $response = $this->chapa->initPayment($data);
 
         if (($response['status'] ?? '') !== 'success') {
-            return back()->with('error', 'Payment initialization failed');
+            // Return JSON error so React can show an alert
+            return response()->json(['error' => 'Payment initialization failed'], 422);
         }
 
-        return redirect()->away($response['data']['checkout_url']);
+        // RETURN JSON instead of redirect()->away()
+        return response()->json([
+            'checkout_url' => $response['data']['checkout_url']
+        ]);
     }
 
     // ... callback method remains the same

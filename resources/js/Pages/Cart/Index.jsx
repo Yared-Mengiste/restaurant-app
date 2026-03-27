@@ -1,6 +1,7 @@
 import React from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import axios from 'axios'
 
 export default function CartIndex({ cart, summary }) {
     const { delete: destroy } = useForm();
@@ -20,17 +21,34 @@ export default function CartIndex({ cart, summary }) {
             product_variant_id: variantId
         }));
     };
-    const handleCheckout = () => {
-        // We use router.post to hit the PaymentController@pay method
-        router.post(route('payment.pay'), {}, {
-            onBefore: () => {
-                // Optional: You could add a loading state here
-                console.log("Initializing payment...");
-            },
-            onError: (errors) => {
-                console.error("Payment failed to initialize", errors);
+    // const handleCheckout = () => {
+    //     // We use router.post to hit the PaymentController@pay method
+    //     router.post(route('payment.pay'), {}, {
+    //         onBefore: () => {
+    //             // Optional: You could add a loading state here
+    //             console.log("Initializing payment...");
+    //         },
+    //         onError: (errors) => {
+    //             console.error("Payment failed to initialize", errors);
+    //         }
+    //     });
+    // };
+    const handleCheckout = async () => {
+        console.log("Initializing payment...");
+
+        try {
+            // 1. Manually hit the route using axios instead of router.post
+            const response = await axios.post(route('payment.pay'));
+
+            // 2. Break out of the SPA and go to Chapa
+            if (response.data.checkout_url) {
+                window.location.href = response.data.checkout_url;
             }
-        });
+        } catch (error) {
+            // 3. Handle failures (like empty cart or API issues)
+            console.error("Payment failed:", error);
+            alert(error.response?.data?.error || "Failed to start payment.");
+        }
     };
 
     // --- NEW FUNCTIONALITY ---

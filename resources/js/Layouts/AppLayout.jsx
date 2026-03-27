@@ -1,5 +1,6 @@
 import { Link, usePage, router } from '@inertiajs/react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
+import { Menu, Transition } from '@headlessui/react';
 
 export default function AppLayout({ children }) {
     const { auth, filters } = usePage().props;
@@ -27,7 +28,7 @@ export default function AppLayout({ children }) {
     const protectedLink = (e) => {
         if (!user) {
             e.preventDefault();
-            router.get(route('register'));
+            router.get(route('login'));
         }
     };
 
@@ -43,6 +44,7 @@ export default function AppLayout({ children }) {
                     </div>
 
                     <div className="flex items-center gap-3 md:gap-6">
+                        {/* Desktop Search */}
                         <div className="relative group hidden md:block">
                             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
                             <input
@@ -58,13 +60,71 @@ export default function AppLayout({ children }) {
                             {showMobileSearch ? 'close' : 'search'}
                         </button>
 
+                        {/* DESKTOP NAV ITEMS */}
                         <div className="hidden md:flex items-center gap-5 text-on-surface-variant border-l border-outline-variant/20 pl-6">
                             <Link href="/favorites" onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">favorite</Link>
                             <div className="relative">
                                 <Link href="/cart" onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">shopping_bag</Link>
                                 {user && <span className="absolute -top-1 -right-1 bg-primary text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>}
                             </div>
-                            <Link href={user ? route('profile.edit') : route('register')} className="material-symbols-outlined hover:text-primary transition-colors">person</Link>
+
+                            {user ? (
+                                <Menu as="div" className="relative">
+                                    <Menu.Button className="flex items-center material-symbols-outlined hover:text-primary transition-colors outline-none">
+                                        account_circle
+                                    </Menu.Button>
+                                    <Transition
+                                        as={Fragment}
+                                        enter="transition ease-out duration-100"
+                                        enterFrom="transform opacity-0 scale-95"
+                                        enterTo="transform opacity-100 scale-100"
+                                        leave="transition ease-in duration-75"
+                                        leaveFrom="transform opacity-100 scale-100"
+                                        leaveTo="transform opacity-0 scale-95"
+                                    >
+                                        <Menu.Items className="absolute right-0 mt-4 w-56 origin-top-right rounded-2xl bg-surface-container-low border border-outline-variant/10 shadow-2xl py-2 focus:outline-none z-[60]">
+                                            <div className="px-4 py-3 border-b border-outline-variant/10 mb-2">
+                                                <p className="text-xs text-primary font-bold uppercase tracking-widest">Welcome</p>
+                                                <p className="text-sm font-headline text-on-surface truncate">{user.name}</p>
+                                            </div>
+
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <Link href={route('profile.edit')} className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
+                                                        <span className="material-symbols-outlined text-lg text-primary">person</span> Profile
+                                                    </Link>
+                                                )}
+                                            </Menu.Item>
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <Link href="/orders" className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
+                                                        <span className="material-symbols-outlined text-lg text-primary">history</span> Order History
+                                                    </Link>
+                                                )}
+                                            </Menu.Item>
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <Link href="/address" className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
+                                                        <span className="material-symbols-outlined text-lg text-primary">location_on</span> Addresses
+                                                    </Link>
+                                                )}
+                                            </Menu.Item>
+
+                                            <div className="mt-2 pt-2 border-t border-outline-variant/10">
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <Link href={route('logout')} method="post" as="button" className="w-full flex items-center gap-3 px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors">
+                                                            <span className="material-symbols-outlined text-lg">logout</span> Logout
+                                                        </Link>
+                                                    )}
+                                                </Menu.Item>
+                                            </div>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
+                            ) : (
+                                <Link href={route('login')} className="material-symbols-outlined hover:text-primary transition-colors">person</Link>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -87,7 +147,6 @@ export default function AppLayout({ children }) {
                 {children}
             </main>
 
-            {/* FOOTER: Hidden on mobile */}
             <footer className="hidden lg:block w-full py-20 px-6 md:px-12 border-t border-outline-variant/10 bg-surface-container-lowest mt-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 w-full max-w-7xl mx-auto">
                     <div>
@@ -104,47 +163,77 @@ export default function AppLayout({ children }) {
                 </div>
             </footer>
 
-            {/* REFINED FLOATING MOBILE NAVIGATION */}
-            <nav className="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6">
-                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-[#4d4635]/30 flex justify-around items-center py-4 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-background/80 backdrop-blur-xl">
-                    <Link
-                        href={route('home')}
-                        className={`flex flex-col items-center justify-center transition-all ${route().current('home') ? 'text-[#f8c927]' : 'text-white/40'}`}
-                    >
+            {/* MOBILE NAVIGATION WITH DROPDOWN */}
+            <nav className="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 pointer-events-none">
+                <div className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-[#4d4635]/30 flex justify-around items-center py-4 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-background/80 backdrop-blur-xl">
+                    <Link href={route('home')} className={`flex flex-col items-center justify-center transition-all ${route().current('home') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">home</span>
                         <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Home</span>
                     </Link>
 
-                    <Link
-                        href="/favorites"
-                        onClick={protectedLink}
-                        className={`flex flex-col items-center justify-center transition-all ${route().current('favorites') ? 'text-[#f8c927]' : 'text-white/40'}`}
-                    >
+                    <Link href="/favorites" onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all ${route().current('favorites') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">favorite</span>
                         <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Favs</span>
                     </Link>
 
-                    <Link
-                        href="/cart"
-                        onClick={protectedLink}
-                        className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart') ? 'text-[#f8c927]' : 'text-white/40'}`}
-                    >
-                        <span
-                            className="material-symbols-outlined"
-                            style={{ fontVariationSettings: route().current('cart') ? "'FILL' 1" : "'FILL' 0" }}
-                        >
-                            shopping_cart
-                        </span>
+                    <Link href="/cart" onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                        <span className="material-symbols-outlined" style={{ fontVariationSettings: route().current('cart') ? "'FILL' 1" : "'FILL' 0" }}>shopping_cart</span>
                         <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Cart</span>
                     </Link>
 
-                    <Link
-                        href={user ? route('profile.edit') : route('register')}
-                        className={`flex flex-col items-center justify-center transition-all ${route().current('profile.edit') || route().current('register') ? 'text-[#f8c927]' : 'text-white/40'}`}
-                    >
-                        <span className="material-symbols-outlined">person</span>
-                        <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Profile</span>
-                    </Link>
+                    {/* Mobile Profile Dropdown */}
+                    <Menu as="div" className="flex flex-col items-center justify-center">
+                        {user ? (
+                            <>
+                                <Menu.Button className={`flex flex-col items-center justify-center transition-all ${route().current('profile.edit') ? 'text-[#f8c927]' : 'text-white/40'} outline-none`}>
+                                    <span className="material-symbols-outlined">person</span>
+                                    <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Account</span>
+                                </Menu.Button>
+
+                                <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-200"
+                                    enterFrom="transform opacity-0 translate-y-4 scale-95"
+                                    enterTo="transform opacity-100 translate-y-0 scale-100"
+                                    leave="transition ease-in duration-150"
+                                    leaveFrom="transform opacity-100 translate-y-0 scale-100"
+                                    leaveTo="transform opacity-0 translate-y-4 scale-95"
+                                >
+                                    <Menu.Items className="fixed bottom-24 right-6 w-56 rounded-3xl bg-background/95 backdrop-blur-2xl border border-[#4d4635]/30 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] py-3 z-[60] flex flex-col overflow-hidden">
+                                        <div className="px-5 py-2 border-b border-white/5 mb-2 text-center">
+                                            <p className="text-[10px] text-[#f8c927] font-bold uppercase tracking-widest">{user.name}</p>
+                                        </div>
+
+                                        <Menu.Item>
+                                            <Link href={route('profile.edit')} className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
+                                                <span className="material-symbols-outlined text-[#f8c927]">settings</span> Profile
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Link href="/orders" className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
+                                                <span className="material-symbols-outlined text-[#f8c927]">receipt_long</span> Orders
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Link href="/address" className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
+                                                <span className="material-symbols-outlined text-[#f8c927]">map</span> Address
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Link href={route('logout')} method="post" as="button" className="flex items-center gap-4 px-5 py-3 text-sm text-error border-t border-white/5 mt-2 active:bg-error/10">
+                                                <span className="material-symbols-outlined">logout</span> Logout
+                                            </Link>
+                                        </Menu.Item>
+                                    </Menu.Items>
+                                </Transition>
+                            </>
+                        ) : (
+                            <Link href={route('login')} className="flex flex-col items-center justify-center text-white/40">
+                                <span className="material-symbols-outlined">person</span>
+                                <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Profile</span>
+                            </Link>
+                        )}
+                    </Menu>
                 </div>
             </nav>
         </div>

@@ -6,7 +6,7 @@ export default function FeaturedProducts({ products = [], auth }) {
     if (products.length === 0) return null;
 
     return (
-        <section className="py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
+        <section className="py-12 px-6 md:px-12 max-w-[1920px] mx-auto overflow-hidden">
             {/* SECTION HEADER */}
             <div className="flex justify-between items-center mb-10">
                 <div className="flex items-center gap-3">
@@ -23,17 +23,22 @@ export default function FeaturedProducts({ products = [], auth }) {
                 </Link>
             </div>
 
-            {/* PRODUCT GRID */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+            {/* RESPONSIVE CONTAINER: Scroll on mobile, Grid on desktop */}
+            <div className="
+                flex overflow-x-auto no-scrollbar gap-6 pb-8 -mx-6 px-6
+                md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-x-8 md:gap-y-12 md:overflow-visible
+                scroll-smooth
+            ">
                 {products.slice(0, 10).map((product) => (
-                    /* We pass the 'product' and 'auth' props directly
-                       into our existing ProductCard component.
+                    /* MOBILE TWEAK: min-w-[280px] ensures the cards
+                       don't shrink to zero width inside the flexbox.
                     */
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        auth={auth}
-                    />
+                    <div key={product.id} className="min-w-[280px] sm:min-w-[320px] md:min-w-0">
+                        <ProductCard
+                            product={product}
+                            auth={auth}
+                        />
+                    </div>
                 ))}
             </div>
         </section>

@@ -10,6 +10,17 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\DashboardController;
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // The Main Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Placeholder routes for the Sidebar links
+    Route::get('/orders', [DashboardController::class, 'index'])->name('orders');
+    Route::get('/products', function() { return inertia('Admin/Products'); })->name('products');
+    Route::get('/categories', function() { return inertia('Admin/Categories'); })->name('categories');
+});
 
 Route::resource('products', ProductController::class);
 // routes/web.php

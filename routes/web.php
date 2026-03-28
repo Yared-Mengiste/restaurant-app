@@ -13,13 +13,33 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    // The Main Dashboard
+    // Dashboard & Orders
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Placeholder routes for the Sidebar links
     Route::get('/orders', [DashboardController::class, 'index'])->name('orders');
     Route::patch('/orders/{order}', [DashboardController::class, 'updateStatus'])->name('orders.update');
-    Route::get('/products', function() { return inertia('Admin/Products'); })->name('products');
+
+    // Products Management
+    Route::get('/products', [ProductController::class, 'index'])->name('products');
+
+    // 1. Add Create & Store Routes
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+
+    // 2. Add Edit & Update Routes
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+
+    /** * NOTE: We use POST for update because of the Multipart/Form-Data limitation
+     * in PHP/Laravel where PATCH/PUT cannot parse file uploads.
+     * Your React form handles this by adding _method: 'PATCH' to the data.
+     */
+    Route::post('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+
+    Route::patch('/products/{product}/toggle-availability', [ProductController::class, 'toggleAvailability'])->name('products.toggle');
+
+    // 3. Add Delete Route (if supported by your service) [cite: 49]
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+    // Categories
     Route::get('/categories', function() { return inertia('Admin/Categories'); })->name('categories');
 });
 

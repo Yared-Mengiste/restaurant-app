@@ -83,7 +83,7 @@ export default function AdminLayout({ children }) {
                     <ul className="space-y-2">
                         <li>
                             <Link
-                                href="/admin/orders"
+                                href={route('admin.dashboard')}
                                 className={`flex items-center gap-4 px-8 py-4 mr-4 font-['Manrope'] text-sm uppercase tracking-[0.1em] transition-all rounded-r-full
                                 ${route().current('admin.orders') ? 'bg-[#333538] text-[#f8c927]' : 'text-white/50 hover:text-white hover:bg-[#333538]/50'}`}
                             >
@@ -92,7 +92,7 @@ export default function AdminLayout({ children }) {
                         </li>
                         <li>
                             <Link
-                                href="/admin/products"
+                                href={route('admin.products')}
                                 className={`flex items-center gap-4 px-8 py-4 mr-4 font-['Manrope'] text-sm uppercase tracking-[0.1em] transition-all rounded-r-full
                                 ${route().current('admin.products') ? 'bg-[#333538] text-[#f8c927]' : 'text-white/50 hover:text-white hover:bg-[#333538]/50'}`}
                             >
@@ -101,7 +101,7 @@ export default function AdminLayout({ children }) {
                         </li>
                         <li>
                             <Link
-                                href="/admin/categories"
+                                href={route('admin.categories')}
                                 className={`flex items-center gap-4 px-8 py-4 mr-4 font-['Manrope'] text-sm uppercase tracking-[0.1em] transition-all rounded-r-full
                                 ${route().current('admin.categories') ? 'bg-[#333538] text-[#f8c927]' : 'text-white/50 hover:text-white hover:bg-[#333538]/50'}`}
                             >
@@ -110,7 +110,7 @@ export default function AdminLayout({ children }) {
                         </li>
                         <li>
                             <Link
-                                href="/admin/settings"
+                                href={route('admin.dashboard')}
                                 className={`flex items-center gap-4 px-8 py-4 mr-4 font-['Manrope'] text-sm uppercase tracking-[0.1em] transition-all rounded-r-full
                                 ${route().current('admin.settings') ? 'bg-[#333538] text-[#f8c927]' : 'text-white/50 hover:text-white hover:bg-[#333538]/50'}`}
                             >
@@ -131,15 +131,15 @@ export default function AdminLayout({ children }) {
             {/* MOBILE BOTTOM NAV (Admin Version)  */}
             <nav className="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 pointer-events-none">
                 <div className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-[#4d4635]/30 glassmorphism-border flex justify-around py-4 bg-background/80 backdrop-blur-xl">
-                    <Link href="/admin/orders" className={`flex flex-col items-center justify-center transition-all ${route().current('admin.orders') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                    <Link href={route('admin.dashboard')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.orders') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">restaurant</span>
                         <span className="text-[10px] uppercase font-bold mt-1">Orders</span>
                     </Link>
-                    <Link href="/admin/products" className={`flex flex-col items-center justify-center transition-all ${route().current('admin.products') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                    <Link href={route('admin.products')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.products') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">flatware</span>
                         <span className="text-[10px] uppercase font-bold mt-1">Items</span>
                     </Link>
-                    <Link href="/admin/categories" className={`flex flex-col items-center justify-center transition-all ${route().current('admin.categories') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                    <Link href={route('admin.categories')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.categories') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">category</span>
                         <span className="text-[10px] uppercase font-bold mt-1">Cats</span>
                     </Link>

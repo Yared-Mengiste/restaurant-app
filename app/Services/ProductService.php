@@ -35,50 +35,40 @@ class ProductService
     public function create($data)
     {
         return DB::transaction(function () use ($data) {
+            // Create product without the 'variants' key to avoid SQL errors
+            $product = Product::create(collect($data)->except('variants')->toArray());
 
-            $product = Product::create([
-                'category_id' => $data['category_id'],
-                'name' => $data['name'],
-                'description' => $data['description'] ?? null,
-                'price' => $data['price'],
-                'has_variants' => $data['has_variants'] ?? false,
-                'is_featured' => $data['is_featured'] ?? false,
-                'is_available' => $data['is_available'] ?? true,
-                'image' => $data['image'] ?? null,
-            ]);
+        // Handle variants only if the product is set to have them
+        if (($data['has_variants'] ?? false) && !empty($data['variants'])) {
+            $product->variants()->createMany($data['variants']);
+        }
 
-            // Handle variants
-            if (!empty($data['variants'])) {
-                foreach ($data['variants'] as $variant) {
-                    $product->variants()->create($variant);
-                }
-            }
-
-            return $product->load('variants');
-        });
+        return $product->load('variants');
+    });
     }
 
     public function update($id, $data)
     {
         return DB::transaction(function () use ($id, $data) {
-
             $product = Product::findOrFail($id);
 
-            $product->update($data);
+            // Update product attributes, excluding variants to prevent 'Column not found' errors
+            $product->update(collect($data)->except('variants')->toArray());
 
-            // Replace variants if provided
-            if (isset($data['variants'])) {
-                $product->variants()->delete();
+        // Sync variants: only if variants are provided in the request
+        if (isset($data['variants'])) {
+            // Standard 'Delete and Re-create' strategy
+            $product->variants()->delete();
 
-                foreach ($data['variants'] as $variant) {
-                    $product->variants()->create($variant);
-                }
+            // Only re-create if the product still supports variants
+            if ($data['has_variants'] ?? $product->has_variants) {
+                $product->variants()->createMany($data['variants']);
             }
+        }
 
-            return $product->load('variants');
-        });
+        return $product->load('variants');
+    });
     }
-
     public function delete($id)
     {
         $product = Product::findOrFail($id);

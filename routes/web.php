@@ -18,6 +18,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Placeholder routes for the Sidebar links
     Route::get('/orders', [DashboardController::class, 'index'])->name('orders');
+    Route::patch('/orders/{order}', [DashboardController::class, 'updateStatus'])->name('orders.update');
     Route::get('/products', function() { return inertia('Admin/Products'); })->name('products');
     Route::get('/categories', function() { return inertia('Admin/Categories'); })->name('categories');
 });

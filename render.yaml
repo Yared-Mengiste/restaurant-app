@@ -35,7 +35,7 @@ services:
         sync: false
       - key: GOOGLE_CLIENT_SECRET
         sync: false
-      - key: GOOGLE_REDIRECT_URI
+      - key: GOOGLE_CALLBACK_REDIRECTS
         value: https://restaurant-app-ib2q.onrender.com/auth/google-callback
 
       # --- App Keys & Drivers ---

@@ -14,7 +14,7 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_URL
-        value: https://restaurant-app.onrender.com
+        value: https://restaurant-app-ib2q.onrender.com
 
       # --- Database (Aiven MySQL) ---
       - key: DB_CONNECTION
@@ -36,7 +36,7 @@ services:
       - key: GOOGLE_CLIENT_SECRET
         sync: false
       - key: GOOGLE_REDIRECT_URI
-        value: https://restaurant-app.onrender.com/auth/google-callback
+        value: https://restaurant-app-ib2q.onrender.com/auth/google-callback
 
       # --- App Keys & Drivers ---
       - key: APP_KEY

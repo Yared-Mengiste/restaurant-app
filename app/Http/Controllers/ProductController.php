@@ -63,6 +63,28 @@ class ProductController extends Controller
         ]);
     }
 
+    public function adminShow($id)
+    {
+        // 1. Fetch the product with all necessary relations for an admin
+        // (e.g., variants, inventory levels, or history)
+        $product = $this->service->getByIdWithRelations($id);
+
+        // 2. Related products might be useful for cross-selling settings,
+        // but often admins need 'Category' info or 'Variants' instead.
+        $relatedProducts = $this->service->getRelatedProducts($product->category_id, $id);
+
+        // 3. Point to your new Admin-specific React component
+        return inertia('Admin/ProductShow', [
+            'product' => $product,
+            'relatedProducts' => $relatedProducts,
+            // Adding a 'status' or 'stats' prop is common for Admin views
+            'stats' => [
+                'total_orders' => $product->orders_count ?? 0,
+                'last_updated' => $product->updated_at->diffForHumans(),
+            ]
+        ]);
+    }
+
     // GET /products/{id}/edit
 
 

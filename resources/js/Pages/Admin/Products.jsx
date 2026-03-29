@@ -108,7 +108,7 @@ export default function Products({ products, filters }) {
                                 <td className="px-8 py-5 text-right">
                                     <div className="flex justify-end gap-2">
                                         <Link
-                                            href={route('products.show', product.id)}
+                                            href={route('admin.products.show', product.id)}
                                             className="p-2 text-on-surface-variant hover:text-primary transition-colors"
                                         >
                                             <span className="material-symbols-outlined text-lg">visibility</span>

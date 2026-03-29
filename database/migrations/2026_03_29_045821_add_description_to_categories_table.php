@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->enum('delivery_type', ['pickup', 'delivery'])->default('pickup');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->text('description')->nullable()->after('name');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table::dropColumn('delivery');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('description');
         });
     }
 };

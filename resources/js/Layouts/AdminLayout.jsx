@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
             {/* TOP NAVBAR (From AppLayout logic + Lumière Style) [cite: 103, 104] */}
             <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-[#4d4635]/10 flex justify-between items-center px-6 md:px-12 py-4 max-w-[1920px] mx-auto">
                 <div className="flex items-center gap-8">
-                    <Link href={route('home')} className="text-2xl font-['Noto_Serif'] italic text-[#f8c927] tracking-tighter">
+                    <Link href={route('admin.dashboard')} className="text-2xl font-['Noto_Serif'] italic text-[#f8c927] tracking-tighter">
                         Bello Admin
                     </Link>
                 </div>
@@ -101,7 +101,7 @@ export default function AdminLayout({ children }) {
                         </li>
                         <li>
                             <Link
-                                href={route('admin.categories')}
+                                href={route('admin.categories.index')}
                                 className={`flex items-center gap-4 px-8 py-4 mr-4 font-['Manrope'] text-sm uppercase tracking-[0.1em] transition-all rounded-r-full
                                 ${route().current('admin.categories') ? 'bg-[#333538] text-[#f8c927]' : 'text-white/50 hover:text-white hover:bg-[#333538]/50'}`}
                             >
@@ -139,7 +139,7 @@ export default function AdminLayout({ children }) {
                         <span className="material-symbols-outlined">flatware</span>
                         <span className="text-[10px] uppercase font-bold mt-1">Items</span>
                     </Link>
-                    <Link href={route('admin.categories')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.categories') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                    <Link href={route('admin.categories')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.categories.index') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">category</span>
                         <span className="text-[10px] uppercase font-bold mt-1">Cats</span>
                     </Link>

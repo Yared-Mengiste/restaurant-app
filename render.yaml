@@ -1,0 +1,80 @@
+services:
+  - type: web
+    name: restaurant-app
+    env: docker
+    plan: free
+
+    # Use the Dockerfile in your project root
+    dockerfilePath: ./Dockerfile
+
+    # Expose Laravel port
+    envVars:
+      - key: APP_ENV
+        value: production
+
+      - key: APP_DEBUG
+        value: false
+
+      - key: APP_URL
+        # Replace after first deployment
+        value: https://restaurant-app.onrender.com
+
+      - key: APP_KEY
+        sync: false  # You set this manually in Render
+
+      # ---- Database Variables (Auto-filled by Render) ----
+      - key: DB_CONNECTION
+        value: pgsql
+
+      - key: DB_HOST
+        fromDatabase:
+          name: restaurant-db
+          property: host
+
+      - key: DB_PORT
+        fromDatabase:
+          name: restaurant-db
+          property: port
+
+      - key: DB_DATABASE
+        fromDatabase:
+          name: restaurant-db
+          property: database
+
+      - key: DB_USERNAME
+        fromDatabase:
+          name: restaurant-db
+          property: user
+
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: restaurant-db
+          property: password
+
+      # ---- Cache & Session ----
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_DRIVER
+        value: file
+
+      # ---- Chapa Keys ----
+      - key: CHAPA_SECRET_KEY
+        sync: false
+      - key: CHAPA_PUBLIC_KEY
+        sync: false
+
+      # ---- Extra Laravel Requirements ----
+      - key: FILESYSTEM_DISK
+        value: public
+
+    # Persistent disk for uploaded product/category images
+    disk:
+      name: storage
+      mountPath: /var/www/html/storage
+      sizeGB: 5
+
+
+databases:
+  - name: restaurant-db
+    plan: free
+    engine: postgres

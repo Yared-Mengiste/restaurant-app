@@ -62,9 +62,9 @@ export default function AppLayout({ children }) {
 
                         {/* DESKTOP NAV ITEMS */}
                         <div className="hidden md:flex items-center gap-5 text-on-surface-variant border-l border-outline-variant/20 pl-6">
-                            <Link href="/favorites" onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">favorite</Link>
+                            <Link href={route('favorites.index')} onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">favorite</Link>
                             <div className="relative">
-                                <Link href="/cart" onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">shopping_bag</Link>
+                                <Link href={route('cart.index') } onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">shopping_bag</Link>
                                 {user && <span className="absolute -top-1 -right-1 bg-primary text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>}
                             </div>
 
@@ -104,7 +104,7 @@ export default function AppLayout({ children }) {
                                             </Menu.Item>
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <Link href="/address" className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
+                                                    <Link href={route('home')} className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
                                                         <span className="material-symbols-outlined text-lg text-primary">location_on</span> Addresses
                                                     </Link>
                                                 )}
@@ -171,12 +171,12 @@ export default function AppLayout({ children }) {
                         <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Home</span>
                     </Link>
 
-                    <Link href="/favorites" onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all ${route().current('favorites') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                    <Link href={route('favorites.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all ${route().current('favorites') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">favorite</span>
                         <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Favs</span>
                     </Link>
 
-                    <Link href="/cart" onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                    <Link href={route('cart.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined" style={{ fontVariationSettings: route().current('cart') ? "'FILL' 1" : "'FILL' 0" }}>shopping_cart</span>
                         <span className="font-['Manrope'] text-[8px] font-bold uppercase mt-1">Cart</span>
                     </Link>
@@ -215,7 +215,7 @@ export default function AppLayout({ children }) {
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item>
-                                            <Link href="/address" className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
+                                            <Link href={route('home')} className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
                                                 <span className="material-symbols-outlined text-[#f8c927]">map</span> Address
                                             </Link>
                                         </Menu.Item>

@@ -19,7 +19,7 @@ export default function CategoryCard({ id, name, image, active = false }) {
             `}>
                 <img
                     alt={name}
-                    src={image || defaultImage}
+                    src={image?`storage/categories/${image}`  :defaultImage}
                     className={`
                         w-full h-full object-cover rounded-full transition-transform duration-700
                         ${active ? 'scale-110' : 'group-hover:scale-110'}

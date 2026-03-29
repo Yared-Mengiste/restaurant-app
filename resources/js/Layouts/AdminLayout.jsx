@@ -139,7 +139,7 @@ export default function AdminLayout({ children }) {
                         <span className="material-symbols-outlined">flatware</span>
                         <span className="text-[10px] uppercase font-bold mt-1">Items</span>
                     </Link>
-                    <Link href={route('admin.categories')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.categories.index') ? 'text-[#f8c927]' : 'text-white/40'}`}>
+                    <Link href={route('admin.categories.index')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.categories.index') ? 'text-[#f8c927]' : 'text-white/40'}`}>
                         <span className="material-symbols-outlined">category</span>
                         <span className="text-[10px] uppercase font-bold mt-1">Cats</span>
                     </Link>

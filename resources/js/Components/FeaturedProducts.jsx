@@ -1,45 +1,84 @@
-import { Link } from '@inertiajs/react';
+import { useRef } from 'react';
 import ProductCard from './ProductCard';
 
 export default function FeaturedProducts({ products = [], auth }) {
-    // 80/20 Rule: If no products are featured, don't show the section at all.
+    const scrollRef = useRef(null);
+
     if (products.length === 0) return null;
 
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current;
+            // Scroll by roughly 70% of the visible width
+            const scrollAmount = clientWidth * 0.7;
+
+            scrollRef.current.scrollTo({
+                left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
-        <section className="py-12 px-6 md:px-12 max-w-[1920px] mx-auto overflow-hidden">
-            {/* SECTION HEADER */}
-            <div className="flex justify-between items-center mb-10">
+        <section className="py-12 px-6 md:px-12 max-w-[1920px] mx-auto overflow-hidden group">
+            {/* HEADER with Navigation Buttons */}
+            <div className="flex justify-between items-end mb-10">
                 <div className="flex items-center gap-3">
                     <span className="text-2xl">✨</span>
-                    <h3 className="font-headline text-3xl text-white italic">Featured</h3>
+                    <div>
+                        <h3 className="font-headline text-3xl text-white italic">Chef's Specials</h3>
+                        <p className="text-on-surface-variant text-[10px] uppercase tracking-widest mt-1">
+                            Signature dishes from our kitchen
+                        </p>
+                    </div>
                 </div>
 
-                <Link
-                    href={route('home', { category_id: null })}
-                    className="text-primary font-label uppercase tracking-widest text-xs font-bold flex items-center gap-2 hover:translate-x-1 transition-transform"
-                >
-                    View all
-                    <span className="material-symbols-outlined text-sm">arrow_forward_ios</span>
-                </Link>
+                {/* NAVIGATION BUTTONS (Visible on Desktop) */}
+                <div className="hidden md:flex gap-3">
+                    <button
+                        onClick={() => scroll('left')}
+                        className="w-10 h-10 rounded-full border border-outline-variant/20 flex items-center justify-center text-white/60 hover:border-primary hover:text-primary transition-all active:scale-90"
+                    >
+                        <span className="material-symbols-outlined text-xl">chevron_left</span>
+                    </button>
+                    <button
+                        onClick={() => scroll('right')}
+                        className="w-10 h-10 rounded-full border border-outline-variant/20 flex items-center justify-center text-white/60 hover:border-primary hover:text-primary transition-all active:scale-90"
+                    >
+                        <span className="material-symbols-outlined text-xl">chevron_right</span>
+                    </button>
+                </div>
             </div>
 
-            {/* RESPONSIVE CONTAINER: Scroll on mobile, Grid on desktop */}
-            <div className="
-                flex overflow-x-auto no-scrollbar gap-6 pb-8 -mx-6 px-6
-                md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-x-8 md:gap-y-12 md:overflow-visible
-                scroll-smooth
-            ">
+            {/* HORIZONTAL SCROLL CONTAINER */}
+            <div
+                ref={scrollRef}
+                className="
+                    flex overflow-x-auto no-scrollbar gap-6 pb-8
+                    -mx-6 px-6 md:mx-0 md:px-0
+                    scroll-smooth snap-x snap-mandatory
+                "
+            >
                 {products.slice(0, 10).map((product) => (
-                    /* MOBILE TWEAK: min-w-[280px] ensures the cards
-                       don't shrink to zero width inside the flexbox.
-                    */
-                    <div key={product.id} className="min-w-[280px] sm:min-w-[320px] md:min-w-0">
+                    <div
+                        key={product.id}
+                        className="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] snap-start"
+                    >
                         <ProductCard
                             product={product}
                             auth={auth}
                         />
                     </div>
                 ))}
+            </div>
+
+            {/* MOBILE ONLY "SWIPE" HINT */}
+            <div className="md:hidden flex justify-center mt-2 opacity-50">
+                <div className="flex gap-1">
+                    <div className="w-1 h-1 rounded-full bg-primary"></div>
+                    <div className="w-1 h-1 rounded-full bg-white/20"></div>
+                    <div className="w-1 h-1 rounded-full bg-white/20"></div>
+                </div>
             </div>
         </section>
     );

@@ -1,119 +1,96 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
+use App\Models\Category;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class CategoryController extends Controller
 {
-    protected $service;
+protected $service;
 
-    public function __construct(CategoryService $service)
-    {
-        $this->service = $service;
-    }
-
-    public function index()
-    {
-        return inertia('Categories/Index', [
-            'categories' => $this->service->getAll()
-        ]);
-    }
-
-    public function create()
-    {
-        return inertia('Categories/Create');
-    }
-
-//    public function store(Request $request)
-//    {
-//        $data = $request->validate([
-//            'name' => 'required|string',
-//            'image' => 'nullable|string'
-//        ]);
-//
-//        $this->service->create($data);
-//
-//        return redirect()->route('categories.index')
-//            ->with('success', 'Category created');
-//    }
-//
-//    public function edit($id)
-//    {
-//        return inertia('Categories/Edit', [
-//            'category' => $this->service->getById($id)
-//        ]);
-//    }
-//
-//    public function update(Request $request, $id)
-//    {
-//        $this->service->update($id, $request->all());
-//
-//        return redirect()->route('categories.index')
-//            ->with('success', 'Updated');
-//    }
-//
-//    public function destroy($id)
-//    {
-//        $this->service->delete($id);
-//
-//        return redirect()->back()->with('success', 'Deleted');
-//    }
+public function __construct(CategoryService $service)
+{
+$this->service = $service;
 }
-//
-//namespace App\Http\Controllers;
-//
-//use Illuminate\Http\Request;
-//use App\Services\CategoryService;
-//
-//class CategoryController extends Controller
-//{
-//    protected $service;
-//
-//    public function __construct(CategoryService $service)
-//    {
-//        $this->service = $service;
-//    }
-//
-//    public function index()
-//    {
-//        return response()->json(
-//            $this->service->getAll()
-//        );
-//    }
-//
-//    public function show($id)
-//    {
-//        return response()->json(
-//            $this->service->getById($id)
-//        );
-//    }
-//
-//    public function store(Request $request)
-//    {
-//        $data = $request->validate([
-//            'name' => 'required|string',
-//            'image' => 'nullable|string'
-//        ]);
-//
-//        return response()->json(
-//            $this->service->create($data),
-//            201
-//        );
-//    }
-//
-//    public function update(Request $request, $id)
-//    {
-//        return response()->json(
-//            $this->service->update($id, $request->all())
-//        );
-//    }
-//
-//    public function destroy($id)
-//    {
-//        $this->service->delete($id);
-//
-//        return response()->json(['message' => 'Deleted']);
-//    }
-//}
+
+public function index()
+{
+return inertia('Admin/Categories/Index', [
+'categories' => $this->service->getAll()
+]);
+}
+
+public function create()
+{
+return inertia('Admin/Categories/CategoryForm');
+}
+
+public function store(Request $request)
+{
+$data = $request->validate([
+'name' => 'required|string|max:255',
+'description' => 'nullable|string',
+'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+]);
+
+if ($request->hasFile('image')) {
+$data['image'] = $this->processImage($request->file('image'));
+}
+
+$this->service->create($data);
+
+return redirect()->route('admin.categories.index')
+->with('success', 'Category successfully added.');
+}
+
+public function edit($id)
+{
+return inertia('Admin/Categories/CategoryForm', [
+'category' => $this->service->getById($id)
+]);
+}
+
+public function update(Request $request, $id)
+{
+$category = Category::findOrFail($id);
+
+$data = $request->validate([
+'name' => 'required|string|max:255',
+'description' => 'nullable|string',
+'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+]);
+
+if ($request->hasFile('image')) {
+if ($category->image) {
+Storage::disk('public')->delete('categories/' . $category->image);
+}
+$data['image'] = $this->processImage($request->file('image'));
+}
+
+$this->service->update($id, $data);
+
+return redirect()->route('admin.categories.index')
+->with('success', 'Category updated successfully.');
+}
+
+public function destroy($id)
+{
+$this->service->delete($id);
+return redirect()->back()->with('success', 'Category deleted.');
+}
+
+protected function processImage($file)
+{
+$filename = time() . '-' . Str::random(10) . '.webp';
+$manager = new ImageManager(new Driver());
+$image = $manager->read($file);
+$encoded = $image->toWebp(80);
+Storage::disk('public')->put('categories/' . $filename, (string) $encoded);
+return $filename;
+}
+}

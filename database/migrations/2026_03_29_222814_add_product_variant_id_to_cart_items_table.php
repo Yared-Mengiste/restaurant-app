@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('cart_items', function (Blueprint $table) {
             $table->foreignId('product_variant_id')->nullable()->constrained()->nullOnDelete();
+            $table->unique(['cart_id', 'product_id', 'product_variant_id']);
 
             //
         });

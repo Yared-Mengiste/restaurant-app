@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\MenuController;
@@ -66,7 +67,7 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::post('/products/{product}/favorite', [ProductController::class, 'toggleFavorite'])->name('products.favorite')->middleware('auth');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-
+    Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::put('/cart', [CartController::class, 'update'])->name('cart.update');

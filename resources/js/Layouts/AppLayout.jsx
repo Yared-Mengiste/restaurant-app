@@ -97,7 +97,7 @@ export default function AppLayout({ children }) {
                                             </Menu.Item>
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <Link href="/orders" className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
+                                                    <Link href={route('orders.history')} className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
                                                         <span className="material-symbols-outlined text-lg text-primary">history</span> Order History
                                                     </Link>
                                                 )}
@@ -210,7 +210,7 @@ export default function AppLayout({ children }) {
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item>
-                                            <Link href="/orders" className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
+                                            <Link href={route('orders.history')} className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
                                                 <span className="material-symbols-outlined text-[#f8c927]">receipt_long</span> Orders
                                             </Link>
                                         </Menu.Item>

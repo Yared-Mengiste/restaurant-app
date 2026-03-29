@@ -58,15 +58,15 @@ export default function ProductCard({ product }) {
                 </div>
 
                 <div className="text-right shrink-0">
-                    <span className={`font-body text-sm md:text-base font-bold transition-colors
-                        ${isArchived ? 'text-on-surface-variant/40' : 'text-primary'}`}>
-                        ${Number(product.price).toFixed(2)}
-                    </span>
-                    {product.has_variants && (
+    <span className={`font-body text-sm md:text-base font-bold transition-colors
+        ${isArchived ? 'text-on-surface-variant/40' : 'text-primary'}`}>
+        {Number(product.price).toFixed(2)}
+    </span>
+                    {product.has_variants ? (
                         <p className="text-[8px] md:text-[9px] text-on-surface-variant/40 uppercase tracking-tighter">
                             Starts at
                         </p>
-                    )}
+                    ) : null}
                 </div>
             </div>
 

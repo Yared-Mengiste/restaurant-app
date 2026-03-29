@@ -3,78 +3,61 @@ services:
     name: restaurant-app
     env: docker
     plan: free
+    region: frankfurt
 
-    # Use the Dockerfile in your project root
+    # Build settings
     dockerfilePath: ./Dockerfile
+    context: .
 
-    # Expose Laravel port
     envVars:
       - key: APP_ENV
         value: production
-
       - key: APP_DEBUG
         value: false
-
       - key: APP_URL
-        # Replace after first deployment
-        value: https://restaurant-app.onrender.com
+        value: https://restaurant-app.onrender.com # Update this after deploy
 
-      - key: APP_KEY
-        sync: false  # You set this manually in Render
-
-      # ---- Database Variables (Auto-filled by Render) ----
+      # --- Database (Neon Postgres) ---
       - key: DB_CONNECTION
         value: pgsql
-
       - key: DB_HOST
-        fromDatabase:
-          name: restaurant-db
-          property: host
-
+        value: ep-dawn-feather-ab21funs-pooler.eu-west-2.aws.neon.tech
       - key: DB_PORT
-        fromDatabase:
-          name: restaurant-db
-          property: port
-
+        value: 5432
       - key: DB_DATABASE
-        fromDatabase:
-          name: restaurant-db
-          property: database
-
+        value: neondb
       - key: DB_USERNAME
-        fromDatabase:
-          name: restaurant-db
-          property: user
-
+        value: neondb_owner
       - key: DB_PASSWORD
-        fromDatabase:
-          name: restaurant-db
-          property: password
+        sync: false # Set this in Render Dashboard for security
+      - key: DB_SSLMODE
+        value: require
 
-      # ---- Cache & Session ----
-      - key: SESSION_DRIVER
-        value: database
-      - key: CACHE_DRIVER
-        value: file
+      # --- Google Socialite ---
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        value: https://restaurant-app.onrender.com/auth/google-callback
 
-      # ---- Chapa Keys ----
+      # --- Payment & App Keys ---
+      - key: APP_KEY
+        sync: false
       - key: CHAPA_SECRET_KEY
         sync: false
       - key: CHAPA_PUBLIC_KEY
         sync: false
 
-      # ---- Extra Laravel Requirements ----
+      # --- Drivers ---
+      - key: SESSION_DRIVER
+        value: database
       - key: FILESYSTEM_DISK
         value: public
 
-    # Persistent disk for uploaded product/category images
+    # Persistent disk for uploaded images
     disk:
-      name: storage
-      mountPath: /var/www/html/storage
-      sizeGB: 5
-
-
-databases:
-  - name: restaurant-db
-    plan: free
-    engine: postgres
+      name: restaurant-storage
+      mountPath: /var/www/html/storage/app/public
+      sizeGB: 1
+    runtime: docker

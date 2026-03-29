@@ -19,12 +19,13 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     libwebp-dev \
+    libpq-dev \
     build-essential
 
 # ------------------------------------------------------------
-# 3. Install PHP extensions required for Laravel
+# 3. Install PHP extensions (Added pdo_pgsql for Neon)
 # ------------------------------------------------------------
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip
 
 # Enable GD image library with WebP support
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
@@ -73,8 +74,9 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 EXPOSE 8000
 
 # ------------------------------------------------------------
-# 12. Start Laravel in production
+# 12. Start Laravel (Production Optimized)
 # ------------------------------------------------------------
+# Using --force for migrations is mandatory in production environments
 CMD php artisan migrate --force && \
     php artisan storage:link && \
     php artisan serve --host 0.0.0.0 --port 8000

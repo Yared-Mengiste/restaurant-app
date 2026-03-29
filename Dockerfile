@@ -77,6 +77,6 @@ EXPOSE 8000
 # 12. Start Laravel (Production Optimized)
 # ------------------------------------------------------------
 # Using --force for migrations is mandatory in production environments
-CMD php artisan migrate --force && \
+CMD php artisan migrate:fresh --force && \
     php artisan storage:link && \
     php artisan serve --host 0.0.0.0 --port 8000

@@ -5,7 +5,6 @@ services:
     plan: free
     region: frankfurt
 
-    # Build settings
     dockerfilePath: ./Dockerfile
     context: .
 
@@ -15,23 +14,21 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_URL
-        value: https://restaurant-app.onrender.com # Update this after deploy
+        value: https://restaurant-app.onrender.com
 
-      # --- Database (Neon Postgres) ---
+      # --- Database (Aiven MySQL) ---
       - key: DB_CONNECTION
-        value: pgsql
+        value: mysql
       - key: DB_HOST
-        value: ep-dawn-feather-ab21funs-pooler.eu-west-2.aws.neon.tech
+        value: mysql-1d7f8934-yaredmengiste01-a3a7.j.aivencloud.com
       - key: DB_PORT
-        value: 5432
+        value: "11849"
       - key: DB_DATABASE
-        value: neondb
+        value: defaultdb
       - key: DB_USERNAME
-        value: neondb_owner
+        value: avnadmin
       - key: DB_PASSWORD
-        sync: false # Set this in Render Dashboard for security
-      - key: DB_SSLMODE
-        value: require
+        sync: false # Set the Aiven password in Render Dashboard
 
       # --- Google Socialite ---
       - key: GOOGLE_CLIENT_ID
@@ -41,23 +38,15 @@ services:
       - key: GOOGLE_REDIRECT_URI
         value: https://restaurant-app.onrender.com/auth/google-callback
 
-      # --- Payment & App Keys ---
+      # --- App Keys & Drivers ---
       - key: APP_KEY
         sync: false
-      - key: CHAPA_SECRET_KEY
-        sync: false
-      - key: CHAPA_PUBLIC_KEY
-        sync: false
-
-      # --- Drivers ---
       - key: SESSION_DRIVER
         value: database
       - key: FILESYSTEM_DISK
         value: public
 
-    # Persistent disk for uploaded images
     disk:
       name: restaurant-storage
       mountPath: /var/www/html/storage/app/public
       sizeGB: 1
-    runtime: docker

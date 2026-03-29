@@ -24,7 +24,7 @@ export default function OrderSuccess({ orderId }) {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                     <Link
-                        href={route('products.index')} // Adjust to your menu/home route
+                        href={route('home')} // Adjust to your menu/home route
                         className="px-8 py-4 rounded-full bg-primary text-on-primary font-bold uppercase text-xs tracking-widest hover:brightness-110 transition-all"
                     >
                         Order More

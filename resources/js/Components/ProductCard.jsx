@@ -1,14 +1,43 @@
 import { Link, router, usePage } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
 
 export default function ProductCard({ product }) {
     const { auth } = usePage().props;
-    const defaultImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuBixsKQpMDnDqNYWkE_TS9GzIVGy9k8VszLKdiI-fZR0HcPit6KuaHSPSTa6H1_rK45Dku9CV0JTIJawfs2cqLdwB1VP2-0PGAvITdOKYJ_tRJ0M37YVKOzdiuNHJrtYIun7TybxrGQsATCpuEWp5_--RjZDounDkvnsJOG6BxStm1S6fAPUW4LHUaKhpnbNifLv7zlY8bdZnyauXLQ_7ljsD_9O-JSlC3pUh0yaesFwhw_WJ0liMxkO2YwcKZwR3cSmkNsEbM9wF3P";
+    const defaultImage = "/placeholder.jpg";
+
+    // 80/20 Rule: Convert 1/0 from Laravel withExists to boolean for React state
+    const [isFavourited, setIsFavourited] = useState(!!product.is_favourited);
+
+    // Sync state if the product prop changes (important for filtering/search)
+    useEffect(() => {
+        setIsFavourited(!!product.is_favourited);
+    }, [product.is_favourited]);
 
     const isArchived = product.is_available === 0 || product.is_available === false;
 
     const handleProductClick = (e) => {
         e.preventDefault();
         router.get(route('products.show', product.id));
+    };
+
+    const toggleFavorite = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!auth.user) {
+            router.get(route('login'));
+            return;
+        }
+
+        // Optimistic UI update: Toggle immediately for a snappy feel
+        const previousState = isFavourited;
+        setIsFavourited(!previousState);
+
+        router.post(route('products.favorite', product.id), {}, {
+            preserveScroll: true,
+            // If the request fails, revert to the original heart state
+            onError: () => setIsFavourited(previousState),
+        });
     };
 
     return (
@@ -22,10 +51,25 @@ export default function ProductCard({ product }) {
             <div className="relative aspect-[4/3] md:aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-5 bg-surface-container-high shadow-lg border border-white/5">
                 <img
                     alt={product.name}
-                    src={(product?.image ? `/storage/products/${product.image}` : defaultImage) }
+                    src={(product?.image ? `/storage/products/${product.image}` : defaultImage)}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     onError={(e) => { e.target.src = defaultImage; }}
                 />
+
+                {/* HEART BUTTON */}
+                {(!auth.user || auth.user.role !== 'admin') && !isArchived && (
+                    <button
+                        onClick={toggleFavorite}
+                        className="absolute top-3 right-3 md:top-5 md:right-5 z-10 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center border border-white/10 text-white transition-all hover:bg-white hover:text-primary active:scale-90"
+                    >
+                        <span
+                            className="material-symbols-outlined text-2xl transition-all"
+                            style={{ fontVariationSettings: isFavourited ? "'FILL' 1" : "'FILL' 0" }}
+                        >
+                            favorite
+                        </span>
+                    </button>
+                )}
 
                 {/* Status Badges */}
                 <div className="absolute top-2 left-2 md:top-4 md:left-4 flex flex-col gap-2">
@@ -58,10 +102,11 @@ export default function ProductCard({ product }) {
                 </div>
 
                 <div className="text-right shrink-0">
-    <span className={`font-body text-sm md:text-base font-bold transition-colors
-        ${isArchived ? 'text-on-surface-variant/40' : 'text-primary'}`}>
-        {Number(product.price).toFixed(2)}
-    </span>
+                    <span className={`font-body text-sm md:text-base font-bold transition-colors
+                        ${isArchived ? 'text-on-surface-variant/40' : 'text-primary'}`}>
+                        ${Number(product.price).toFixed(2)}
+                    </span>
+                    {/* Fixed Logic: Prevents rendering '0' if false */}
                     {product.has_variants ? (
                         <p className="text-[8px] md:text-[9px] text-on-surface-variant/40 uppercase tracking-tighter">
                             Starts at

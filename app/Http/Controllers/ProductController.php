@@ -195,6 +195,20 @@ class ProductController extends Controller
 
         return back()->with('success', $product->is_available ? 'Product is now live.' : 'Product hidden from menu.');
     }
+
+    public function toggleFavorite(Product $product)
+    {
+        $user = auth()->user();
+
+        // Toggle the favorite
+        if ($user->favorites()->where('product_id', $product->id)->exists()) {
+            $user->favorites()->detach($product->id);
+            return back()->with('message', 'Removed from favorites');
+        }
+
+        $user->favorites()->attach($product->id);
+        return back()->with('message', 'Added to favorites');
+    }
 }
 //
 //namespace App\Http\Controllers;

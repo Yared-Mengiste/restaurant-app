@@ -24,4 +24,10 @@ class Product extends Model
     public function category() {
         return $this->belongsTo(Category::class);
     }
+    // App\Models\Product.php
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorites::class);
+    }
 }

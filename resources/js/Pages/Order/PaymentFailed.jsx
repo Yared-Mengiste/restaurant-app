@@ -34,7 +34,7 @@ export default function PaymentFailed() {
                         </Link>
 
                         <Link
-                            href="/"
+                            href={route('home')}
                             className="block w-full py-4 rounded-full border border-outline text-on-surface font-bold uppercase tracking-widest text-xs hover:bg-surface-container-high transition-all active:scale-95"
                         >
                             Cancel and Browse Menu

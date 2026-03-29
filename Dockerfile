@@ -65,6 +65,10 @@ RUN npm install && npm run build
 # ------------------------------------------------------------
 # 10. Laravel permissions
 # ------------------------------------------------------------
+RUN mkdir -p /var/www/html/storage/framework/cache/data \
+             /var/www/html/storage/framework/sessions \
+             /var/www/html/storage/framework/views \
+             /var/www/html/storage/logs
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -77,6 +81,9 @@ EXPOSE 8000
 # 12. Start Laravel (Production Optimized)
 # ------------------------------------------------------------
 # Using --force for migrations is mandatory in production environments
-CMD php artisan migrate:fresh --force && \
+CMD php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
+    php artisan migrate --force && \
     php artisan storage:link && \
     php artisan serve --host 0.0.0.0 --port 8000

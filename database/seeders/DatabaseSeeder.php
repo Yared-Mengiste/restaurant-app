@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Uncomment these when you're ready to seed products/settings
-        // $this->call(ProductSeeder::class);
-        // $this->call(SettingSeeder::class);
+         $this->call(ProductSeeder::class);
+         $this->call( SettingSeeder::class);
     }
 }

@@ -55,6 +55,11 @@ export default function Show({ product, relatedProducts }) {
                             <h1 className="font-headline text-5xl md:text-6xl text-on-surface mb-6">
                                 {product.name}
                             </h1>
+                            <div className="mb-8">
+                                <p className="text-on-surface/70 text-lg leading-relaxed max-w-xl">
+                                    {product.description || "No description available for this item."}
+                                </p>
+                            </div>
                             <div className="flex items-baseline gap-4">
                                 <span className="text-3xl font-headline text-primary">
                                     ${Number(unitPrice).toFixed(2)}

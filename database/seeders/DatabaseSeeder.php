@@ -15,13 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-//        $this->call(ProductSeeder::class);
-//        User::factory()->create([
-//            'name' => 'Yared Mengiste',
-//            'email' => 'yaredmengiste01@gmail.com',
-//            'password' => bcrypt('0922415744'),
-//        ]);
-//        $this->call(SettingSeeder::class);
+        // Use updateOrCreate to ensure the admin exists and has the right password/role
+        User::updateOrCreate(
+            ['email' => 'yaredmengiste01@gmail.com'], // Find by this
+            [
+                'name' => 'Yared Mengiste',
+                'password' => bcrypt('0922415744'),
+                'role' => 'admin',
+                'email_verified_at' => now(), // Good for production to avoid verification locks
+            ]
+        );
+
+        // Uncomment these when you're ready to seed products/settings
+        // $this->call(ProductSeeder::class);
+        // $this->call(SettingSeeder::class);
     }
 }

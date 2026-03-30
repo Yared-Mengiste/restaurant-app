@@ -70,7 +70,7 @@ export default function OrderHistory({ orders }) {
                                                             <div key={item.id} className="flex justify-between items-center bg-background/40 p-4 rounded-2xl border border-outline-variant/10">
                                                                 <div className="flex items-center gap-4">
                                                                     <div className="w-10 h-10 rounded-xl bg-surface-container-high overflow-hidden">
-                                                                        <img src={item.product.image_url || '/placeholder.png'} className="w-full h-full object-cover" alt="" />
+                                                                        <img src={item.product.image || '/placeholder.png'} className="w-full h-full object-cover" alt="" />
                                                                     </div>
                                                                     <div>
                                                                         <p className="text-sm font-headline text-on-surface">{item.product.name}</p>

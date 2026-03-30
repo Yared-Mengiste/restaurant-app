@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Cloudinary\Configuration\Configuration;
+use Cloudinary\Api\Upload\UploadApi;
+
 
 class ProductController extends Controller
 {
@@ -107,7 +110,28 @@ class ProductController extends Controller
 
         // Handle Image Processing
         if ($request->hasFile('image')) {
-            $data['image'] = $this->processImage($request->file('image'));
+            // 1. Configure the native SDK
+            Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key'    => env('CLOUDINARY_KEY'),
+                    'api_secret' => env('CLOUDINARY_SECRET'),
+                ],
+                'url' => [
+                    'secure' => true
+                ]
+            ]);
+
+            // 2. Use the UploadApi directly
+            $upload = new UploadApi();
+
+            $response = $upload->upload($request->file('image')->getRealPath(), [
+                'folder' => 'products',
+                'resource_type' => 'auto',
+            ]);
+
+            // 3. Get the URL from the response array
+            $data['image'] = $response['secure_url'];
         }
 
         // Create product and handle variants via service
@@ -141,11 +165,28 @@ class ProductController extends Controller
 
         // Handle Image Replacement
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($product->image) {
-                Storage::disk('public')->delete('products/' . $product->image);
-            }
-            $data['image'] = $this->processImage($request->file('image'));
+            // 1. Configure the native SDK
+            Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key'    => env('CLOUDINARY_KEY'),
+                    'api_secret' => env('CLOUDINARY_SECRET'),
+                ],
+                'url' => [
+                    'secure' => true
+                ]
+            ]);
+
+            // 2. Use the UploadApi directly
+            $upload = new UploadApi();
+
+            $response = $upload->upload($request->file('image')->getRealPath(), [
+                'folder' => 'products',
+                'resource_type' => 'auto',
+            ]);
+
+            // 3. Get the URL from the response array
+            $data['image'] = $response['secure_url'];
         }
 
         $this->service->update($id, $data);

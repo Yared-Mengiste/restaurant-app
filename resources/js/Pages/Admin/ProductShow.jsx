@@ -70,7 +70,7 @@ export default function AdminProductLayout({ product, children }) {
                     <div className="w-full lg:w-3/5">
                         <div className={`aspect-[4/5] rounded-xl overflow-hidden bg-surface-container-low shadow-2xl ${!product.is_available ? 'opacity-40 grayscale' : ''}`}>
                             <img
-                                src={product?.image ? `/storage/products/${product.image}` : '/placeholder.jpg'}
+                                src={product?.image ? product.image : '/placeholder.jpg'}
                                 className="w-full h-full object-cover"
                                 alt={product.name}
                             />

@@ -43,7 +43,7 @@ export default function Show({ product, relatedProducts }) {
                                 <img
                                     alt={product.name}
                                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                                    src={(product?.image ? `/storage/products/${product.image}` : '/placeholder.jpg')}
+                                    src={(product?.image ? product.image : '/placeholder.jpg')}
 
                                 />
                             </div>

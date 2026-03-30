@@ -85,7 +85,7 @@ export default function CartIndex({ cart, summary }) {
                                 <div key={`${item.product_id}-${item.product_variant_id}`} className="group flex flex-col md:flex-row gap-6 p-6 rounded-xl transition-all hover:bg-surface-container-low">
                                     <div className="w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
                                         <img
-                                            src={(item.product?.image ? `/storage/products/${item.product.image}` : '/placeholder.jpg')}
+                                            src={(item.product?.image ? item.product.image : '/placeholder.jpg')}
 
                                             alt={item.product.name}
                                             className="w-full h-full object-cover"

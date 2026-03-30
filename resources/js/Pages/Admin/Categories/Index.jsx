@@ -31,7 +31,7 @@ export default function Index({ categories }) {
                             <td className="px-8 py-5">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-lg overflow-hidden bg-surface-container-highest">
-                                        <img src={cat.image ? `/storage/categories/${cat.image}` : '/placeholder.webp'} className="w-full h-full object-cover" />
+                                        <img src={cat.image ? cat.image : '/placeholder.webp'} className="w-full h-full object-cover" />
                                     </div>
                                     <span className="font-headline text-sm text-on-surface">{cat.name}</span>
                                 </div>

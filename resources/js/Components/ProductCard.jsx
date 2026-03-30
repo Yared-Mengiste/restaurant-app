@@ -51,7 +51,7 @@ export default function ProductCard({ product }) {
             <div className="relative aspect-[4/3] md:aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-5 bg-surface-container-high shadow-lg border border-white/5">
                 <img
                     alt={product.name}
-                    src={(product?.image ? `/storage/products/${product.image}` : defaultImage)}
+                    src={(product?.image ? product.image : defaultImage)}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     onError={(e) => { e.target.src = defaultImage; }}
                 />

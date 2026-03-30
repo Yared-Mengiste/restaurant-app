@@ -124,7 +124,7 @@ export default function ProductForm({ product = null, categories = [] }) {
                                 <label className="block text-[10px] font-label uppercase tracking-widest text-outline mb-4">Visual Representation</label>
                                 <div className="flex items-center gap-6">
                                     {isEditing && !data.image && product.image && (
-                                        <img src={`/storage/products/${product.image}`} className="w-24 h-24 rounded-lg object-cover border border-outline-variant/20" />
+                                        <img src={product.image} className="w-24 h-24 rounded-lg object-cover border border-outline-variant/20" alt={product.name}/>
                                     )}
                                     <input
                                         type="file"

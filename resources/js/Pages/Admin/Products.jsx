@@ -79,7 +79,7 @@ export default function Products({ products, filters }) {
                                 <td className="px-8 py-5">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 rounded-lg overflow-hidden bg-surface-container-highest shrink-0">
-                                            <img src={(product?.image ? `/storage/products/${product.image}` : null)} alt="" className="w-full h-full object-cover" />
+                                            <img src={(product?.image ? product.image : 'placeholder.jpg')} alt="" className="w-full h-full object-cover" />
                                         </div>
                                         <div>
                                             <p className="font-headline text-sm text-on-surface">{product.name}</p>

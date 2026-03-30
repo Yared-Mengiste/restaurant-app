@@ -32,7 +32,7 @@ export default function AdminProductLayout({ product, children }) {
                         <div className="hidden lg:flex items-center gap-6 ml-4 border-l border-outline-variant/20 pl-8">
                             <Link href={route('admin.orders')} className="text-[10px] uppercase font-bold tracking-widest hover:text-primary transition-colors">Orders</Link>
                             <Link href={route('admin.products')} className="text-[10px] uppercase font-bold tracking-widest text-primary">Products</Link>
-                            <Link href={route('admin.categories')} className="text-[10px] uppercase font-bold tracking-widest hover:text-primary transition-colors">Categories</Link>
+                            <Link href={route('admin.categories.index')} className="text-[10px] uppercase font-bold tracking-widest hover:text-primary transition-colors">Categories</Link>
                         </div>
                     </div>
 
@@ -126,7 +126,7 @@ export default function AdminProductLayout({ product, children }) {
                     <span className="text-[8px] uppercase font-bold mt-1">Dash</span>
                 </Link>
                 <Link
-                    href={route('admin.categories')}
+                    href={route('admin.categories.index')}
                     className={`flex flex-col items-center transition-all ${route().current('admin.categories.*') ? 'text-primary' : 'text-white/40 active:text-primary'}`}
                 >
                     <span className="material-symbols-outlined">category</span>

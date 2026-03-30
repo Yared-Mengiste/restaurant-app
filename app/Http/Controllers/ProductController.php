@@ -80,7 +80,7 @@ class ProductController extends Controller
             // Adding a 'status' or 'stats' prop is common for Admin views
             'stats' => [
                 'total_orders' => $product->orders_count ?? 0,
-                'last_updated' => $product->updated_at->diffForHumans(),
+                'last_updated' => $product->updated_at?->diffForHumans()?? 'Never',
             ]
         ]);
     }

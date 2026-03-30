@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProductController extends Controller
 {
@@ -107,7 +108,10 @@ class ProductController extends Controller
 
         // Handle Image Processing
         if ($request->hasFile('image')) {
-            $data['image'] = $this->processImage($request->file('image'));
+            // Upload directly to Cloudinary in a 'products' folder
+            $data['image'] = $request->file('image')
+                ->storeOnCloudinary('products')
+                ->getSecurePath();
         }
 
         // Create product and handle variants via service
@@ -141,11 +145,11 @@ class ProductController extends Controller
 
         // Handle Image Replacement
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($product->image) {
-                Storage::disk('public')->delete('products/' . $product->image);
-            }
-            $data['image'] = $this->processImage($request->file('image'));
+            // Cloudinary handles overwriting if you want,
+            // but usually, we just store the new path.
+            $data['image'] = $request->file('image')
+                ->storeOnCloudinary('products')
+                ->getSecurePath();
         }
 
         $this->service->update($id, $data);

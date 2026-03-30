@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class CategoryController extends Controller
 {
@@ -38,9 +39,11 @@ $data = $request->validate([
 'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
 ]);
 
-if ($request->hasFile('image')) {
-$data['image'] = $this->processImage($request->file('image'));
-}
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')
+            ->storeOnCloudinary('categories')
+            ->getSecurePath();
+    }
 
 $this->service->create($data);
 
@@ -65,12 +68,11 @@ $data = $request->validate([
 'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
 ]);
 
-if ($request->hasFile('image')) {
-if ($category->image) {
-Storage::disk('public')->delete('categories/' . $category->image);
-}
-$data['image'] = $this->processImage($request->file('image'));
-}
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')
+            ->storeOnCloudinary('categories')
+            ->getSecurePath();
+    }
 
 $this->service->update($id, $data);
 

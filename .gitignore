@@ -1,7 +1,6 @@
 # --- Laravel Core ---
 /.phpunit.cache
 /node_modules
-/public/build
 /public/hot
 /vendor
 .env

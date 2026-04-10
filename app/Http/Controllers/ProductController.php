@@ -52,7 +52,7 @@ class ProductController extends Controller
     // GET /products/{id}
     public function show(Request $request,$id)
     {
-        if ($request->user()->role === 'admin') {
+        if ($request->user() && $request->user()->role === 'admin') {
             return redirect()->intended(route('admin.dashboard', absolute: false));
         }
         $product = $this->service->getByIdWithRelations($id);

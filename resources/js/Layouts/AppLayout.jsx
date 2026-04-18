@@ -11,7 +11,7 @@ export default function AppLayout({ children }) {
     const [isDark, setIsDark] = useState(false);
     const isFirstRender = useRef(true);
 
-    // Initial Theme Sync
+    // Initial Theme sync
     useEffect(() => {
         const theme = localStorage.getItem('theme');
         const darkModeEnabled = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);

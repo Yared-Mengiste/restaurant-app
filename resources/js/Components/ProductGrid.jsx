@@ -1,6 +1,10 @@
 import ProductCard from './ProductCard';
+import { Link } from '@inertiajs/react';
 
 export default function ProductGrid({ products, auth, title = "Our Menu" }) {
+    // Extract the actual product array from the pagination object
+    const items = products.data;
+
     return (
         <section className="py-12 px-6 md:px-12 max-w-[1920px] mx-auto min-h-[400px]">
             {/* GRID HEADER */}
@@ -13,18 +17,51 @@ export default function ProductGrid({ products, auth, title = "Our Menu" }) {
             </div>
 
             {/* PRODUCT MAPPING */}
-            {products.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
-                    {products.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            auth={auth}
-                        />
-                    ))}
-                </div>
+            {items.length > 0 ? (
+                <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+                        {items.map((product) => (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                auth={auth}
+                            />
+                        ))}
+                    </div>
+
+                    {/* PAGINATION BUTTONS */}
+                    <div className="mt-20 flex justify-center items-center gap-2">
+                        {products.links.map((link, index) => {
+                            // Fix: If no URL exists, render a span to prevent the 'toString' null error
+                            if (!link.url) {
+                                return (
+                                    <span
+                                        key={index}
+                                        dangerouslySetInnerHTML={{ __html: link.label }}
+                                        className="px-4 py-2 text-[10px] font-label uppercase tracking-widest rounded-full border border-outline-variant/10 opacity-30 cursor-not-allowed text-on-surface-variant/50"
+                                    />
+                                );
+                            }
+
+                            return (
+                                <Link
+                                    key={index}
+                                    href={link.url}
+                                    preserveScroll // Recommended for better UX
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    className={`
+                                        px-4 py-2 text-[10px] font-label uppercase tracking-widest transition-all rounded-full border
+                                        ${link.active
+                                        ? 'bg-primary text-on-primary border-primary font-bold shadow-lg'
+                                        : 'bg-surface text-on-surface-variant border-outline-variant/20 hover:border-primary hover:text-primary'}
+                                    `}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
             ) : (
-                /* EMPTY STATE: Editorial Style */
+                /* EMPTY STATE */
                 <div className="flex flex-col items-center justify-center py-24 text-center">
                     <span className="material-symbols-outlined text-4xl text-primary/30 mb-4 font-light">
                         restaurant_menu
@@ -34,7 +71,6 @@ export default function ProductGrid({ products, auth, title = "Our Menu" }) {
                     </h4>
                     <p className="text-on-surface-variant/60 max-w-xs text-sm leading-relaxed">
                         We couldn't find any delicacies matching your current selection.
-                        Please try adjusting your filters.
                     </p>
                 </div>
             )}

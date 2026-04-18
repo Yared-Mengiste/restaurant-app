@@ -123,6 +123,13 @@ export default function AppLayout({ children }) {
                                             </Menu.Item>
                                             <Menu.Item>
                                                 {({ active }) => (
+                                                    <Link href={route('orders.history')} className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
+                                                        <span className="material-symbols-outlined text-lg text-primary">history</span> Order History
+                                                    </Link>
+                                                )}
+                                            </Menu.Item>
+                                            <Menu.Item>
+                                                {({ active }) => (
                                                     <Link href={route('logout')} method="post" as="button" className="w-full flex items-center gap-3 px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors text-left">
                                                         <span className="material-symbols-outlined text-lg">logout</span> Logout
                                                     </Link>
@@ -225,6 +232,11 @@ export default function AppLayout({ children }) {
                                         <Menu.Item>
                                             <Link href={route('profile.edit')} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10">
                                                 <span className="material-symbols-outlined text-primary">settings</span> Profile
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Link href={route('orders.history')} className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
+                                                <span className="material-symbols-outlined text-primary">receipt_long</span> Orders
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item>

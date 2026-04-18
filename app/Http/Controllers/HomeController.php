@@ -39,7 +39,7 @@ class HomeController extends Controller
             })
             ->latest();
 
-        $products = $productsQuery->get();
+        $products = $productsQuery->paginate(12)->withQueryString();
 
         // Featured section logic
         $featured = [];

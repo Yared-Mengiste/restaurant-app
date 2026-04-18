@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { usePage, Head, useForm } from '@inertiajs/react'; // Added useForm
+import {usePage, Head, useForm, router} from '@inertiajs/react'; // Added useForm
 import AppLayout from '@/Layouts/AppLayout';
 import ProductCard from '@/Components/ProductCard';
 
@@ -22,13 +22,17 @@ export default function Show({ product, relatedProducts }) {
     const unitPrice = selectedVariant ? selectedVariant.price : product.price;
 
     const handleAddToCart = () => {
-        post(route('cart.store'), {
-            preserveScroll: true,
-            onSuccess: () => {
-                // Optional: reset quantity after adding
-                setData('quantity', 1);
-            },
-        });
+        if (auth.user) {
+            post(route('cart.store'), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setData('quantity', 1);
+                },
+            });
+        } else {
+            // This actually moves the user to the login page
+            router.visit(route('login'));
+        }
     };
 
     return (
@@ -95,7 +99,7 @@ export default function Show({ product, relatedProducts }) {
             </main>
 
             {/* Fixed Floating Order Bar */}
-            {auth.user && (
+
                 <div className="fixed bottom-24 md:bottom-12 left-0 w-full z-40 px-4 md:px-6 pointer-events-none">
                     <div className="max-w-4xl mx-auto bg-[#111316]/95 rounded-full p-2 flex items-center justify-between pointer-events-auto backdrop-blur-xl border border-outline-variant/20">
                         <div className="flex items-center gap-8 pl-10">
@@ -145,7 +149,7 @@ export default function Show({ product, relatedProducts }) {
                         </button>
                     </div>
                 </div>
-            )}
+
         </AppLayout>
     );
 }

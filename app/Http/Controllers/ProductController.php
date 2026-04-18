@@ -206,96 +206,10 @@ class ProductController extends Controller
         // Toggle the favorite
         if ($user->favorites()->where('product_id', $product->id)->exists()) {
             $user->favorites()->detach($product->id);
-            return back()->with('message', 'Removed from favorites');
+            return back()->with('success', 'Removed from favorites');
         }
 
         $user->favorites()->attach($product->id);
-        return back()->with('message', 'Added to favorites');
+        return back()->with('success', 'Added to favorites');
     }
 }
-//
-//namespace App\Http\Controllers;
-//
-//use Illuminate\Http\Request;
-//use App\Services\ProductService;
-//
-//class ProductController extends Controller
-//{
-//    protected $service;
-//
-//    public function __construct(ProductService $service)
-//    {
-//        $this->service = $service;
-//    }
-//
-//    // GET /products?search=burger
-//    public function index(Request $request)
-//    {
-//        $products = $this->service->getAll($request->search);
-//
-//        return response()->json($products);
-//    }
-//
-//    // GET /products/{id}
-//    public function show($id)
-//    {
-//        return response()->json(
-//            $this->service->getById($id)
-//        );
-//    }
-//
-//    // POST /products
-//    public function store(Request $request)
-//    {
-//        $data = $request->validate([
-//            'category_id' => 'required|exists:categories,id',
-//            'name' => 'required|string',
-//            'description' => 'nullable|string',
-//            'price' => 'required|numeric',
-//            'has_variants' => 'boolean',
-//            'is_featured' => 'boolean',
-//            'is_available' => 'boolean',
-//            'image' => 'nullable|string',
-//
-//            'variants' => 'array',
-//            'variants.*.name' => 'required|string',
-//            'variants.*.price' => 'required|numeric'
-//        ]);
-//
-//        return response()->json(
-//            $this->service->create($data),
-//            201
-//        );
-//    }
-//
-//    // PUT /products/{id}
-//    public function update(Request $request, $id)
-//    {
-//        $data = $request->validate([
-//            'category_id' => 'sometimes|exists:categories,id',
-//            'name' => 'sometimes|string',
-//            'description' => 'nullable|string',
-//            'price' => 'sometimes|numeric',
-//            'has_variants' => 'boolean',
-//            'is_featured' => 'boolean',
-//            'is_available' => 'boolean',
-//            'image' => 'nullable|string',
-//
-//            'variants' => 'array',
-//            'variants.*.name' => 'required|string',
-//            'variants.*.price' => 'required|numeric'
-//        ]);
-//
-//        return response()->json(
-//            $this->service->update($id, $data)
-//        );
-//    }
-//
-//    // DELETE /products/{id}
-//    public function destroy($id)
-//    {
-//        $this->service->delete($id);
-//
-//        return response()->json(['message' => 'Deleted']);
-//    }
-//}

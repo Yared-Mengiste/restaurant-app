@@ -22,8 +22,8 @@ export default function AdminLayout({ children }) {
             {/* TOP NAVBAR (From AppLayout logic + Lumière Style) [cite: 103, 104] */}
             <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-[#4d4635]/10 flex justify-between items-center px-6 md:px-12 py-4 max-w-[1920px] mx-auto">
                 <div className="flex items-center gap-8">
-                    <Link href={route('admin.dashboard')} className="text-2xl font-['Noto_Serif'] italic text-[#f8c927] tracking-tighter">
-                        Bello Admin
+                    <Link href={route('admin.dashboard')} className="text-2xl md:text-3xl font-serif italic text-primary tracking-tight">
+                        Bello <span className="text-secondary not-italic font-sans text-xs tracking-[0.3em] uppercase block">Admin</span>
                     </Link>
                 </div>
 

@@ -15,7 +15,7 @@ export default function ProductForm({ product = null, categories = [] }) {
         is_featured: product?.is_featured ?? false,
         has_variants: product?.has_variants ?? false,
         image: null,
-        variants: product?.variants || [{ name: '', price: '' }],
+        variants: product?.variants || [],
     });
 
     const handleSubmit = (e) => {
@@ -155,7 +155,12 @@ export default function ProductForm({ product = null, categories = [] }) {
                             </div>
 
                             <div className="space-y-3">
-                                {data.variants.map((variant, index) => (
+                                {data.variants.length === 0 ? (
+                                    <p className="text-[10px] text-outline italic text-center py-4">
+                                        No variants added. This will be sold as a single item.
+                                    </p>
+                                ) : (
+                                data.variants.map((variant, index) => (
                                     <div key={index} className="flex gap-4 items-center bg-surface-container-low p-3 rounded-lg border border-outline-variant/20">
                                         <input
                                             className="bg-transparent border-none focus:ring-0 text-sm flex-1 p-0"
@@ -183,7 +188,7 @@ export default function ProductForm({ product = null, categories = [] }) {
                                             <span className="material-symbols-outlined text-lg">delete</span>
                                         </button>
                                     </div>
-                                ))}
+                                )))}
                             </div>
                         </div>
 

@@ -26,7 +26,7 @@ export default function FeaturedProducts({ products = [], auth }) {
                 <div className="flex items-center gap-3">
                     <span className="text-2xl">✨</span>
                     <div>
-                        <h3 className="font-headline text-3xl text-white italic">Chef's Specials</h3>
+                        <h3 className="font-headline text-3xl text-on-surface italic">Chef's Specials</h3>
                         <p className="text-on-surface-variant text-[10px] uppercase tracking-widest mt-1">
                             Signature dishes from our kitchen
                         </p>

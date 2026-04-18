@@ -18,30 +18,30 @@ export default {
 
             // ✅ MERGED COLORS
             colors: {
-                primary: "#f8c927",
-                secondary: "#c8c6c5",
-                tertiary: "#bfcdff",
-                background: "#111316",
-                surface: "#111316",
+                primary: "rgb(var(--primary) / <alpha-value>)",
+                secondary: "rgb(var(--secondary) / <alpha-value>)",
+                tertiary: "rgb(var(--tertiary) / <alpha-value>)",
+                background: "rgb(var(--background) / <alpha-value>)",
+                surface: "rgb(var(--surface) / <alpha-value>)",
 
-                "surface-container": "#1e2023",
-                "surface-container-low": "#1a1c1f",
-                "surface-container-high": "#282a2d",
-                "surface-container-highest": "#333538",
+                "surface-container": "rgb(var(--surface-container) / <alpha-value>)",
+                "surface-container-low": "rgb(var(--surface-container-low) / <alpha-value>)",
+                "surface-container-high": "rgb(var(--surface-container-high) / <alpha-value>)",
+                "surface-container-highest": "rgb(var(--surface-container-highest) / <alpha-value>)",
 
-                "on-surface": "#e2e2e6",
-                "on-background": "#e2e2e6",
-                "on-primary": "#3d2f00",
+                "on-surface": "rgb(var(--on-surface) / <alpha-value>)",
+                "on-background": "rgb(var(--on-background) / <alpha-value>)",
+                "on-primary": "rgb(var(--on-primary) / <alpha-value>)",
 
-                "primary-container": "#d9ae00",
-                "secondary-container": "#474747",
-                "tertiary-container": "#97b0ff",
+                "primary-container": "rgb(var(--primary-container) / <alpha-value>)",
+                "secondary-container": "rgb(var(--secondary-container) / <alpha-value>)",
+                "tertiary-container": "rgb(var(--tertiary-container) / <alpha-value>)",
 
-                "error": "#ffb4ab",
-                "error-container": "#93000a",
+                "error": "rgb(var(--error) / <alpha-value>)",
+                "error-container": "rgb(var(--error-container) / <alpha-value>)",
 
-                "outline": "#99907c",
-                "outline-variant": "#4d4635",
+                "outline": "rgb(var(--outline) / <alpha-value>)",
+                "outline-variant": "rgb(var(--outline-variant) / <alpha-value>)",
             },
 
             // ✅ MERGED FONTS

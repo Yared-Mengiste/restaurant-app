@@ -2,6 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* --- LIGHT MODE (Italian Bistro Style) --- */
+    --primary: 190 30 45;                 /* Crimson Red from 'Bello' (#BE1E2D) */
+    --secondary: 204 163 84;              /* Golden Ochre from the fork (#CCA354) */
+    --tertiary: 0 146 70;                 /* Italian Flag Green (#009246) */
+
+    --background: 252 250 242;            /* Warm Antique Paper/Cream White */
+    --surface: 255 255 255;               /* Pure White */
+
+    /* Containers use warm cream tones to match the "paper" aesthetic */
+    --surface-container: 245 241 230;
+    --surface-container-low: 249 246 238;
+    --surface-container-high: 238 233 218;
+    --surface-container-highest: 230 224 205;
+
+    --on-surface: 40 30 20;               /* Rich Espresso Brown (Better than black) */
+    --on-background: 40 30 20;
+    --on-primary: 255 255 255;            /* White text on red buttons */
+
+    --primary-container: 255 210 215;     /* Soft pinkish-red */
+    --secondary-container: 250 238 210;    /* Soft gold */
+
+    --error: 186 26 26;
+    --outline: 140 120 100;               /* Earthy brown outline */
+    --outline-variant: 204 163 84 / 0.3;  /* Faint gold lines */
+}
+
+.dark {
+    /* --- DARK MODE (Premium Night Dining) --- */
+    --primary: 215 45 60;                 /* Slightly brighter crimson for contrast */
+    --secondary: 218 185 115;             /* Lighter Gold */
+    --tertiary: 40 167 69;                /* Muted Green */
+
+    --background: 18 16 14;               /* Charcoal Coffee Black */
+    --surface: 26 24 22;                  /* Deep Wood/Dark Brown */
+
+    --surface-container: 36 34 32;
+    --surface-container-low: 30 28 26;
+    --surface-container-high: 46 44 42;
+    --surface-container-highest: 56 54 52;
+
+    --on-surface: 245 235 220;            /* Creamy text */
+    --on-background: 245 235 220;
+    --on-primary: 255 255 255;
+
+    --primary-container: 140 20 30;       /* Darker wine red */
+    --outline-variant: 77 70 53;          /* Dark bronze/gold */
+}
 
 @layer utilities {
     .no-scrollbar::-webkit-scrollbar { display: none; }

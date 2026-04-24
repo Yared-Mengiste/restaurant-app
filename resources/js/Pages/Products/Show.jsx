@@ -99,57 +99,63 @@ export default function Show({ product, relatedProducts }) {
             </main>
 
             {/* Fixed Floating Order Bar */}
+            <div className="fixed bottom-24 md:bottom-12 left-0 w-full z-40 px-4 md:px-6 pointer-events-none">
+                <div className="max-w-4xl mx-auto bg-surface-container-high/95 rounded-full p-2 flex items-center justify-between pointer-events-auto backdrop-blur-xl border border-outline-variant/20 shadow-2xl transition-colors duration-300">
 
-                <div className="fixed bottom-24 md:bottom-12 left-0 w-full z-40 px-4 md:px-6 pointer-events-none">
-                    <div className="max-w-4xl mx-auto bg-[#111316]/95 rounded-full p-2 flex items-center justify-between pointer-events-auto backdrop-blur-xl border border-outline-variant/20">
-                        <div className="flex items-center gap-8 pl-10">
-                            <div className="flex flex-col">
-                                <span className="text-lg md:text-2xl font-headline text-primary">
-                                    ${(Number(unitPrice) * data.quantity).toFixed(2)}
-                                </span>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <button
-                                    onClick={() => setData('quantity', Math.max(1, data.quantity - 1))}
-                                    className="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center"
-                                >
-                                    <span className="material-symbols-outlined">remove</span>
-                                </button>
-                                <span className="text-xl w-6 text-center">{data.quantity}</span>
-                                <button
-                                    onClick={() => setData('quantity', data.quantity + 1)}
-                                    className="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center"
-                                >
-                                    <span className="material-symbols-outlined">add</span>
-                                </button>
-                            </div>
+                    <div className="flex items-center gap-4 md:gap-8 pl-6 md:pl-10">
+                        {/* Total Price */}
+                        <div className="flex flex-col">
+                <span className="text-lg md:text-2xl font-headline text-on-surface">
+                    ${(Number(unitPrice) * data.quantity).toFixed(2)}
+                </span>
                         </div>
 
-                        <button
-                            disabled={processing}
-                            onClick={handleAddToCart}
-                            className={`h-14 md:h-16 px-8 md:px-12 flex items-center justify-center gap-3 text-xs md:text-sm font-bold uppercase tracking-widest text-black
-                                          bg-gradient-to-r from-primary to-primary-container rounded-full shadow-lg transition-all
-                            ${processing ? 'opacity-70 cursor-wait' : 'hover:scale-105 active:scale-95'}
-                            `}
-                        >
-                            {processing ? (
-                                <span className="flex items-center gap-2">
-                                <svg className="animate-spin h-4 w-4 text-black" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                            </svg>
-                            <span>Adding...</span>
-                            </span>
-                            ) : (
-                                <span className="material-symbols-outlined text-2xl">
-                                shopping_cart
-                                </span>
-                            )}
-                        </button>
+                        {/* Quantity Controls */}
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <button
+                                type="button"
+                                onClick={() => setData('quantity', Math.max(1, data.quantity - 1))}
+                                className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-surface-container-highest text-on-surface hover:bg-primary/20 transition-colors flex items-center justify-center"
+                            >
+                                <span className="material-symbols-outlined text-sm md:text-base">remove</span>
+                            </button>
+                            <span className="text-lg md:text-xl w-6 text-center text-on-surface font-bold">{data.quantity}</span>
+                            <button
+                                type="button"
+                                onClick={() => setData('quantity', data.quantity + 1)}
+                                className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-surface-container-highest text-on-surface hover:bg-primary/20 transition-colors flex items-center justify-center"
+                            >
+                                <span className="material-symbols-outlined text-sm md:text-base">add</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
 
+                    {/* Add to Cart Button */}
+                    <button
+                        disabled={processing}
+                        onClick={handleAddToCart}
+                        className={`h-12 md:h-16 px-6 md:px-12 flex items-center justify-center gap-3 text-[10px] md:text-xs font-bold uppercase tracking-widest
+                bg-primary text-on-primary rounded-full shadow-lg transition-all
+                ${processing ? 'opacity-70 cursor-wait' : 'hover:scale-105 active:scale-95 shadow-primary/20'}
+            `}
+                    >
+                        {processing ? (
+                            <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-4 w-4 text-on-primary" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    <span>Adding...</span>
+                </span>
+                        ) : (
+                            <>
+                                <span className="material-symbols-outlined text-xl md:text-2xl">shopping_cart</span>
+                                <span className="hidden sm:inline">Add to Cart</span>
+                            </>
+                        )}
+                    </button>
+                </div>
+            </div>
         </AppLayout>
     );
 }

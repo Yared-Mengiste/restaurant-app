@@ -8,20 +8,35 @@ export default function AppLayout({ children }) {
 
     const [search, setSearch] = useState(filters?.search || '');
     const [showMobileSearch, setShowMobileSearch] = useState(false);
-    const [isDark, setIsDark] = useState(false);
     const isFirstRender = useRef(true);
+// --- Inside AppLayout Component ---
 
-    // Initial Theme sync
+    const [isDark, setIsDark] = useState(false);
+
+// Initial Theme sync
     useEffect(() => {
-        const theme = localStorage.getItem('theme');
-        const darkModeEnabled = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        setIsDark(darkModeEnabled);
-        if (darkModeEnabled) document.documentElement.classList.add('dark');
+        // 1. Check if user has a saved preference
+        const savedTheme = localStorage.getItem('theme');
+
+        // 2. Logic: If no saved theme, we DEFAULT to Light (false).
+        // If there is a saved theme, follow it.
+        const darkModeEnabled = savedTheme === 'dark';
+
+        if (darkModeEnabled) {
+            setIsDark(true);
+            document.documentElement.classList.add('dark');
+        } else {
+            setIsDark(false);
+            document.documentElement.classList.remove('dark');
+            // Explicitly set light if it's the first time to avoid system overrides
+            if (!savedTheme) localStorage.setItem('theme', 'light');
+        }
     }, []);
 
     const toggleTheme = () => {
         const newDark = !isDark;
         setIsDark(newDark);
+
         if (newDark) {
             document.documentElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
@@ -180,21 +195,38 @@ export default function AppLayout({ children }) {
             </footer>
 
             {/* MOBILE NAVIGATION */}
+            {/* MOBILE NAVIGATION */}
             <nav className="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 pointer-events-none">
                 <div className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-outline-variant/30 flex justify-around items-center py-4 px-4 shadow-2xl bg-background/80 backdrop-blur-xl">
+
                     <Link href={route('home')} className={`flex flex-col items-center justify-center transition-all ${route().current('home') ? 'text-primary' : 'text-on-surface/40'}`}>
                         <span className="material-symbols-outlined">home</span>
                         <span className="font-label text-[8px] font-bold uppercase mt-1">Home</span>
+                    </Link>
+                    {/* NEW: THEME TOGGLE ON THE LEFT */}
+                    <button
+                        onClick={toggleTheme}
+                        className="flex flex-col items-center justify-center transition-all text-on-surface/40 active:text-primary outline-none"
+                    >
+            <span className="material-symbols-outlined transition-transform duration-500">
+                {isDark ? 'light_mode' : 'dark_mode'}
+            </span>
+                        <span className="font-label text-[8px] font-bold uppercase mt-1">
+                {isDark ? 'Light' : 'Dark'}
+            </span>
+                    </button>
+
+
+
+                    {/* Central Cart Icon - Kept scale-110 for prominence */}
+                    <Link href={route('cart.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart.*') ? 'text-primary' : 'text-on-surface/40'}`}>
+                        <span className="material-symbols-outlined">shopping_cart</span>
+                        <span className="font-label text-[8px] font-bold uppercase mt-1">Cart</span>
                     </Link>
 
                     <Link href={route('favorites.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all ${route().current('favorites.*') ? 'text-primary' : 'text-on-surface/40'}`}>
                         <span className="material-symbols-outlined">favorite</span>
                         <span className="font-label text-[8px] font-bold uppercase mt-1">Favs</span>
-                    </Link>
-
-                    <Link href={route('cart.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart.*') ? 'text-primary' : 'text-on-surface/40'}`}>
-                        <span className="material-symbols-outlined">shopping_cart</span>
-                        <span className="font-label text-[8px] font-bold uppercase mt-1">Cart</span>
                     </Link>
 
                     <Menu as="div" className="flex flex-col items-center justify-center">
@@ -219,13 +251,7 @@ export default function AppLayout({ children }) {
                                     </div>
                                 )}
 
-                                {/* THEME TOGGLE */}
-                                <Menu.Item>
-                                    <button onClick={toggleTheme} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10 w-full text-left">
-                                        <span className="material-symbols-outlined text-primary">{isDark ? 'light_mode' : 'dark_mode'}</span>
-                                        {isDark ? 'Light Mode' : 'Dark Mode'}
-                                    </button>
-                                </Menu.Item>
+                                {/* THEME TOGGLE REMOVED FROM HERE */}
 
                                 {user ? (
                                     <>
@@ -235,7 +261,7 @@ export default function AppLayout({ children }) {
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item>
-                                            <Link href={route('orders.history')} className="flex items-center gap-4 px-5 py-3 text-sm text-white/80 active:bg-white/10">
+                                            <Link href={route('orders.history')} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10">
                                                 <span className="material-symbols-outlined text-primary">receipt_long</span> Orders
                                             </Link>
                                         </Menu.Item>
@@ -256,7 +282,6 @@ export default function AppLayout({ children }) {
                         </Transition>
                     </Menu>
                 </div>
-            </nav>
-        </div>
+            </nav>   </div>
     );
 }

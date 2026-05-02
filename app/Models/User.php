@@ -23,7 +23,11 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
-        'role'
+        'role',
+        'address_line',
+        'latitude',
+        'longitude',
+        'distance_km'
     ];
 
     /**
@@ -60,7 +64,7 @@ class User extends Authenticatable
     public function addresses() {
         return $this->hasMany(Address::class);
     }
-    
+
     public function favorites() {
         return $this->belongsToMany(Product::class, 'favorites');
     }

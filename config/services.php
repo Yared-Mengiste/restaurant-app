@@ -42,5 +42,16 @@ return [
     'chapa' => [
         'secret' => env('CHAPA_SECRET_KEY'),
     ],
+    'mapbox' => [
+        'secret_token' => env('MAPBOX_SECRET_TOKEN'),
+        'public_token' => env('VITE_MAPBOX_TOKEN'),
+        'restaurant_lat' => (float) env('RESTAURANT_LAT', 9.03),
+        'restaurant_lng' => (float) env('RESTAURANT_LNG', 38.74),
+    ],
+
+    'delivery' => [
+        'max_km' => (float) env('MAX_DELIVERY_DISTANCE_KM', 10),
+        // These can also be pulled from your 'Settings' table as fallback
+    ],
 
 ];

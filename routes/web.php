@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
@@ -66,6 +67,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 */
 Route::middleware(['auth', 'customer'])->group(function () {
     // Cart Management
+    Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
     Route::post('/products/{product}/favorite', [ProductController::class, 'toggleFavorite'])->name('products.favorite')->middleware('auth');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');
@@ -74,6 +76,8 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::put('/cart', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::post('/cart/delivery', [CartController::class, 'updateDeliveryType'])->name('cart.update-delivery-type');
+    Route::post('/cart/address', [CartController::class, 'updateAddress'])->name('cart.update-address');
+
 
     // Checkout & Payment
     Route::post('/pay', [PaymentController::class, 'pay'])->name('payment.pay');

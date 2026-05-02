@@ -74,8 +74,8 @@ class CartService
 
     public function getCartWithItems($user)
     {
-        return Cart::with(['items.product', 'items.variant'])
-            ->where('user_id', $user->id)
+        return Cart::with(['items.product', 'items.variant', 'address']) // ✅ Added 'address'
+        ->where('user_id', $user->id)
             ->first();
     }
 
@@ -113,15 +113,23 @@ class CartService
             ];
         }
 
-        // subtotal from product items
         $subtotal = $this->calculateSubtotal($cart);
+        $deliveryFee = 0;
 
-        // delivery fee depends on delivery_type
-        $deliveryFee = $cart->delivery_type === 'delivery'
-            ? (float)(Setting::where('key', 'base_delivery_fee')->value('value'))
-            : 0;
+        // ✅ DYNAMIC DELIVERY CALCULATION
+        if ($cart->delivery_type === 'delivery' && $cart->address_id) {
+            // Load the address to get the cached distance
+            $address = \App\Models\Address::find($cart->address_id);
 
-        // example: service charge logic
+            if ($address && $address->distance_km !== null) {
+                $baseFee = (float)Setting::where('key', 'base_delivery_fee')->value('value');
+                $perKmRate = (float)Setting::where('key', 'per_km_rate')->value('value');
+
+                // Formula: base + (dist * rate)
+                $deliveryFee = $baseFee + ($address->distance_km * $perKmRate);
+            }
+        }
+
         $serviceCharge = $subtotal * 0.05;
 
         return [

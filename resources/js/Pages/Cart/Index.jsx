@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
+import AddressMapSelector from '../../Components/AddressMapSelector'; // Import the new component
 
-export default function CartIndex({ cart, summary }) {
+export default function CartIndex({ cart, summary, userAddresses = [] }) {
     const { delete: destroy } = useForm();
 
-    // State to track if the payment request is in flight
+    // UI States
     const [isProcessing, setIsProcessing] = useState(false);
+    const [showMap, setShowMap] = useState(false);
+    const [newAddressData, setNewAddressData] = useState(null);
 
     const handleUpdateQuantity = (productId, variantId, quantity) => {
         if (quantity < 1) return;
@@ -25,40 +28,52 @@ export default function CartIndex({ cart, summary }) {
         }));
     };
 
-    const handleCheckout = async () => {
-        if (isProcessing) return; // Prevent multiple clicks
+    // --- Address Selection Logic ---
+    const handleSelectSavedAddress = (addressId) => {
+        router.post(route('cart.update-address'), { address_id: addressId }, {
+            preserveScroll: true
+        });
+    };
 
-        setIsProcessing(true);
-        console.log("Initializing payment...");
+    const handleSaveNewAddress = () => {
+        if (!newAddressData) return;
 
-        try {
-            // 1. Manually hit the route using axios
-            const response = await axios.post(route('payment.pay'));
+        router.post(route('addresses.store'), newAddressData, {
+            onSuccess: (page) => {
+                // Logic: The 'page' object contains the updated props from Laravel.
+                // Find the latest address you just added to the userAddresses array
+                const newAddress = page.props.userAddresses[0];
 
-            // 2. Break out of the SPA and go to Chapa redirect URL
-            if (response.data.checkout_url) {
-                window.location.href = response.data.checkout_url;
-            } else {
-                // If response comes back without a URL, re-enable button
-                setIsProcessing(false);
+                if (newAddress) {
+                    handleSelectSavedAddress(newAddress.id);
+                }
+
+                setShowMap(false);
+                setNewAddressData(null);
             }
-        } catch (error) {
-            // 3. Handle failures and re-enable button for retry
-            setIsProcessing(false);
-            console.error("Payment failed:", error);
-            alert(error.response?.data?.error || "Failed to start payment process.");
-        }
+        });
     };
 
     const handleUpdateDeliveryType = (type) => {
         if (summary.delivery_type === type) return;
+        router.post(route('cart.update-delivery-type'), { type: type }, { preserveScroll: true });
+    };
 
-        router.post(route('cart.update-delivery-type'), {
-            type: type
-        }, {
-            preserveScroll: true,
-            onSuccess: () => console.log(`Switched to ${type}`)
-        });
+    const handleCheckout = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
+
+        try {
+            const response = await axios.post(route('payment.pay'));
+            if (response.data.checkout_url) {
+                window.location.href = response.data.checkout_url;
+            } else {
+                setIsProcessing(false);
+            }
+        } catch (error) {
+            setIsProcessing(false);
+            alert(error.response?.data?.error || "Failed to start payment process.");
+        }
     };
 
     return (
@@ -70,6 +85,7 @@ export default function CartIndex({ cart, summary }) {
 
                     {/* LEFT COLUMN: ITEMS */}
                     <div className="lg:col-span-7 space-y-12">
+                        {/* ... (Existing Header and Cart Item Map) ... */}
                         <header>
                             <h1 className="font-headline text-5xl md:text-6xl text-on-surface font-light tracking-tight mb-4">
                                 Your Selection
@@ -153,27 +169,55 @@ export default function CartIndex({ cart, summary }) {
                             </div>
 
                             {summary.delivery_type === 'delivery' && (
-                                <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-500">
-                                    <div className="flex items-center justify-between mb-6">
-                                        <h3 className="font-headline text-xl">Address Selection</h3>
-                                        <button className="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-sm">add_location</span> Add New
+                                <div className="mt-8 space-y-6 animate-in fade-in slide-in-from-top-4 duration-500">
+                                    <h3 className="font-headline text-xl">Delivery Address</h3>
+
+                                    {/* Saved Addresses List */}
+                                    <div className="grid grid-cols-1 gap-4">
+                                        {userAddresses.map((addr) => (
+                                            <button
+                                                key={addr.id}
+                                                onClick={() => handleSelectSavedAddress(addr.id)}
+                                                className={`p-5 rounded-xl border text-left transition-all flex items-center justify-between ${cart.address_id === addr.id ? 'border-primary bg-primary/5' : 'border-outline-variant/20 bg-surface-container-low'}`}
+                                            >
+                                                <div>
+                                                    <p className="font-bold text-sm">{addr.address_line}</p>
+                                                    {addr.distance_km && <p className="text-xs text-on-surface-variant">{addr.distance_km} km away</p>}
+                                                </div>
+                                                {cart.address_id === addr.id && <span className="material-symbols-outlined text-primary">check_circle</span>}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {/* Map Integration */}
+                                    {!showMap ? (
+                                        <button
+                                            onClick={() => setShowMap(true)}
+                                            className="w-full py-6 border-2 border-dashed border-outline-variant/30 rounded-xl text-on-surface-variant hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2"
+                                        >
+                                            <span className="material-symbols-outlined">add_location</span>
+                                            Add New Address via Map
                                         </button>
-                                    </div>
-                                    <div className="relative w-full h-[300px] rounded-xl overflow-hidden grayscale contrast-125 brightness-75 border border-outline-variant/30">
-                                        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center"></div>
-                                        <div className="absolute inset-0 bg-background/20"></div>
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                            <span className="material-symbols-outlined text-primary text-5xl drop-shadow-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>location_on</span>
-                                        </div>
-                                        <div className="absolute bottom-6 left-6 right-6 bg-surface-container-highest/90 backdrop-blur-md p-4 rounded-lg flex items-center justify-between">
-                                            <div>
-                                                <p className="text-xs uppercase font-bold text-primary tracking-widest mb-1">Active Address</p>
-                                                <p className="text-sm font-semibold">Bole, Addis Ababa, Ethiopia</p>
+                                    ) : (
+                                        <div className="bg-surface-container-high p-6 rounded-2xl space-y-6">
+                                            <AddressMapSelector onAddressSelect={setNewAddressData} />
+                                            <div className="flex gap-4">
+                                                <button
+                                                    onClick={handleSaveNewAddress}
+                                                    disabled={!newAddressData}
+                                                    className="flex-1 py-4 bg-primary text-on-primary rounded-full font-bold uppercase text-xs tracking-widest disabled:opacity-50"
+                                                >
+                                                    Save This Location
+                                                </button>
+                                                <button
+                                                    onClick={() => setShowMap(false)}
+                                                    className="flex-1 py-4 bg-surface-container-highest rounded-full font-bold uppercase text-xs tracking-widest"
+                                                >
+                                                    Cancel
+                                                </button>
                                             </div>
-                                            <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -194,6 +238,10 @@ export default function CartIndex({ cart, summary }) {
                                         <span className="font-headline text-lg">${summary.delivery_fee.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between items-center">
+                                        <span className="text-on-surface-variant font-medium text-xs uppercase tracking-tighter">Distance Charge</span>
+                                        <span className="text-xs text-on-surface-variant italic">Included in delivery</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
                                         <span className="text-on-surface-variant font-medium">Service Charge (5%)</span>
                                         <span className="font-headline text-lg">${summary.service_charge.toFixed(2)}</span>
                                     </div>
@@ -205,7 +253,7 @@ export default function CartIndex({ cart, summary }) {
 
                                 <button
                                     onClick={handleCheckout}
-                                    disabled={isProcessing || !cart || cart.items.length === 0}
+                                    disabled={isProcessing || !cart || cart.items.length === 0 || (summary.delivery_type === 'delivery' && !cart.address_id)}
                                     className={`w-full py-6 rounded-full font-bold uppercase tracking-[0.2em] text-sm transition-all relative overflow-hidden
                                         ${isProcessing
                                         ? 'bg-surface-container-highest text-on-surface-variant cursor-not-allowed'
@@ -217,13 +265,16 @@ export default function CartIndex({ cart, summary }) {
                                         {isProcessing ? (
                                             <>
                                                 <span className="material-symbols-outlined animate-spin text-xl">progress_activity</span>
-                                                <span>Connecting to Chapa...</span>
+                                                <span>Connecting...</span>
                                             </>
                                         ) : (
                                             <span>Proceed to Payment</span>
                                         )}
                                     </div>
                                 </button>
+                                {summary.delivery_type === 'delivery' && !cart.address_id && (
+                                    <p className="text-center text-error text-[10px] mt-4 uppercase tracking-widest font-bold">Please select an address</p>
+                                )}
                             </div>
                         </div>
                     </aside>

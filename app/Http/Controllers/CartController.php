@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Services\CartService;
 
@@ -20,7 +21,8 @@ class CartController extends Controller
 
         return inertia('Cart/Index', [
             'cart' => $this->cartService->getCartWithItems($user),
-            'summary' => $this->cartService->getSummary($user)
+            'summary' => $this->cartService->getSummary($user),
+            'userAddresses' => $user->addresses
         ]);
     }
 
@@ -86,5 +88,24 @@ class CartController extends Controller
         $cart->save();
 
         return back()->with('success', 'Updated delivery type');
+    }
+
+    public function updateAddress(Request $request)
+    {
+        // Validate that the address exists and belongs to the authenticated user
+        $request->validate([
+            'address_id' => 'required|exists:addresses,id,user_id,' . auth()->id(),
+        ]);
+
+        $user = $request->user();
+        // Use your existing service to get the active cart
+        $cart = $this->cartService->getCart($user);
+
+        $cart->update([
+            'address_id' => $request->address_id,
+            'delivery_type' => 'delivery' // Ensure it's set to delivery when an address is picked
+        ]);
+
+        return back()->with('success', 'Delivery location updated.');
     }
 }

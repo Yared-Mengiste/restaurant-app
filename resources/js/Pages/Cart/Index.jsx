@@ -44,9 +44,9 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                 // Find the latest address you just added to the userAddresses array
                 const newAddress = page.props.userAddresses[0];
 
-                if (newAddress) {
-                    handleSelectSavedAddress(newAddress.id);
-                }
+                // if (newAddress) {
+                //     handleSelectSavedAddress(newAddress.id);
+                // }
 
                 setShowMap(false);
                 setNewAddressData(null);

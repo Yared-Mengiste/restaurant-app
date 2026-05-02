@@ -123,7 +123,7 @@ class CartService
 
             if ($address && $address->distance_km !== null) {
                 $baseFee = (float)Setting::where('key', 'base_delivery_fee')->value('value');
-                $perKmRate = (float)Setting::where('key', 'per_km_rate')->value('value');
+                $perKmRate = (float)Setting::where('key', 'per_km_price')->value('value');
 
                 // Formula: base + (dist * rate)
                 $deliveryFee = $baseFee + ($address->distance_km * $perKmRate);

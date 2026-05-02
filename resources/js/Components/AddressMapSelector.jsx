@@ -21,11 +21,24 @@ export default function AddressMapSelector({ onAddressSelect }) {
             zoom: 12
         });
 
+        // Inside useEffect in AddressMapSelector.jsx
+
         const geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             mapboxgl: mapboxgl,
             marker: false,
-            placeholder: 'Search for your area...'
+            placeholder: 'Search for your area (e.g., 4 Kilo)...',
+
+            // --- ADD THESE OPTIONS ---
+            countries: 'et', // Restrict to Ethiopia
+            // Bounding Box for Addis Ababa: [minLng, minLat, maxLng, maxLat]
+            bbox: [38.65, 8.85, 38.85, 9.10],
+            proximity: {
+                longitude: 38.74,
+                latitude: 9.03
+            },
+            types: 'address,poi,neighborhood,locality' // POI helps find landmarks like 4 Kilo
+            // -------------------------
         });
 
         map.current.addControl(geocoder);

@@ -37,4 +37,20 @@ class AddressController extends Controller
 
         return back()->with('success', 'Address saved!');
     }
+    // App\Http\Controllers\AddressController.php
+
+    public function destroy(Request $request, $id)
+    {
+        $address = $request->user()->addresses()->findOrFail($id);
+
+        // Optional: If this address is currently selected in the cart,
+        // you might want to clear it so the delivery fee doesn't break.
+        \App\Models\Cart::where('user_id', $request->user()->id)
+            ->where('address_id', $address->id)
+            ->update(['address_id' => null]);
+
+        $address->delete();
+
+        return back()->with('success', 'Address removed successfully.');
+    }
 }

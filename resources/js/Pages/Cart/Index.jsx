@@ -11,6 +11,18 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
     const [isProcessing, setIsProcessing] = useState(false);
     const [showMap, setShowMap] = useState(false);
     const [newAddressData, setNewAddressData] = useState(null);
+    const [addressToDelete, setAddressToDelete] = useState(null);
+
+    const handleDeleteAddress = (e, addressId) => {
+        e.stopPropagation(); // Prevent selecting the address while trying to delete it
+
+        if (confirm('Are you sure you want to delete this address?')) {
+            router.delete(route('addresses.destroy', addressId), {
+                preserveScroll: true,
+                onSuccess: () => setAddressToDelete(null)
+            });
+        }
+    };
 
     const handleUpdateQuantity = (productId, variantId, quantity) => {
         if (quantity < 1) return;
@@ -173,19 +185,53 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                     <h3 className="font-headline text-xl">Delivery Address</h3>
 
                                     {/* Saved Addresses List */}
+                                    {/* Saved Addresses List */}
                                     <div className="grid grid-cols-1 gap-4">
                                         {userAddresses.map((addr) => (
-                                            <button
-                                                key={addr.id}
-                                                onClick={() => handleSelectSavedAddress(addr.id)}
-                                                className={`p-5 rounded-xl border text-left transition-all flex items-center justify-between ${cart.address_id === addr.id ? 'border-primary bg-primary/5' : 'border-outline-variant/20 bg-surface-container-low'}`}
-                                            >
-                                                <div>
-                                                    <p className="font-bold text-sm">{addr.address_line}</p>
-                                                    {addr.distance_km && <p className="text-xs text-on-surface-variant">{addr.distance_km} km away</p>}
-                                                </div>
-                                                {cart.address_id === addr.id && <span className="material-symbols-outlined text-primary">check_circle</span>}
-                                            </button>
+                                            <div key={addr.id} className="relative group">
+                                                <button
+                                                    onClick={() => handleSelectSavedAddress(addr.id)}
+                                                    className={`w-full p-4 md:p-5 rounded-xl border text-left transition-all flex items-center justify-between ${
+                                                        cart.address_id === addr.id
+                                                            ? 'border-primary bg-primary/5'
+                                                            : 'border-outline-variant/20 bg-surface-container-low active:bg-surface-container-high'
+                                                    }`}
+                                                >
+                                                    {/*
+                   Added 'pr-10': This creates a "safe zone" so the text
+                   doesn't run into the delete icon on small screens.
+                */}
+                                                    <div className="flex-grow pr-10">
+                                                        <p className="font-bold text-sm line-clamp-1">{addr.address_line}</p>
+                                                        {addr.distance_km && (
+                                                            <p className="text-xs text-on-surface-variant">
+                                                                {addr.distance_km} km away
+                                                            </p>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="flex items-center">
+                                                        {cart.address_id === addr.id && (
+                                                            <span className="material-symbols-outlined text-primary text-xl">
+                            check_circle
+                        </span>
+                                                        )}
+                                                    </div>
+                                                </button>
+
+                                                {/*
+                MD:OPACITY-0: Hidden by default only on medium screens and up.
+                GROUP-HOVER: Visible on hover for desktops.
+                On mobile, it stays visible so the user knows they can delete.
+            */}
+                                                <button
+                                                    onClick={(e) => handleDeleteAddress(e, addr.id)}
+                                                    className="absolute right-2 top-1/2 -translate-y-1/2 p-3 text-on-surface-variant hover:text-error active:scale-90 transition-all md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
+                                                    title="Delete Address"
+                                                >
+                                                    <span className="material-symbols-outlined text-xl">delete</span>
+                                                </button>
+                                            </div>
                                         ))}
                                     </div>
 

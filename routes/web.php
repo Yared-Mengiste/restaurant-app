@@ -14,6 +14,26 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Models\Product;
+
+Route::get('/api/search', function (Request $request) {
+    $query = $request->input('q');
+
+    if (!$query) {
+        return response()->json([]);
+    }
+
+    $products = Product::where('is_available', true)
+        ->where(function($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%")
+                ->orWhere('description', 'like', "%{$query}%");
+        })
+        ->limit(6) // Only fetch a few for the dropdown
+        ->get(['id', 'name', 'image', 'price']); // Only grab columns we need
+
+    return response()->json($products);
+})->name('api.search');
 
 /*
 |--------------------------------------------------------------------------

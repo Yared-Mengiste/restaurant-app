@@ -1,14 +1,15 @@
 import { Link, usePage, router } from '@inertiajs/react';
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
+import LiveSearchBar from '@/Components/LiveSearchBar'; // adjust path if needed
 
 export default function AppLayout({ children }) {
     const { auth, filters } = usePage().props;
     const user = auth?.user;
 
-    const [search, setSearch] = useState(filters?.search || '');
+    // const [search, setSearch] = useState(filters?.search || '');
     const [showMobileSearch, setShowMobileSearch] = useState(false);
-    const isFirstRender = useRef(true);
+    // const isFirstRender = useRef(true);
 // --- Inside AppLayout Component ---
 
     const [isDark, setIsDark] = useState(false);
@@ -46,20 +47,20 @@ export default function AppLayout({ children }) {
         }
     };
 
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
-        const delayDebounceFn = setTimeout(() => {
-            router.get(
-                route('home'),
-                { search, category_id: filters?.category_id },
-                { preserveState: true, replace: true, preserveScroll: true }
-            );
-        }, 300);
-        return () => clearTimeout(delayDebounceFn);
-    }, [search]);
+    // useEffect(() => {
+    //     if (isFirstRender.current) {
+    //         isFirstRender.current = false;
+    //         return;
+    //     }
+    //     const delayDebounceFn = setTimeout(() => {
+    //         router.get(
+    //             route('home'),
+    //             { search, category_id: filters?.category_id },
+    //             { preserveState: true, replace: true, preserveScroll: true }
+    //         );
+    //     }, 300);
+    //     return () => clearTimeout(delayDebounceFn);
+    // }, [search]);
 
     const protectedLink = (e) => {
         if (!user) {
@@ -86,16 +87,7 @@ export default function AppLayout({ children }) {
                         </button>
 
                         {/* Desktop Search */}
-                        <div className="relative group hidden md:block">
-                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-                            <input
-                                type="text"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                placeholder="Search our menu..."
-                                className="bg-surface-container-highest/30 border border-outline-variant/20 rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-48 lg:w-64 outline-none text-on-surface transition-all"
-                            />
-                        </div>
+                        <LiveSearchBar />
 
                         <button onClick={() => setShowMobileSearch(!showMobileSearch)} className="md:hidden material-symbols-outlined text-on-surface-variant p-2">
                             {showMobileSearch ? 'close' : 'search'}
@@ -161,15 +153,8 @@ export default function AppLayout({ children }) {
                 </div>
 
                 {showMobileSearch && (
-                    <div className="md:hidden absolute top-full left-0 w-full bg-surface p-4 border-b border-outline-variant/20 animate-in fade-in slide-in-from-top-2">
-                        <input
-                            autoFocus
-                            type="text"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="What are you craving?"
-                            className="w-full bg-background border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface outline-none focus:border-primary"
-                        />
+                    <div className="md:hidden absolute top-full left-0 w-full bg-surface p-4 border-b border-outline-variant/20 animate-in fade-in slide-in-from-top-2 z-50">
+                        <LiveSearchBar isMobile={true} onClose={() => setShowMobileSearch(false)} />
                     </div>
                 )}
             </nav>

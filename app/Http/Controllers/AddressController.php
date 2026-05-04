@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MapboxService;
+// 1. Ensure you are importing the correct Service
+use App\Services\GoogleMapsService;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
-    //
-    public function store(Request $request, MapboxService $mapbox)
+    /**
+     * 2. Change the Type-hint from MapboxService to GoogleMapsService.
+     * 3. Change the variable name to $googleMaps to match your function call.
+     */
+    public function store(Request $request, GoogleMapsService $googleMaps)
     {
         $validated = $request->validate([
             'address_line' => 'required|string',
@@ -16,13 +20,11 @@ class AddressController extends Controller
             'longitude' => 'required|numeric',
         ]);
 
-        // Calculate distance ONCE on creation
-        $distance = $mapbox->getDrivingDistance($validated['longitude'], $validated['latitude']);
-//        \Log::info("Distance calculated: " . $distance . " km");
+        // 4. Calculate distance using the newly injected service
+        $distance = $googleMaps->getDrivingDistance($validated['longitude'], $validated['latitude']);
 
         // Check constraint: MAX_DISTANCE_KM
         if ($distance > config('services.delivery.max_km')) {
-//            return back()->withErrors(['address' => 'Location is outside our delivery zone.']);
             return back()->with('error', 'Location is outside our delivery zone.');
         }
 

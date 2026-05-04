@@ -38,6 +38,9 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_CALLBACK_REDIRECTS'),
+        'maps_api_key' => env('GOOGLE_MAPS_API_KEY'),
+        'restaurant_lat' => env('RESTAURANT_LAT'),
+        'restaurant_lng' => env('RESTAURANT_LNG'),
     ],
     'chapa' => [
         'secret' => env('CHAPA_SECRET_KEY'),
@@ -53,5 +56,6 @@ return [
         'max_km' => (float) env('MAX_DELIVERY_DISTANCE_KM', 10),
         // These can also be pulled from your 'Settings' table as fallback
     ],
+
 
 ];

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
+import { Search, Loader2 } from 'lucide-react'; // Import Lucide icons
 
 export default function LiveSearchBar({ isMobile = false, onClose = () => {} }) {
     const [query, setQuery] = useState('');
@@ -20,6 +21,7 @@ export default function LiveSearchBar({ isMobile = false, onClose = () => {} }) 
         const delayDebounceFn = setTimeout(async () => {
             setIsSearching(true);
             try {
+                // Using standard axios or route() helper if available
                 const response = await axios.get(route('api.search', { q: query }));
                 setResults(response.data);
                 setShowDropdown(true);
@@ -48,7 +50,11 @@ export default function LiveSearchBar({ isMobile = false, onClose = () => {} }) 
         <div ref={searchRef} className={`relative ${isMobile ? 'w-full' : 'hidden md:block'}`}>
             {/* Input Field */}
             <div className="relative group">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+                {/* Search Icon */}
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">
+                    <Search size={18} />
+                </div>
+
                 <input
                     type="text"
                     value={query}
@@ -60,11 +66,12 @@ export default function LiveSearchBar({ isMobile = false, onClose = () => {} }) 
                         isMobile ? 'w-full bg-background border-outline-variant/30 py-3 rounded-lg' : 'w-48 lg:w-64'
                     }`}
                 />
+
                 {/* Loading Spinner */}
                 {isSearching && (
-                    <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-primary text-sm animate-spin">
-                        progress_activity
-                    </span>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary animate-spin">
+                        <Loader2 size={16} />
+                    </div>
                 )}
             </div>
 

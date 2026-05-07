@@ -1,14 +1,13 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
+import { Heart, Lock } from 'lucide-react'; // Import Lucide icons
 
 export default function ProductCard({ product }) {
     const { auth } = usePage().props;
     const defaultImage = "/placeholder.jpg";
 
-    // 80/20 Rule: Convert 1/0 from Laravel withExists to boolean for React state
     const [isFavourited, setIsFavourited] = useState(!!product.is_favourited);
 
-    // Sync state if the product prop changes (important for filtering/search)
     useEffect(() => {
         setIsFavourited(!!product.is_favourited);
     }, [product.is_favourited]);
@@ -29,13 +28,11 @@ export default function ProductCard({ product }) {
             return;
         }
 
-        // Optimistic UI update: Toggle immediately for a snappy feel
         const previousState = isFavourited;
         setIsFavourited(!previousState);
 
         router.post(route('products.favorite', product.id), {}, {
             preserveScroll: true,
-            // If the request fails, revert to the original heart state
             onError: () => setIsFavourited(previousState),
         });
     };
@@ -62,12 +59,12 @@ export default function ProductCard({ product }) {
                         onClick={toggleFavorite}
                         className="absolute top-3 right-3 md:top-5 md:right-5 z-10 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center border border-white/10 text-white transition-all hover:bg-white hover:text-primary active:scale-90"
                     >
-                        <span
-                            className="material-symbols-outlined text-2xl transition-all"
-                            style={{ fontVariationSettings: isFavourited ? "'FILL' 1" : "'FILL' 0" }}
-                        >
-                            favorite
-                        </span>
+                        {/* 80/20 Rule: Use 'fill' prop for the active state */}
+                        <Heart
+                            size={22}
+                            className="transition-all duration-300"
+                            fill={isFavourited ? "currentColor" : "none"}
+                        />
                     </button>
                 )}
 
@@ -106,19 +103,18 @@ export default function ProductCard({ product }) {
                         ${isArchived ? 'text-on-surface-variant/40' : 'text-primary'}`}>
                         ${Number(product.price).toFixed(2)}
                     </span>
-                    {/* Fixed Logic: Prevents rendering '0' if false */}
-                    {product.has_variants ? (
+                    {product.has_variants && (
                         <p className="text-[8px] md:text-[9px] text-on-surface-variant/40 uppercase tracking-tighter">
                             Starts at
                         </p>
-                    ) : null}
+                    )}
                 </div>
             </div>
 
             {/* Admin Quick Indicator */}
             {auth.user?.role === 'admin' && isArchived && (
                 <p className="mt-2 text-[8px] font-label uppercase tracking-widest text-error font-bold flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[10px]">lock</span>
+                    <Lock size={10} />
                     Hidden from customers
                 </p>
             )}

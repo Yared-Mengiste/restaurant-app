@@ -1,6 +1,17 @@
 import { Link, usePage, router } from '@inertiajs/react';
 import { useState, useEffect, Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
+import {
+    Sun,
+    Moon,
+    User,
+    Settings,
+    LogOut,
+    UtensilsCrossed,
+    Beef,
+    Layers,
+    LayoutDashboard
+} from 'lucide-react';
 
 export default function AdminLayout({ children }) {
     const { auth } = usePage().props;
@@ -37,6 +48,14 @@ export default function AdminLayout({ children }) {
 
     if (!user || user.role !== 'admin') return null;
 
+    // Sidebar items configuration
+    const navItems = [
+        { name: 'orders', label: 'Orders', icon: UtensilsCrossed, route: 'admin.orders' },
+        { name: 'products', label: 'Products', icon: Beef, route: 'admin.products' },
+        { name: 'categories', label: 'Categories', icon: Layers, route: 'admin.categories.index' },
+        { name: 'settings', label: 'Dashboard', icon: LayoutDashboard, route: 'admin.dashboard' },
+    ];
+
     return (
         <div className="min-h-screen bg-background text-on-background font-body selection:bg-primary selection:text-on-primary-fixed overflow-x-hidden transition-colors duration-300">
 
@@ -49,7 +68,6 @@ export default function AdminLayout({ children }) {
                 </div>
 
                 <div className="flex items-center gap-6">
-                    {/* PROFILE & THEME DROPDOWN */}
                     <Menu as="div" className="relative">
                         <Menu.Button className="w-10 h-10 rounded-full border border-outline-variant/30 overflow-hidden outline-none hover:border-primary transition-colors">
                             <img
@@ -73,15 +91,12 @@ export default function AdminLayout({ children }) {
                                     <p className="text-sm font-headline text-on-surface truncate">{user.name}</p>
                                 </div>
 
-                                {/* THEME TOGGLE OPTION */}
                                 <Menu.Item>
                                     <button
                                         onClick={toggleTheme}
                                         className="w-full flex items-center gap-3 px-4 py-2 text-sm text-on-surface-variant hover:bg-primary/10 hover:text-primary transition-colors text-left"
                                     >
-                                        <span className="material-symbols-outlined text-lg">
-                                            {isDark ? 'light_mode' : 'dark_mode'}
-                                        </span>
+                                        {isDark ? <Sun size={18} /> : <Moon size={18} />}
                                         {isDark ? 'Switch to Light' : 'Switch to Dark'}
                                     </button>
                                 </Menu.Item>
@@ -89,7 +104,7 @@ export default function AdminLayout({ children }) {
                                 <Menu.Item>
                                     {({ active }) => (
                                         <Link href={route('profile.edit')} className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
-                                            <span className="material-symbols-outlined text-lg">person</span> Profile Settings
+                                            <User size={18} /> Profile Settings
                                         </Link>
                                     )}
                                 </Menu.Item>
@@ -98,7 +113,7 @@ export default function AdminLayout({ children }) {
                                     <Menu.Item>
                                         {({ active }) => (
                                             <Link href={route('logout')} method="post" as="button" className="w-full flex items-center gap-3 px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors">
-                                                <span className="material-symbols-outlined text-lg">logout</span> Sign Out
+                                                <LogOut size={18} /> Sign Out
                                             </Link>
                                         )}
                                     </Menu.Item>
@@ -109,7 +124,7 @@ export default function AdminLayout({ children }) {
                 </div>
             </header>
 
-            {/* SIDEBAR */}
+            {/* SIDEBAR (Desktop) */}
             <aside className="fixed left-0 top-0 h-full w-64 bg-surface-container-low hidden lg:flex flex-col py-8 border-r border-outline-variant/10 z-40">
                 <div className="px-8 mt-24 mb-12">
                     <h3 className="font-['Manrope'] text-sm uppercase tracking-[0.1em] text-on-surface-variant/50">Management</h3>
@@ -117,19 +132,17 @@ export default function AdminLayout({ children }) {
                 </div>
                 <nav className="flex-grow">
                     <ul className="space-y-2">
-                        {['orders', 'products', 'categories.index', 'settings'].map((item) => (
-                            <li key={item}>
+                        {navItems.map((item) => (
+                            <li key={item.name}>
                                 <Link
-                                    href={route(item === 'settings' ? 'admin.dashboard' : `admin.${item}`)}
+                                    href={route(item.route)}
                                     className={`flex items-center gap-4 px-8 py-4 mr-4 font-['Manrope'] text-sm uppercase tracking-[0.1em] transition-all rounded-r-full
-                                    ${route().current(`admin.${item.split('.')[0]}*`)
+                                    ${route().current(item.route.replace('.index', '') + '*')
                                         ? 'bg-primary/10 text-primary font-bold border-l-4 border-primary'
                                         : 'text-on-surface-variant/70 hover:text-on-surface hover:bg-surface-container-high'}`}
                                 >
-                                    <span className="material-symbols-outlined">
-                                        {item === 'orders' ? 'restaurant' : item === 'products' ? 'flatware' : item.includes('categories') ? 'category' : 'settings'}
-                                    </span>
-                                    {item.split('.')[0]}
+                                    <item.icon size={20} />
+                                    {item.label}
                                 </Link>
                             </li>
                         ))}
@@ -147,18 +160,16 @@ export default function AdminLayout({ children }) {
             {/* MOBILE NAV (Bottom) */}
             <nav className="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 pointer-events-none">
                 <div className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-outline-variant/20 flex justify-around py-4 bg-background/80 backdrop-blur-xl shadow-2xl">
-                    <Link href={route('admin.dashboard')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.orders') ? 'text-primary' : 'text-on-surface-variant/50'}`}>
-                        <span className="material-symbols-outlined">restaurant</span>
-                        <span className="text-[8px] uppercase font-bold mt-1">Orders</span>
-                    </Link>
-                    <Link href={route('admin.products')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.products') ? 'text-primary' : 'text-on-surface-variant/50'}`}>
-                        <span className="material-symbols-outlined">flatware</span>
-                        <span className="text-[8px] uppercase font-bold mt-1">Items</span>
-                    </Link>
-                    <Link href={route('admin.categories.index')} className={`flex flex-col items-center justify-center transition-all ${route().current('admin.categories.*') ? 'text-primary' : 'text-on-surface-variant/50'}`}>
-                        <span className="material-symbols-outlined">category</span>
-                        <span className="text-[8px] uppercase font-bold mt-1">Cats</span>
-                    </Link>
+                    {navItems.filter(i => i.name !== 'settings').map((item) => (
+                        <Link
+                            key={item.name}
+                            href={route(item.route)}
+                            className={`flex flex-col items-center justify-center transition-all ${route().current(item.route.replace('.index', '') + '*') ? 'text-primary' : 'text-on-surface-variant/50'}`}
+                        >
+                            <item.icon size={20} />
+                            <span className="text-[8px] uppercase font-bold mt-1">{item.name === 'categories' ? 'Cats' : item.label}</span>
+                        </Link>
+                    ))}
                 </div>
             </nav>
         </div>

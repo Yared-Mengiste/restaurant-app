@@ -48,7 +48,7 @@ export default function Dashboard({ auth, stats, orders, filters }) {
 
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <StatCard label="Total Revenue" value={`$${Number(stats.total_revenue).toLocaleString()}`} growth={`${stats.revenue_growth}%`} icon="payments" color="primary" />
+                <StatCard label="Total Revenue" value={formatCurrency(stats.total_revenue)} growth={`${stats.revenue_growth}%`} icon="payments" color="primary" />
                 <StatCard label="Today's Orders" value={stats.today_orders} subtext="Live" icon="restaurant_menu" color="tertiary" />
                 <StatCard label="Pending Deliveries" value={stats.pending_deliveries} pulse={stats.pending_deliveries > 0} icon="pending_actions" color="error" />
             </div>

@@ -1,4 +1,5 @@
 import { Link, router } from '@inertiajs/react';
+import { formatCurrency } from '@/lib/currency';
 
 export default function AdminProductCard({ product }) {
     const defaultImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuBixsKQpMDnDqNYWkE_TS9GzIVGy9k8VszLKdiI-fZR0HcPit6KuaHSPSTa6H1_rK45Dku9CV0JTIJawfs2cqLdwB1VP2-0PGAvITdOKYJ_tRJ0M37YVKOzdiuNHJrtYIun7TybxrGQsATCpuEWp5_--RjZDounDkvnsJOG6BxStm1S6fAPUW4LHUaKhpnbNifLv7zlY8bdZnyauXLQ_7ljsD_9O-JSlC3pUh0yaesFwhw_WJ0liMxkO2YwcKZwR3cSmkNsEbM9wF3P";
@@ -48,7 +49,7 @@ export default function AdminProductCard({ product }) {
 
                 <div className="text-right shrink-0">
                     <span className="font-body text-sm md:text-base text-primary font-bold">
-                        ${Number(product.price).toFixed(2)}
+                        {formatCurrency(product.price)}
                     </span>
                     {product.has_variants? (
                         <p className="text-[8px] md:text-[9px] text-on-surface-variant/40 uppercase tracking-tighter">

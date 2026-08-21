@@ -1,5 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
+import { formatCurrency } from '@/lib/currency';
 import { useState, useEffect, useRef } from 'react';
 
 export default function Products({ products, filters }) {
@@ -93,7 +94,7 @@ export default function Products({ products, filters }) {
                                         </span>
                                 </td>
                                 <td className="px-8 py-5 font-bold text-on-surface">
-                                    ${Number(product.price).toFixed(2)}
+                                    {formatCurrency(product.price)}
                                 </td>
                                 <td className="px-8 py-5">
                                         <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-widest border ${

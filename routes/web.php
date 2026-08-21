@@ -38,6 +38,8 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 Route::view('/privacy', 'legal.privacy')->name('legal.privacy');
 Route::view('/terms', 'legal.terms')->name('legal.terms');
 Route::view('/contact', 'legal.contact')->name('legal.contact');
+Route::view('/refunds', 'legal.refunds')->name('legal.refunds');
+Route::view('/delivery-policy', 'legal.delivery')->name('legal.delivery');
 Route::get('/sitemap.xml', function () {
     return response()->view('sitemap')->header('Content-Type', 'application/xml');
 })->name('sitemap');

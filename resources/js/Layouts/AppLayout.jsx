@@ -10,6 +10,8 @@ import {
 export default function AppLayout({ children }) {
     const { auth, cart_count: cartCount = 0 } = usePage().props;
     const user = auth?.user;
+    const addisHour = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'Africa/Addis_Ababa', hour: '2-digit', hour12: false }).format(new Date()));
+    const isOpen = addisHour >= 11 && addisHour < 22;
 
     const [showMobileSearch, setShowMobileSearch] = useState(false);
     const [isDark, setIsDark] = useState(false);
@@ -159,6 +161,10 @@ export default function AppLayout({ children }) {
                             <a className="block hover:text-primary" href="tel:+251911000000">+251 911 000 000</a>
                             <a className="block hover:text-primary" href="https://wa.me/251911000000" target="_blank" rel="noreferrer">WhatsApp orders</a>
                             <p>Open daily · 11:00–22:00</p>
+                            <p className={isOpen ? 'text-tertiary' : 'text-error'}>{isOpen ? 'Open now' : 'Currently closed'}</p>
+                            <p>Pickup: typically 25–35 minutes</p>
+                            <p>Delivery: within 10 km · minimum order 300 ETB</p>
+                            <a className="block hover:text-primary" href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
                         </div>
                     </div>
                 </div>
@@ -166,7 +172,7 @@ export default function AppLayout({ children }) {
                     <p className="font-body text-[10px] text-on-surface-variant/50 uppercase tracking-[0.2em]">
                         © 2026 Bello Restaurant. All Rights Reserved.
                     </p>
-                    <div className="mt-4 flex justify-center gap-5 text-xs text-on-surface-variant"><Link href={route('legal.privacy')}>Privacy</Link><Link href={route('legal.terms')}>Terms</Link><Link href={route('legal.contact')}>Contact</Link></div>
+                    <div className="mt-4 flex flex-wrap justify-center gap-5 text-xs text-on-surface-variant"><Link href={route('legal.privacy')}>Privacy</Link><Link href={route('legal.terms')}>Terms</Link><Link href={route('legal.refunds')}>Refunds</Link><Link href={route('legal.delivery')}>Delivery policy</Link><Link href={route('legal.contact')}>Contact</Link></div>
                 </div>
             </footer>
 

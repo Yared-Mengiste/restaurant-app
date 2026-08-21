@@ -4,4 +4,6 @@
     <url><loc>{{ route('legal.privacy') }}</loc></url>
     <url><loc>{{ route('legal.terms') }}</loc></url>
     <url><loc>{{ route('legal.contact') }}</loc></url>
+    <url><loc>{{ route('legal.refunds') }}</loc></url>
+    <url><loc>{{ route('legal.delivery') }}</loc></url>
 </urlset>

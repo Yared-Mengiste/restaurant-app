@@ -134,7 +134,7 @@ export default function Register() {
 
                             {/* Terms */}
                             <p className="text-[11px] text-on-surface-variant/60 font-body leading-relaxed text-center px-4">
-                                By creating an account, you agree to our <Link className="underline hover:text-primary transition-colors" href="#">Privacy Policy</Link> and <Link className="underline hover:text-primary transition-colors" href="#">Terms of Service</Link>.
+                                By creating an account, you agree to our <Link className="underline hover:text-primary transition-colors" href={route('legal.privacy')}>Privacy Policy</Link> and <Link className="underline hover:text-primary transition-colors" href={route('legal.terms')}>Terms of Service</Link>.
                             </p>
 
                             {/* Submit Action */}
@@ -168,9 +168,9 @@ export default function Register() {
                         © 2026 Bello Restaurant. An Editorial Dining Experience.
                     </div>
                     <div className="flex gap-8">
-                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Privacy Policy</Link>
-                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Terms of Service</Link>
-                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Contact</Link>
+                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href={route('legal.privacy')}>Privacy Policy</Link>
+                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href={route('legal.terms')}>Terms of Service</Link>
+                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href={route('legal.contact')}>Contact</Link>
                     </div>
                 </div>
             </footer>

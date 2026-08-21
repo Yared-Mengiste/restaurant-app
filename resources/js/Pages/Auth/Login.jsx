@@ -159,8 +159,8 @@ export default function Login({ status, canResetPassword }) {
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 w-full max-w-7xl mx-auto">
                     <span className="font-sans text-[10px] uppercase tracking-widest text-gray-500">© 2026 Bello Restaurant. An Editorial Dining Experience.</span>
                     <div className="flex gap-8">
-                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Privacy Policy</Link>
-                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href="#">Terms of Service</Link>
+                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href={route('legal.privacy')}>Privacy Policy</Link>
+                        <Link className="font-sans text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-300 transition-colors" href={route('legal.terms')}>Terms of Service</Link>
                     </div>
                 </div>
             </footer>

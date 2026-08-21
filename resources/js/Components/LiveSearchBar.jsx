@@ -25,8 +25,9 @@ export default function LiveSearchBar({ isMobile = false, onClose = () => {} }) 
                 const response = await axios.get(route('api.search', { q: query }));
                 setResults(response.data);
                 setShowDropdown(true);
-            } catch (error) {
-                console.error("Search failed", error);
+            } catch {
+                setResults([]);
+                setShowDropdown(true);
             } finally {
                 setIsSearching(false);
             }

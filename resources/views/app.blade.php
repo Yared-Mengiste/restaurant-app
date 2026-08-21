@@ -4,7 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <title inertia>Bello Ristorante · Italian dining in Addis Ababa</title>
+    <meta name="description" content="Order wood-fired pizzas, Italian-inspired dishes, and cocktails from Bello Ristorante in Addis Ababa.">
+    <meta property="og:title" content="Bello Ristorante · Addis Ababa">
+    <meta property="og:description" content="Italian-inspired dining, pickup, and delivery from Bello Ristorante.">
+    <meta property="og:image" content="{{ asset('images/belloHero1.jpg') }}">
+    <meta property="og:type" content="restaurant">
+    <link rel="canonical" href="{{ config('app.url') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +21,8 @@
     @viteReactRefresh
     @vite(['resources/js/app.jsx'])
     @inertiaHead
+
+    <script type="application/ld+json">@json(['@context' => 'https://schema.org', '@type' => 'Restaurant', 'name' => 'Bello Ristorante', 'servesCuisine' => 'Italian', 'telephone' => '+251911000000', 'address' => ['@type' => 'PostalAddress', 'streetAddress' => 'Bole', 'addressLocality' => 'Addis Ababa', 'addressCountry' => 'ET'], 'openingHours' => 'Mo-Su 11:00-22:00', 'priceRange' => '$$'])</script>
 
     <script>
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

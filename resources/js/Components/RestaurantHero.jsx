@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from '@inertiajs/react';
 
 export default function RestaurantHero() {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -68,6 +69,11 @@ export default function RestaurantHero() {
                                 <p className="text-white/80 mb-8 text-lg max-w-sm">
                                     {slide.description}
                                 </p>
+                                <div className="flex flex-wrap gap-3">
+                                    <Link href={route('home')} className="rounded-full bg-primary px-6 py-3 text-xs font-bold uppercase tracking-widest text-on-primary">Order now</Link>
+                                    <a href="#menu" className="rounded-full border border-white/50 px-6 py-3 text-xs font-bold uppercase tracking-widest text-white">View menu</a>
+                                    <a href="tel:+251911000000" className="rounded-full border border-white/50 px-6 py-3 text-xs font-bold uppercase tracking-widest text-white">Call us</a>
+                                </div>
                             </div>
                         </div>
                     </div>

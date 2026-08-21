@@ -21,6 +21,9 @@ use Inertia\Inertia;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::view('/privacy', 'legal.privacy')->name('legal.privacy');
+Route::view('/terms', 'legal.terms')->name('legal.terms');
+Route::view('/contact', 'legal.contact')->name('legal.contact');
 
 
 // Social Authentication

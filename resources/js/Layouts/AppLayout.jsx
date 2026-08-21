@@ -182,15 +182,20 @@ export default function AppLayout({ children }) {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 w-full max-w-7xl mx-auto">
                     <div>
                         <div className="font-headline text-primary text-2xl mb-4 italic">Bello Restaurant</div>
-                        <p className="text-on-surface-variant font-body text-sm leading-relaxed max-w-xs">
-                            An odyssey of taste, where every ingredient tells a story of heritage and passion.
-                        </p>
+                        <p className="text-on-surface-variant font-body text-sm leading-relaxed max-w-xs">Italian-inspired dining and wood-fired favorites in Addis Ababa.</p>
+                        <div className="mt-5 space-y-2 text-sm text-on-surface-variant">
+                            <a className="block hover:text-primary" href="https://maps.google.com/?q=Bole,Addis+Ababa" target="_blank" rel="noreferrer">Bole, Addis Ababa, Ethiopia</a>
+                            <a className="block hover:text-primary" href="tel:+251911000000">+251 911 000 000</a>
+                            <a className="block hover:text-primary" href="https://wa.me/251911000000" target="_blank" rel="noreferrer">WhatsApp orders</a>
+                            <p>Open daily · 11:00–22:00</p>
+                        </div>
                     </div>
                 </div>
                 <div className="mt-20 pt-8 border-t border-outline-variant/10 text-center">
                     <p className="font-body text-[10px] text-on-surface-variant/50 uppercase tracking-[0.2em]">
                         © 2026 Bello Restaurant. All Rights Reserved.
                     </p>
+                    <div className="mt-4 flex justify-center gap-5 text-xs text-on-surface-variant"><Link href={route('legal.privacy')}>Privacy</Link><Link href={route('legal.terms')}>Terms</Link><Link href={route('legal.contact')}>Contact</Link></div>
                 </div>
             </footer>
 

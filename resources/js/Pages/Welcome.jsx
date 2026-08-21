@@ -34,11 +34,11 @@ export default function Welcome({
             )}
 
             {/* 4. The Main Menu / Search Results */}
-            <ProductGrid
+            <div id="menu"><ProductGrid
                 products={products}
                 auth={auth}
                 title={isSearching ? "Search Results" : "Our Menu"}
-            />
+            /></div>
         </AppLayout>
     );
 }

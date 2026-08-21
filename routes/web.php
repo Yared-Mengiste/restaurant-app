@@ -26,6 +26,7 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 // Social Authentication
 Route::get('auth/google', [SocialiteController::class, 'googleLogin'])->name('auth.google');
 Route::get('auth/google-callback', [SocialiteController::class, 'googleAuthentication'])->name('auth.google-callback');
+Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
 
 /*
 |--------------------------------------------------------------------------

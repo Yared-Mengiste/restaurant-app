@@ -7,6 +7,7 @@ use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Services\CartService;
+use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
@@ -17,7 +18,7 @@ class OrderService
         $this->cartService = $cartService;
     }
 
-    public function createOrderFromCart($user, $transactionRef)
+    public function createOrderFromCart($user, $transactionRef, string $paymentStatus = 'pending')
     {
         $cart = $this->cartService->getCartWithItems($user);
 
@@ -32,15 +33,21 @@ class OrderService
         $serviceCharge = $subtotal * 0.05;
         $total = $subtotal + $deliveryFee + $serviceCharge;
 
-        // 1️⃣ Create order
+        if ($payment = Payment::where('transaction_ref', $transactionRef)->first()) {
+            return $payment->order;
+        }
+
         $order = Order::create([
             'user_id' => $user->id,
-            'delivery_type' => $cart->delivery_type, // or pickup (frontend will choose)
+            'address_id' => $cart->address_id,
+            'delivery_type' => $cart->delivery_type,
             'subtotal' => $subtotal,
             'delivery_fee' => $deliveryFee,
             'total' => $total,
             'status' => 'pending',
-            'payment_status' => 'paid',
+            'payment_status' => $paymentStatus,
+            'phone' => $cart->phone,
+            'order_notes' => $cart->order_notes,
         ]);
 
         // 2️⃣ Create items
@@ -59,12 +66,30 @@ class OrderService
             'order_id' => $order->id,
             'transaction_ref' => $transactionRef,
             'amount' => $total,
-            'status' => 'paid'
+            'status' => $paymentStatus,
         ]);
 
-        // 4️⃣ Clear the cart
-        $cart->items()->delete();
-
         return $order;
+    }
+
+    public function markPaid(string $transactionRef): ?Order
+    {
+        return DB::transaction(function () use ($transactionRef) {
+            $payment = Payment::where('transaction_ref', $transactionRef)->lockForUpdate()->first();
+            if (!$payment || $payment->status === 'paid') return $payment?->order;
+            $payment->update(['status' => 'paid']);
+            $payment->order->update(['payment_status' => 'paid']);
+            $payment->order->user->cart?->items()->delete();
+            return $payment->order;
+        });
+    }
+
+    public function markFailed(string $transactionRef): ?Order
+    {
+        $payment = Payment::where('transaction_ref', $transactionRef)->first();
+        if (!$payment || $payment->status === 'paid') return $payment?->order;
+        $payment->update(['status' => 'failed']);
+        $payment->order->update(['payment_status' => 'failed']);
+        return $payment->order;
     }
 }

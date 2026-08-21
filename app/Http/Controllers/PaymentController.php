@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ChapaService;
 use App\Services\CartService;
 use App\Services\OrderService;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -60,6 +61,9 @@ class PaymentController extends Controller
             ]
         ];
 
+        $order = app(OrderService::class)->createOrderFromCart($user, $reference);
+        if (!$order) return response()->json(['error' => 'Unable to create order'], 422);
+
 //        $response = $this->chapa->initPayment($data);
 //
 //        if (($response['status'] ?? '') !== 'success') {
@@ -85,15 +89,31 @@ class PaymentController extends Controller
 
     public function callback($reference)
     {
+        return $this->completePayment($reference);
+    }
+
+    public function webhook(Request $request)
+    {
+        $reference = $request->input('tx_ref') ?: $request->input('reference');
+        if (!$reference) return response()->json(['error' => 'Missing transaction reference'], 422);
+        return $this->completePayment($reference, true);
+    }
+
+    protected function completePayment(string $reference, bool $webhook = false)
+    {
         $data = $this->chapa->verify($reference);
+        $orders = app(OrderService::class);
+        $payment = Payment::where('transaction_ref', $reference)->first();
+        $verifiedAmount = (float) data_get($data, 'data.amount', -1);
 
-        if (($data['status'] ?? '') === 'success') {
-
-            $order = app(OrderService::class)->createOrderFromCart(auth()->user(), $reference);
-
-            return redirect()->route('order.success', ['order' => $order->id]);
+        if (($data['status'] ?? '') === 'success' && $payment && abs($verifiedAmount - (float) $payment->amount) < 0.01) {
+            $order = $orders->markPaid($reference);
+            if ($webhook) return response()->json(['status' => 'ok']);
+            return redirect()->route('order.success', ['order' => $order?->id]);
         }
 
+        $orders->markFailed($reference);
+        if ($webhook) return response()->json(['status' => 'failed'], 422);
         return redirect()->route('payment.failed');
     }
 }

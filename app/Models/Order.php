@@ -14,7 +14,9 @@ protected $fillable = [
 'delivery_fee',
 'total',
 'status',
-'payment_status'
+'payment_status',
+'phone',
+'order_notes',
 ];
 
 public function user() {

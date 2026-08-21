@@ -1,5 +1,6 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
+import { formatCurrency } from '@/lib/currency';
 
 export default function ProductCard({ product }) {
     const { auth } = usePage().props;
@@ -104,7 +105,7 @@ export default function ProductCard({ product }) {
                 <div className="text-right shrink-0">
                     <span className={`font-body text-sm md:text-base font-bold transition-colors
                         ${isArchived ? 'text-on-surface-variant/40' : 'text-primary'}`}>
-                        ${Number(product.price).toFixed(2)}
+                        {formatCurrency(product.price)}
                     </span>
                     {/* Fixed Logic: Prevents rendering '0' if false */}
                     {product.has_variants ? (

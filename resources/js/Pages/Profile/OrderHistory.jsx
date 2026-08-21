@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { Head, router, Link } from '@inertiajs/react';
+import { formatCurrency } from '@/lib/currency';
 
 export default function OrderHistory({ orders }) {
     const [expandedRow, setExpandedRow] = useState(null);
@@ -47,7 +48,7 @@ export default function OrderHistory({ orders }) {
                                         <td className="px-8 py-6 text-sm text-on-surface-variant">
                                             {new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                                         </td>
-                                        <td className="px-8 py-6 font-bold text-on-surface">${Number(order.total).toFixed(2)}</td>
+                                        <td className="px-8 py-6 font-bold text-on-surface">{formatCurrency(order.total)}</td>
                                         <td className="px-8 py-6">
                                             <StatusBadge status={order.status} />
                                         </td>
@@ -80,7 +81,7 @@ export default function OrderHistory({ orders }) {
                                                                         </p>
                                                                     </div>
                                                                 </div>
-                                                                <span className="font-mono text-sm text-primary">${(item.price * item.quantity).toFixed(2)}</span>
+                                                                <span className="font-mono text-sm text-primary">{formatCurrency(item.price * item.quantity)}</span>
                                                             </div>
                                                         ))}
                                                     </div>

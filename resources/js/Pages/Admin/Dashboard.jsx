@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState, useEffect, useRef, Fragment } from 'react';
+import { formatCurrency } from '@/lib/currency';
 
 export default function Dashboard({ auth, stats, orders, filters }) {
     const [search, setSearch] = useState(filters.search || '');
@@ -110,7 +111,7 @@ export default function Dashboard({ auth, stats, orders, filters }) {
                                 >
                                     <td className="px-8 py-6 font-mono text-xs text-primary">#{order.id}</td>
                                     <td className="px-8 py-6 font-headline text-sm">{order.user.name}</td>
-                                    <td className="px-8 py-6 font-bold text-on-surface">${order.total}</td>
+                                    <td className="px-8 py-6 font-bold text-on-surface">{formatCurrency(order.total)}</td>
                                     <td className="px-8 py-6">
                                             <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-highest text-[10px] font-extrabold uppercase tracking-widest ${order.status === 'preparing' ? 'text-primary' : 'text-on-surface-variant'}`}>
                                                 <span className={`w-1.5 h-1.5 rounded-full ${order.status === 'preparing' ? 'bg-primary animate-pulse' : 'bg-tertiary'}`}></span>

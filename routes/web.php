@@ -24,6 +24,9 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 Route::view('/privacy', 'legal.privacy')->name('legal.privacy');
 Route::view('/terms', 'legal.terms')->name('legal.terms');
 Route::view('/contact', 'legal.contact')->name('legal.contact');
+Route::get('/sitemap.xml', function () {
+    return response()->view('sitemap')->header('Content-Type', 'application/xml');
+})->name('sitemap');
 
 
 // Social Authentication
@@ -74,14 +77,14 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-    Route::put('/cart', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store')->middleware('throttle:60,1');
+    Route::put('/cart', [CartController::class, 'update'])->name('cart.update')->middleware('throttle:60,1');
+    Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy')->middleware('throttle:60,1');
     Route::post('/cart/delivery', [CartController::class, 'updateDeliveryType'])->name('cart.update-delivery-type');
     Route::post('/cart/checkout-details', [CartController::class, 'updateCheckoutDetails'])->name('cart.update-checkout-details');
 
     // Checkout & Payment
-    Route::post('/pay', [PaymentController::class, 'pay'])->name('payment.pay');
+    Route::post('/pay', [PaymentController::class, 'pay'])->name('payment.pay')->middleware('throttle:10,1');
     Route::get('/payment/callback/{reference}', [PaymentController::class, 'callback'])->name('payment.callback');
     Route::get('/order/success/{order}', function ($orderId) {
         return inertia('Order/OrderSuccess', ['orderId' => $orderId]);

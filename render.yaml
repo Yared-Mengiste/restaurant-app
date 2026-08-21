@@ -45,6 +45,10 @@ services:
         value: database
       - key: FILESYSTEM_DISK
         value: public
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: LOG_LEVEL
+        value: warning
 
     disk:
       name: restaurant-storage

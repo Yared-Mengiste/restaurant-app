@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {usePage, Head, useForm, router} from '@inertiajs/react'; // Added useForm
 import AppLayout from '@/Layouts/AppLayout';
+import { formatCurrency } from '@/lib/currency';
 import ProductCard from '@/Components/ProductCard';
 
 export default function Show({ product, relatedProducts }) {
@@ -66,7 +67,7 @@ export default function Show({ product, relatedProducts }) {
                             </div>
                             <div className="flex items-baseline gap-4">
                                 <span className="text-3xl font-headline text-primary">
-                                    ${Number(unitPrice).toFixed(2)}
+                                    {formatCurrency(unitPrice)}
                                 </span>
                             </div>
                         </section>
@@ -106,7 +107,7 @@ export default function Show({ product, relatedProducts }) {
                         {/* Total Price */}
                         <div className="flex flex-col">
                 <span className="text-lg md:text-2xl font-headline text-on-surface">
-                    ${(Number(unitPrice) * data.quantity).toFixed(2)}
+                    {formatCurrency(Number(unitPrice) * data.quantity)}
                 </span>
                         </div>
 

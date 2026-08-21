@@ -147,7 +147,7 @@ export default function AppLayout({ children }) {
                 )}
             </nav>
 
-            <main className="transition-all duration-300 pb-32 lg:pb-0">
+            <main className="transition-all duration-300 pb-28 lg:pb-0">
                 {children}
             </main>
 
@@ -177,36 +177,26 @@ export default function AppLayout({ children }) {
             </footer>
 
             {/* MOBILE NAVIGATION */}
-            <nav className="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 pointer-events-none">
-                <div className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-outline-variant/30 flex justify-around items-center py-4 px-4 shadow-2xl bg-background/80 backdrop-blur-xl">
+            <nav aria-label="Mobile navigation" className="lg:hidden fixed bottom-0 w-full flex justify-around items-center z-50 px-4 pointer-events-none mobile-safe-bottom">
+                <div className="pointer-events-auto w-full max-w-md rounded-2xl border border-outline-variant/30 grid grid-cols-4 items-center p-2 shadow-2xl bg-background/90 backdrop-blur-xl">
 
-                    <Link href={route('home')} className={`flex flex-col items-center justify-center transition-all ${route().current('home') ? 'text-primary' : 'text-on-surface/40'}`}>
+                    <Link aria-label="Home" href={route('home')} className={`min-h-12 flex flex-col items-center justify-center transition-all ${route().current('home') ? 'text-primary' : 'text-on-surface/50'}`}>
                         <Home size={20} />
                         <span className="font-label text-[8px] font-bold uppercase mt-1">Home</span>
                     </Link>
 
-                    <button
-                        onClick={toggleTheme}
-                        className="flex flex-col items-center justify-center transition-all text-on-surface/40 active:text-primary outline-none"
-                    >
-                        {isDark ? <Sun size={20} /> : <Moon size={20} />}
-                        <span className="font-label text-[8px] font-bold uppercase mt-1">
-                            {isDark ? 'Light' : 'Dark'}
-                        </span>
+                    <button aria-label="Search menu" onClick={() => setShowMobileSearch(true)} className="min-h-12 flex flex-col items-center justify-center transition-all text-on-surface/50 active:text-primary outline-none">
+                        <Search size={20} />
+                        <span className="font-label text-[8px] font-bold uppercase mt-1">Search</span>
                     </button>
 
-                    <Link href={route('cart.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart.*') ? 'text-primary' : 'text-on-surface/40'}`}>
-                        <ShoppingCart size={20} />
+                    <Link aria-label={`Cart with ${cartCount} items`} href={route('cart.index')} onClick={protectedLink} className={`relative min-h-12 flex flex-col items-center justify-center transition-all ${route().current('cart.*') ? 'text-primary' : 'text-on-surface/50'}`}>
+                        <span className="relative"><ShoppingCart size={20} />{cartCount > 0 && <span className="absolute -top-2 -right-3 min-w-4 h-4 px-1 rounded-full bg-primary text-on-primary text-[9px] flex items-center justify-center">{cartCount}</span>}</span>
                         <span className="font-label text-[8px] font-bold uppercase mt-1">Cart</span>
                     </Link>
 
-                    <Link href={route('favorites.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all ${route().current('favorites.*') ? 'text-primary' : 'text-on-surface/40'}`}>
-                        <Heart size={20} />
-                        <span className="font-label text-[8px] font-bold uppercase mt-1">Favs</span>
-                    </Link>
-
                     <Menu as="div" className="flex flex-col items-center justify-center">
-                        <Menu.Button className="flex flex-col items-center justify-center transition-all text-on-surface/40 outline-none">
+                        <Menu.Button aria-label={user ? 'Open account menu' : 'Log in'} className="min-h-12 w-full flex flex-col items-center justify-center transition-all text-on-surface/50 outline-none">
                             <User size={20} />
                             <span className="font-label text-[8px] font-bold uppercase mt-1">{user ? 'Account' : 'Login'}</span>
                         </Menu.Button>
@@ -220,7 +210,7 @@ export default function AppLayout({ children }) {
                             leaveFrom="transform opacity-100 translate-y-0 scale-100"
                             leaveTo="transform opacity-0 translate-y-4 scale-95"
                         >
-                            <Menu.Items className="fixed bottom-24 right-6 w-56 rounded-3xl bg-surface-container border border-outline-variant/20 shadow-2xl py-3 z-[60] flex flex-col overflow-hidden">
+                            <Menu.Items className="fixed bottom-24 right-4 w-64 rounded-2xl bg-surface-container border border-outline-variant/20 shadow-2xl py-3 z-[60] flex flex-col overflow-hidden">
                                 {user && (
                                     <div className="px-5 py-2 border-b border-outline-variant/10 mb-2">
                                         <p className="text-[10px] text-primary font-bold uppercase tracking-widest truncate">{user.name}</p>
@@ -235,9 +225,19 @@ export default function AppLayout({ children }) {
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item>
+                                            <Link href={route('favorites.index')} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10">
+                                                <Heart size={18} className="text-primary" /> Favorites
+                                            </Link>
+                                        </Menu.Item>
+                                        <Menu.Item>
                                             <Link href={route('orders.history')} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10">
                                                 <ReceiptText size={18} className="text-primary" /> Orders
                                             </Link>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <button onClick={toggleTheme} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10 w-full text-left">
+                                                {isDark ? <Sun size={18} className="text-primary" /> : <Moon size={18} className="text-primary" />} {isDark ? 'Light mode' : 'Dark mode'}
+                                            </button>
                                         </Menu.Item>
                                         <Menu.Item>
                                             <Link href={route('logout')} method="post" as="button" className="flex items-center gap-4 px-5 py-3 text-sm text-error border-t border-outline-variant/10 mt-2 active:bg-error/10 w-full text-left">

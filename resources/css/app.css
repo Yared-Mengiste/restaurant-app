@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
     /* --- LIGHT MODE (Italian Bistro Style) --- */
     --primary: 190 30 45;                 /* Crimson Red from 'Bello' (#BE1E2D) */
@@ -56,6 +52,14 @@
 }
 
 @layer utilities {
+    .mobile-safe-bottom {
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    }
+
+    .touch-target {
+        min-width: 44px;
+        min-height: 44px;
+    }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .material-symbols-outlined {

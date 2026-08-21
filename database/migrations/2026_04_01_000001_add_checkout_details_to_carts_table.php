@@ -7,18 +7,33 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->foreignId('address_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('phone', 30)->nullable();
-            $table->text('order_notes')->nullable();
-        });
+        if (!Schema::hasColumn('carts', 'address_id')) {
+            Schema::table('carts', function (Blueprint $table) {
+                $table->foreignId('address_id')->nullable()->constrained()->nullOnDelete();
+            });
+        }
+
+        if (!Schema::hasColumn('carts', 'phone')) {
+            Schema::table('carts', function (Blueprint $table) {
+                $table->string('phone', 30)->nullable();
+            });
+        }
+
+        if (!Schema::hasColumn('carts', 'order_notes')) {
+            Schema::table('carts', function (Blueprint $table) {
+                $table->text('order_notes')->nullable();
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('address_id');
-            $table->dropColumn(['phone', 'order_notes']);
-        });
+        if (Schema::hasColumn('carts', 'order_notes')) {
+            Schema::table('carts', fn (Blueprint $table) => $table->dropColumn('order_notes'));
+        }
+
+        if (Schema::hasColumn('carts', 'phone')) {
+            Schema::table('carts', fn (Blueprint $table) => $table->dropColumn('phone'));
+        }
     }
 };

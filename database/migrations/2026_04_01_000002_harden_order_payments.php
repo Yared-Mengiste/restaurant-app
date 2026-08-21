@@ -7,18 +7,39 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('phone', 30)->nullable();
-            $table->text('order_notes')->nullable();
-        });
-        Schema::table('payments', function (Blueprint $table) {
-            $table->unique('transaction_ref');
-        });
+        if (!Schema::hasColumn('orders', 'phone')) {
+            Schema::table('orders', fn (Blueprint $table) => $table->string('phone', 30)->nullable());
+        }
+
+        if (!Schema::hasColumn('orders', 'order_notes')) {
+            Schema::table('orders', fn (Blueprint $table) => $table->text('order_notes')->nullable());
+        }
+
+        $hasUniqueReference = collect(Schema::getIndexes('payments'))->contains(
+            fn (array $index) => $index['unique'] && $index['columns'] === ['transaction_ref']
+        );
+
+        if (!$hasUniqueReference) {
+            Schema::table('payments', fn (Blueprint $table) => $table->unique('transaction_ref'));
+        }
     }
 
     public function down(): void
     {
-        Schema::table('payments', fn (Blueprint $table) => $table->dropUnique(['transaction_ref']));
-        Schema::table('orders', fn (Blueprint $table) => $table->dropColumn(['phone', 'order_notes']));
+        $hasUniqueReference = collect(Schema::getIndexes('payments'))->contains(
+            fn (array $index) => $index['name'] === 'payments_transaction_ref_unique'
+        );
+
+        if ($hasUniqueReference) {
+            Schema::table('payments', fn (Blueprint $table) => $table->dropUnique(['transaction_ref']));
+        }
+
+        if (Schema::hasColumn('orders', 'order_notes')) {
+            Schema::table('orders', fn (Blueprint $table) => $table->dropColumn('order_notes'));
+        }
+
+        if (Schema::hasColumn('orders', 'phone')) {
+            Schema::table('orders', fn (Blueprint $table) => $table->dropColumn('phone'));
+        }
     }
 };

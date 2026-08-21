@@ -22,7 +22,24 @@
     @vite(['resources/js/app.jsx'])
     @inertiaHead
 
-    <script type="application/ld+json">@json(['@context' => 'https://schema.org', '@type' => 'Restaurant', 'name' => 'Bello Ristorante', 'servesCuisine' => 'Italian', 'telephone' => '+251911000000', 'address' => ['@type' => 'PostalAddress', 'streetAddress' => 'Bole', 'addressLocality' => 'Addis Ababa', 'addressCountry' => 'ET'], 'openingHours' => 'Mo-Su 11:00-22:00', 'priceRange' => '$$'])</script>
+    @php
+        $restaurantSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Restaurant',
+            'name' => 'Bello Ristorante',
+            'servesCuisine' => 'Italian',
+            'telephone' => '+251911000000',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'Bole',
+                'addressLocality' => 'Addis Ababa',
+                'addressCountry' => 'ET',
+            ],
+            'openingHours' => 'Mo-Su 11:00-22:00',
+            'priceRange' => '$$',
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($restaurantSchema, JSON_UNESCAPED_SLASHES) !!}</script>
 
     <script>
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

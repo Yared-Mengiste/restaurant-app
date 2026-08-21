@@ -8,10 +8,10 @@ export default function Index({ products }) {
         <AppLayout>
             <Head title="My Favorites" />
 
-            <main className="pt-32 pb-40 px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen">
+            <main className="pt-20 md:pt-32 pb-40 px-4 sm:px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen">
                 {/* HEADER */}
                 <header className="mb-12 md:mb-20">
-                    <h1 className="font-headline text-5xl md:text-6xl text-on-surface font-light tracking-tight mb-4">
+                    <h1 className="font-headline text-3xl sm:text-4xl lg:text-6xl text-on-surface font-light tracking-tight mb-4">
                         Saved for Later
                     </h1>
                     <p className="font-body text-on-surface-variant flex items-center gap-2">
@@ -22,7 +22,7 @@ export default function Index({ products }) {
 
                 {products.length > 0 ? (
                     /* PRODUCT GRID */
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12 md:gap-y-16">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 md:gap-y-16">
                         {products.map((product) => (
                             <ProductCard key={product.id} product={product} />
                         ))}

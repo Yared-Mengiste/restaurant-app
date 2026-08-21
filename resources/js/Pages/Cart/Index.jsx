@@ -327,7 +327,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                 <button
                                     onClick={handleCheckout}
                                     disabled={isProcessing || !cart || cart.items.length === 0 || (summary.delivery_type === 'delivery' && !cart.address_id)}
-                                    className={`w-full py-6 rounded-full font-bold uppercase tracking-[0.2em] text-sm transition-all relative overflow-hidden
+                                    className={`hidden lg:block w-full py-6 rounded-full font-bold uppercase tracking-[0.2em] text-sm transition-all relative overflow-hidden
                                         ${isProcessing
                                         ? 'bg-surface-container-highest text-on-surface-variant cursor-not-allowed'
                                         : 'bg-gradient-to-r from-primary to-primary-container text-on-primary shadow-[0_10px_30px_rgba(248,201,39,0.2)] hover:brightness-110 active:scale-[0.98]'

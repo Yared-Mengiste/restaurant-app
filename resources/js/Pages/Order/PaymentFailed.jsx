@@ -7,7 +7,7 @@ export default function PaymentFailed() {
         <AppLayout>
             <Head title="Payment Failed" />
 
-            <main className="min-h-screen flex items-center justify-center pt-32 pb-40 px-6">
+            <main className="min-h-screen flex items-center justify-center pt-20 md:pt-32 pb-40 px-4 sm:px-6">
                 <div className="max-w-md w-full bg-surface-container-low rounded-3xl p-8 md:p-12 text-center border border-outline-variant/10 shadow-lg">
 
                     {/* Error Icon */}

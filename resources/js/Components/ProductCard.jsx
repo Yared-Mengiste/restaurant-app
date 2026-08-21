@@ -58,7 +58,8 @@ export default function ProductCard({ product }) {
                 {(!auth.user || auth.user.role !== 'admin') && !isArchived && (
                     <button
                         onClick={toggleFavorite}
-                        className="absolute top-3 right-3 md:top-5 md:right-5 z-10 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center border border-white/10 text-white transition-all hover:bg-white hover:text-primary active:scale-90"
+                        aria-label={isFavourited ? `Remove ${product.name} from favorites` : `Add ${product.name} to favorites`}
+                        className="absolute top-3 right-3 md:top-5 md:right-5 z-10 w-11 h-11 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center border border-white/10 text-white transition-all hover:bg-white hover:text-primary active:scale-90"
                     >
                         {/* 80/20 Rule: Use 'fill' prop for the active state */}
                         <Heart

@@ -47,7 +47,7 @@ export default function Register() {
                 <div className="w-full max-w-xl relative z-10">
                     {/* Header Section */}
                     <div className="text-center mb-12">
-                        <h1 className="font-headline text-5xl md:text-6xl mb-4 text-on-surface tracking-tight">Create Account</h1>
+                        <h1 className="font-headline text-3xl sm:text-4xl lg:text-6xl mb-4 text-on-surface tracking-tight">Create Account</h1>
                         <p className="font-body text-on-surface-variant tracking-wide uppercase text-[10px] opacity-70">Begin your bespoke culinary journey</p>
                     </div>
 

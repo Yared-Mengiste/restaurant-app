@@ -15,9 +15,9 @@ export default function OrderHistory({ orders }) {
         <AppLayout>
             <Head title="Order History" />
 
-            <main className="pt-32 pb-40 px-6 md:px-12 max-w-[1400px] mx-auto min-h-screen">
+            <main className="pt-20 md:pt-32 pb-40 px-4 sm:px-6 md:px-12 max-w-[1400px] mx-auto min-h-screen">
                 <header className="mb-12">
-                    <h1 className="font-headline text-5xl md:text-6xl text-on-surface font-light tracking-tight mb-4">
+                    <h1 className="font-headline text-3xl sm:text-4xl lg:text-6xl text-on-surface font-light tracking-tight mb-4">
                         Order <span className="text-primary italic">History</span>
                     </h1>
                     <p className="font-body text-on-surface-variant">

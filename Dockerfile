@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
-    nano \
+    nginx \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
@@ -51,6 +51,7 @@ WORKDIR /var/www/html
 # 7. Copy app files
 # ------------------------------------------------------------
 COPY . .
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # ------------------------------------------------------------
 # 8. Install PHP dependencies
@@ -71,6 +72,7 @@ RUN mkdir -p /var/www/html/storage/framework/cache/data \
              /var/www/html/storage/logs
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod +x /var/www/html/docker/start.sh
 
 # ------------------------------------------------------------
 # 11. Expose port 8000 for Laravel
@@ -78,11 +80,9 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 EXPOSE 8000
 
 # ------------------------------------------------------------
-# 12. Start Laravel (Production Optimized)
+# 12. Start PHP-FPM and Nginx
 # ------------------------------------------------------------
-CMD php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache && \
-    php artisan migrate --force && \
-    php artisan storage:link && \
-    php artisan serve --host 0.0.0.0 --port 8000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD curl --fail http://127.0.0.1:8000/up || exit 1
+
+CMD ["/var/www/html/docker/start.sh"]

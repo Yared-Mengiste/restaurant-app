@@ -87,4 +87,33 @@ class CartController extends Controller
 
         return back()->with('success', 'Updated delivery type');
     }
+
+    public function updateCheckoutDetails(Request $request)
+    {
+        $data = $request->validate([
+            'address_line' => ['required_if:delivery_type,delivery', 'nullable', 'string', 'max:500'],
+            'phone' => ['required', 'string', 'max:30'],
+            'order_notes' => ['nullable', 'string', 'max:1000'],
+            'delivery_type' => ['required', 'in:pickup,delivery'],
+        ]);
+
+        $cart = $this->cartService->getCart($request->user());
+        $cart->delivery_type = $data['delivery_type'];
+        $cart->phone = $data['phone'];
+        $cart->order_notes = $data['order_notes'] ?? null;
+
+        if ($data['delivery_type'] === 'delivery') {
+            $address = $request->user()->addresses()->updateOrCreate(
+                ['id' => $cart->address_id],
+                ['address_line' => $data['address_line'], 'latitude' => 9.03, 'longitude' => 38.74],
+            );
+            $cart->address_id = $address->id;
+        } else {
+            $cart->address_id = null;
+        }
+
+        $cart->save();
+
+        return back()->with('success', 'Checkout details saved');
+    }
 }

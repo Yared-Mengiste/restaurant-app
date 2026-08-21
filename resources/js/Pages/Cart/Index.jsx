@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
+import { formatCurrency } from '@/lib/currency';
 
 export default function CartIndex({ cart, summary }) {
     const { delete: destroy } = useForm();
 
     // State to track if the payment request is in flight
     const [isProcessing, setIsProcessing] = useState(false);
+    const [details, setDetails] = useState({
+        delivery_type: summary.delivery_type,
+        address_line: cart?.address?.address_line || '',
+        phone: cart?.phone || '',
+        order_notes: cart?.order_notes || '',
+    });
 
     const handleUpdateQuantity = (productId, variantId, quantity) => {
         if (quantity < 1) return;
@@ -29,7 +36,12 @@ export default function CartIndex({ cart, summary }) {
         if (isProcessing) return; // Prevent multiple clicks
 
         setIsProcessing(true);
-        console.log("Initializing payment...");
+        if (!details.phone || (details.delivery_type === 'delivery' && !details.address_line)) {
+            alert('Please provide your phone number and delivery address.');
+            setIsProcessing(false);
+            return;
+        }
+        await axios.post(route('cart.update-checkout-details'), details);
 
         try {
             // 1. Manually hit the route using axios
@@ -45,7 +57,6 @@ export default function CartIndex({ cart, summary }) {
         } catch (error) {
             // 3. Handle failures and re-enable button for retry
             setIsProcessing(false);
-            console.error("Payment failed:", error);
             alert(error.response?.data?.error || "Failed to start payment process.");
         }
     };
@@ -57,7 +68,7 @@ export default function CartIndex({ cart, summary }) {
             type: type
         }, {
             preserveScroll: true,
-            onSuccess: () => console.log(`Switched to ${type}`)
+            onSuccess: () => setDetails((current) => ({ ...current, delivery_type: type }))
         });
     };
 
@@ -102,7 +113,7 @@ export default function CartIndex({ cart, summary }) {
                                                 )}
                                             </div>
                                             <span className="font-headline text-xl text-primary">
-                                                ${item.variant ? item.variant.price : item.product.price}
+                                                {formatCurrency(item.variant ? item.variant.price : item.product.price)}
                                             </span>
                                         </div>
                                         <div className="flex items-center justify-between mt-4">
@@ -156,26 +167,24 @@ export default function CartIndex({ cart, summary }) {
                                 <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-500">
                                     <div className="flex items-center justify-between mb-6">
                                         <h3 className="font-headline text-xl">Address Selection</h3>
-                                        <button className="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-sm">add_location</span> Add New
-                                        </button>
+                                        <span className="text-on-surface-variant text-xs">Enter your delivery address below</span>
                                     </div>
-                                    <div className="relative w-full h-[300px] rounded-xl overflow-hidden grayscale contrast-125 brightness-75 border border-outline-variant/30">
-                                        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center"></div>
-                                        <div className="absolute inset-0 bg-background/20"></div>
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                            <span className="material-symbols-outlined text-primary text-5xl drop-shadow-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>location_on</span>
-                                        </div>
-                                        <div className="absolute bottom-6 left-6 right-6 bg-surface-container-highest/90 backdrop-blur-md p-4 rounded-lg flex items-center justify-between">
-                                            <div>
-                                                <p className="text-xs uppercase font-bold text-primary tracking-widest mb-1">Active Address</p>
-                                                <p className="text-sm font-semibold">Bole, Addis Ababa, Ethiopia</p>
-                                            </div>
-                                            <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                                        </div>
-                                    </div>
+                                    <input value={details.address_line} onChange={(e) => setDetails({ ...details, address_line: e.target.value })} placeholder="Street, building, landmark, Addis Ababa" className="w-full rounded-lg bg-background border border-outline-variant/30 px-4 py-3" />
                                 </div>
                             )}
+                        </div>
+
+                        <div className="pt-10 border-t border-outline-variant/10 space-y-5">
+                            <h2 className="font-headline text-3xl">Contact & order notes</h2>
+                            <label className="block">
+                                <span className="block text-xs font-bold uppercase tracking-widest mb-2">Phone number</span>
+                                <input type="tel" value={details.phone} onChange={(e) => setDetails({ ...details, phone: e.target.value })} placeholder="+251 9..." className="w-full rounded-lg bg-background border border-outline-variant/30 px-4 py-3" />
+                            </label>
+                            <label className="block">
+                                <span className="block text-xs font-bold uppercase tracking-widest mb-2">Order notes</span>
+                                <textarea value={details.order_notes} onChange={(e) => setDetails({ ...details, order_notes: e.target.value })} placeholder="Allergies, preparation requests, or delivery directions" rows="4" className="w-full rounded-lg bg-background border border-outline-variant/30 px-4 py-3" />
+                            </label>
+                            <p className="text-sm text-on-surface-variant">Pickup orders are usually ready in 25–35 minutes. Delivery estimates are confirmed after payment.</p>
                         </div>
                     </div>
 
@@ -187,19 +196,19 @@ export default function CartIndex({ cart, summary }) {
                                 <div className="space-y-4 mb-8">
                                     <div className="flex justify-between items-center">
                                         <span className="text-on-surface-variant font-medium">Subtotal</span>
-                                        <span className="font-headline text-lg">${summary.subtotal.toFixed(2)}</span>
+                                        <span className="font-headline text-lg">{formatCurrency(summary.subtotal)}</span>
                                     </div>
                                     <div className="flex justify-between items-center">
                                         <span className="text-on-surface-variant font-medium">Delivery Fee</span>
-                                        <span className="font-headline text-lg">${summary.delivery_fee.toFixed(2)}</span>
+                                        <span className="font-headline text-lg">{formatCurrency(summary.delivery_fee)}</span>
                                     </div>
                                     <div className="flex justify-between items-center">
                                         <span className="text-on-surface-variant font-medium">Service Charge (5%)</span>
-                                        <span className="font-headline text-lg">${summary.service_charge.toFixed(2)}</span>
+                                        <span className="font-headline text-lg">{formatCurrency(summary.service_charge)}</span>
                                     </div>
                                     <div className="pt-4 border-t border-outline-variant/10 flex justify-between items-center">
                                         <span className="text-on-surface text-xl font-headline">Total</span>
-                                        <span className="text-primary text-3xl font-headline font-bold">${summary.total.toFixed(2)}</span>
+                                        <span className="text-primary text-3xl font-headline font-bold">{formatCurrency(summary.total)}</span>
                                     </div>
                                 </div>
 

@@ -74,6 +74,7 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::put('/cart', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::post('/cart/delivery', [CartController::class, 'updateDeliveryType'])->name('cart.update-delivery-type');
+    Route::post('/cart/checkout-details', [CartController::class, 'updateCheckoutDetails'])->name('cart.update-checkout-details');
 
     // Checkout & Payment
     Route::post('/pay', [PaymentController::class, 'pay'])->name('payment.pay');

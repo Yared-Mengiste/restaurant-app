@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 
 export default function AppLayout({ children }) {
-    const { auth, filters } = usePage().props;
+    const { auth, filters, cart_count: cartCount = 0 } = usePage().props;
     const user = auth?.user;
 
     const [search, setSearch] = useState(filters?.search || '');
@@ -106,7 +106,7 @@ export default function AppLayout({ children }) {
                             <Link href={route('favorites.index')} onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">favorite</Link>
                             <div className="relative">
                                 <Link href={route('cart.index')} onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">shopping_bag</Link>
-                                {user && <span className="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>}
+                                {user && cartCount > 0 && <span className="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center">{cartCount}</span>}
                             </div>
 
                             {user ? (

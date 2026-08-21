@@ -74,7 +74,7 @@ class CartService
 
     public function getCartWithItems($user)
     {
-        return Cart::with(['items.product', 'items.variant'])
+        return Cart::with(['items.product', 'items.variant', 'address'])
             ->where('user_id', $user->id)
             ->first();
     }

@@ -17,7 +17,8 @@ export default function Index({ categories }) {
             </div>
 
             <div className="bg-surface-container-low rounded-2xl border border-outline-variant/10 overflow-hidden shadow-2xl">
-                <table className="w-full text-left">
+                <div className="overflow-x-auto">
+                <table className="min-w-[560px] w-full text-left">
                     <thead>
                     <tr className="bg-surface-container-high/30">
                         <th className="px-8 py-5 font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Category</th>
@@ -48,6 +49,7 @@ export default function Index({ categories }) {
                     ))}
                     </tbody>
                 </table>
+                </div>
             </div>
         </AdminLayout>
     );

@@ -92,7 +92,7 @@ export default function Dashboard({ auth, stats, orders, filters }) {
                     </div>
                 </div>
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                    <table className="min-w-[680px] w-full text-left border-collapse">
                         <thead>
                         <tr className="bg-surface-container-high/30">
                             <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Order ID</th>
@@ -202,11 +202,11 @@ export default function Dashboard({ auth, stats, orders, filters }) {
                     </table>
                 </div>
                 {/* Pagination */}
-                <div className="px-8 py-6 border-t border-outline-variant/10 flex justify-between items-center">
+                <div className="px-4 sm:px-8 py-6 border-t border-outline-variant/10 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
                     <p className="text-[10px] font-label uppercase tracking-widest text-on-surface-variant">
                         Showing {orders.from} to {orders.to} of {orders.total} orders
                     </p>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                         {orders.links.map((link, i) => (
                             <button
                                 key={i}

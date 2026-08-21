@@ -27,7 +27,7 @@ export default function OrderHistory({ orders }) {
 
                 <div className="bg-surface-container-low rounded-3xl border border-outline-variant/10 overflow-hidden shadow-sm">
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
+                        <table className="min-w-[680px] w-full text-left border-collapse">
                             <thead>
                             <tr className="bg-surface-container-high/30">
                                 <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Order</th>
@@ -120,7 +120,7 @@ export default function OrderHistory({ orders }) {
 
                     {/* Simple Pagination */}
                     {orders.total > orders.per_page && (
-                        <div className="px-8 py-6 border-t border-outline-variant/10 flex justify-center gap-2">
+                        <div className="px-4 sm:px-8 py-6 border-t border-outline-variant/10 flex flex-wrap justify-center gap-2">
                             {orders.links.map((link, i) => (
                                 <button
                                     key={i}

@@ -64,7 +64,7 @@ export default function Products({ products, filters }) {
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                    <table className="min-w-[680px] w-full text-left border-collapse">
                         <thead>
                         <tr className="bg-surface-container-high/30">
                             <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Item</th>
@@ -129,11 +129,11 @@ export default function Products({ products, filters }) {
                 </div>
 
                 {/* Pagination (Standard Inertia) */}
-                <div className="px-8 py-6 border-t border-outline-variant/10 flex justify-between items-center">
+                <div className="px-4 sm:px-8 py-6 border-t border-outline-variant/10 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
                     <p className="text-[10px] font-label uppercase tracking-widest text-on-surface-variant">
                         Showing {products.from} to {products.to} of {products.total} entries
                     </p>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                         {products.links.map((link, i) => (
                             <button
                                 key={i}

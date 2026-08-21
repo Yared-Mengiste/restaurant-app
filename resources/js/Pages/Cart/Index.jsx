@@ -13,6 +13,8 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
     const [showMap, setShowMap] = useState(false);
     const [newAddressData, setNewAddressData] = useState(null);
     const [addressToDelete, setAddressToDelete] = useState(null);
+    const [showSummary, setShowSummary] = useState(false);
+    const [validationError, setValidationError] = useState('');
     const [details, setDetails] = useState({
         phone: cart?.phone || '',
         order_notes: cart?.order_notes || '',
@@ -21,12 +23,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
     const handleDeleteAddress = (e, addressId) => {
         e.stopPropagation(); // Prevent selecting the address while trying to delete it
 
-        if (confirm('Are you sure you want to delete this address?')) {
-            router.delete(route('addresses.destroy', addressId), {
-                preserveScroll: true,
-                onSuccess: () => setAddressToDelete(null)
-            });
-        }
+        setAddressToDelete(addressId);
     };
 
     const handleUpdateQuantity = (productId, variantId, quantity) => {
@@ -81,10 +78,11 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
         setIsProcessing(true);
 
         if (!details.phone || (summary.delivery_type === 'delivery' && !cart.address_id)) {
-            alert('Please provide a phone number and select a delivery address.');
+            setValidationError(!details.phone ? 'Enter a phone number before checkout.' : 'Select a delivery address before checkout.');
             setIsProcessing(false);
             return;
         }
+        setValidationError('');
 
         try {
             await axios.post(route('cart.update-checkout-details'), {
@@ -100,7 +98,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
             }
         } catch (error) {
             setIsProcessing(false);
-            alert(error.response?.data?.error || "Failed to start payment process.");
+            setValidationError(error.response?.data?.error || 'Failed to start payment. Please try again.');
         }
     };
 
@@ -108,14 +106,14 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
         <AppLayout>
             <Head title="Your Selection" />
 
-            <main className="pt-32 pb-40 px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen">
+            <main className="pt-20 md:pt-32 pb-48 lg:pb-40 px-4 sm:px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
 
                     {/* LEFT COLUMN: ITEMS */}
                     <div className="lg:col-span-7 space-y-12">
                         {/* ... (Existing Header and Cart Item Map) ... */}
                         <header>
-                            <h1 className="font-headline text-5xl md:text-6xl text-on-surface font-light tracking-tight mb-4">
+                            <h1 className="font-headline text-3xl sm:text-4xl lg:text-6xl text-on-surface font-light tracking-tight mb-4">
                                 Your Selection
                             </h1>
                             <p className="font-body text-on-surface-variant flex items-center gap-2">
@@ -126,8 +124,8 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
 
                         <div className="space-y-8">
                             {cart?.items.map((item) => (
-                                <div key={`${item.product_id}-${item.product_variant_id}`} className="group flex flex-col md:flex-row gap-6 p-6 rounded-xl transition-all hover:bg-surface-container-low">
-                                    <div className="w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
+                                <div key={`${item.product_id}-${item.product_variant_id}`} className="group flex gap-4 md:gap-6 p-3 sm:p-6 rounded-xl transition-all hover:bg-surface-container-low">
+                                    <div className="w-24 sm:w-28 md:w-32 h-24 sm:h-28 md:h-32 rounded-lg overflow-hidden flex-shrink-0">
                                         <img
                                             src={(item.product?.image ? `/storage/products/${item.product.image}` : '/placeholder.jpg')}
 
@@ -151,16 +149,16 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                         </div>
                                         <div className="flex items-center justify-between mt-4">
                                             <div className="flex items-center gap-4 bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/20">
-                                                <button
+                                                <button aria-label={`Decrease ${item.product.name} quantity`}
                                                     onClick={() => handleUpdateQuantity(item.product_id, item.product_variant_id, item.quantity - 1)}
-                                                    className="text-on-surface-variant hover:text-primary transition-colors"
+                                                    className="touch-target text-on-surface-variant hover:text-primary transition-colors"
                                                 >
                                                     <span className="material-symbols-outlined text-lg">remove</span>
                                                 </button>
                                                 <span className="font-bold w-4 text-center">{item.quantity}</span>
-                                                <button
+                                                <button aria-label={`Increase ${item.product.name} quantity`}
                                                     onClick={() => handleUpdateQuantity(item.product_id, item.product_variant_id, item.quantity + 1)}
-                                                    className="text-on-surface-variant hover:text-primary transition-colors"
+                                                    className="touch-target text-on-surface-variant hover:text-primary transition-colors"
                                                 >
                                                     <span className="material-symbols-outlined text-lg">add</span>
                                                 </button>
@@ -241,7 +239,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                 On mobile, it stays visible so the user knows they can delete.
             */}
                                                 <button
-                                                    onClick={(e) => handleDeleteAddress(e, addr.id)}
+                                                    onClick={(e) => handleDeleteAddress(e, addr.id)} aria-label={`Delete ${addr.address_line}`}
                                                     className="absolute right-2 top-1/2 -translate-y-1/2 p-3 text-on-surface-variant hover:text-error active:scale-90 transition-all md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
                                                     title="Delete Address"
                                                 >
@@ -290,6 +288,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                 <span className="block text-xs font-bold uppercase tracking-widest mb-2">Phone number</span>
                                 <input type="tel" value={details.phone} onChange={(e) => setDetails({ ...details, phone: e.target.value })} placeholder="+251 9..." className="w-full rounded-lg bg-background border border-outline-variant/30 px-4 py-3" />
                             </label>
+                            {validationError && <p role="alert" className="rounded-lg bg-error/10 px-4 py-3 text-sm text-error">{validationError}</p>}
                             <label className="block">
                                 <span className="block text-xs font-bold uppercase tracking-widest mb-2">Order notes</span>
                                 <textarea value={details.order_notes} onChange={(e) => setDetails({ ...details, order_notes: e.target.value })} placeholder="Allergies, preparation requests, or delivery directions" rows="4" className="w-full rounded-lg bg-background border border-outline-variant/30 px-4 py-3" />
@@ -300,9 +299,9 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                     {/* RIGHT COLUMN: SUMMARY */}
                     <aside className="lg:col-span-5">
                         <div className="sticky top-32 space-y-8">
-                            <div className="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
-                                <h2 className="font-headline text-3xl mb-8">Order Summary</h2>
-                                <div className="space-y-4 mb-8">
+                            <div className="bg-surface-container-low rounded-xl p-5 md:p-8 border border-outline-variant/10">
+                                <button type="button" onClick={() => setShowSummary(!showSummary)} className="lg:pointer-events-none w-full flex items-center justify-between"><h2 className="font-headline text-2xl md:text-3xl lg:mb-8">Order Summary</h2><span className="lg:hidden material-symbols-outlined">{showSummary ? 'expand_less' : 'expand_more'}</span></button>
+                                <div className={`${showSummary ? 'block' : 'hidden'} lg:block space-y-4 my-6 lg:mt-0 lg:mb-8`}>
                                     <div className="flex justify-between items-center">
                                         <span className="text-on-surface-variant font-medium">Subtotal</span>
                                         <span className="font-headline text-lg">{formatCurrency(summary.subtotal)}</span>
@@ -354,6 +353,10 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                     </aside>
                 </div>
             </main>
+
+            {addressToDelete && <div className="fixed inset-0 z-[80] bg-black/60 p-4 flex items-center justify-center"><div className="w-full max-w-sm rounded-2xl bg-surface p-6 shadow-2xl"><h2 className="font-headline text-2xl">Remove this address?</h2><p className="mt-2 text-sm text-on-surface-variant">You can add it again later from the map.</p><div className="mt-6 flex gap-3"><button onClick={() => setAddressToDelete(null)} className="min-h-11 flex-1 rounded-xl border border-outline-variant/30">Cancel</button><button onClick={() => router.delete(route('addresses.destroy', addressToDelete), { preserveScroll: true, onFinish: () => setAddressToDelete(null) })} className="min-h-11 flex-1 rounded-xl bg-error text-white">Remove</button></div></div></div>}
+
+            <div className="lg:hidden fixed bottom-20 left-0 right-0 z-40 px-3 pointer-events-none"><div className="max-w-md mx-auto rounded-2xl bg-surface-container-high/95 border border-outline-variant/20 shadow-2xl backdrop-blur-xl p-2 flex items-center justify-between gap-3 pointer-events-auto"><div className="pl-3"><p className="text-[10px] uppercase tracking-widest text-on-surface-variant">Total</p><p className="font-headline text-lg text-primary">{formatCurrency(summary.total)}</p></div><button onClick={handleCheckout} disabled={isProcessing || !cart?.items?.length || (summary.delivery_type === 'delivery' && !cart.address_id)} className="min-h-12 px-6 rounded-xl bg-primary text-on-primary font-bold disabled:opacity-50">{isProcessing ? 'Connecting…' : 'Pay now'}</button></div></div>
         </AppLayout>
     );
 }

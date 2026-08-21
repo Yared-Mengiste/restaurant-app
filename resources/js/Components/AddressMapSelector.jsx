@@ -6,7 +6,7 @@ const libraries = ['places'];
 // Map container sizing
 const mapContainerStyle = {
     width: '100%',
-    height: '400px',
+    height: 'clamp(280px, 45vh, 400px)',
     borderRadius: '0.75rem'
 };
 

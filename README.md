@@ -39,6 +39,15 @@ If product or category images are stored on the public disk, create the storage 
 php artisan storage:link
 ```
 
+Create the first administrator explicitly after the database is ready:
+
+```bash
+php artisan app:create-admin
+```
+
+The command prompts for the administrator's name, email, and password. Do not
+place administrator credentials in seeders or commit them to the repository.
+
 ## Configuration
 
 Keep local credentials in `.env`, which is ignored by Git. In addition to the standard Laravel settings, integrations use these variables when enabled:

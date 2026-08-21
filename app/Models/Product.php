@@ -15,7 +15,10 @@ class Product extends Model
         'image',
         'has_variants',
         'is_featured'
+        ,'ingredients', 'allergens', 'dietary_labels', 'portion', 'customization_options'
     ];
+
+    protected $casts = ['customization_options' => 'array'];
 
     public function variants() {
         return $this->hasMany(ProductVariant::class);

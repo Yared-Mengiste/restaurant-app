@@ -10,6 +10,10 @@ export default function ProductForm({ product = null, categories = [] }) {
         category_id: product?.category_id || '',
         name: product?.name || '',
         description: product?.description || '',
+        ingredients: product?.ingredients || '',
+        allergens: product?.allergens || '',
+        dietary_labels: product?.dietary_labels || '',
+        portion: product?.portion || '',
         price: product?.price || '',
         is_available: product?.is_available ?? true,
         is_featured: product?.is_featured ?? false,
@@ -117,6 +121,15 @@ export default function ProductForm({ product = null, categories = [] }) {
                                     className="w-full bg-transparent border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 transition-colors py-4 px-4 text-on-surface resize-none"
                                     placeholder="Describe the flavor profile..."
                                 />
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {['ingredients', 'allergens', 'dietary_labels', 'portion'].map((field) => (
+                                    <label key={field} className="block">
+                                        <span className="block text-[10px] font-label uppercase tracking-widest text-primary mb-2">{field.replace('_', ' ')}</span>
+                                        <input value={data[field]} onChange={(e) => setData(field, e.target.value)} className="w-full rounded-lg bg-background border border-outline-variant/30 px-4 py-3" placeholder={field === 'portion' ? 'e.g. 350 g' : 'Optional'} />
+                                    </label>
+                                ))}
                             </div>
 
                             {/* Image Upload Area [cite: 25, 43] */}

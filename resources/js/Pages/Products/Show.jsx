@@ -70,6 +70,12 @@ export default function Show({ product, relatedProducts }) {
                                     {formatCurrency(unitPrice)}
                                 </span>
                             </div>
+                            <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
+                                {product.portion && <div><span className="font-bold">Portion:</span> {product.portion}</div>}
+                                {product.dietary_labels && <div><span className="font-bold">Dietary:</span> {product.dietary_labels}</div>}
+                                {product.ingredients && <div className="col-span-2"><span className="font-bold">Ingredients:</span> {product.ingredients}</div>}
+                                {product.allergens && <div className="col-span-2 text-error"><span className="font-bold">Allergens:</span> {product.allergens}</div>}
+                            </div>
                         </section>
 
                         {/* Variants Selection */}

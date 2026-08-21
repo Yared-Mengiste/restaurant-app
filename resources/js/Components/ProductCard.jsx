@@ -90,11 +90,11 @@ export default function ProductCard({ product }) {
             {/* CONTENT SECTION */}
             <div className="flex justify-between items-start px-1">
                 <div className="flex flex-col gap-0.5 md:gap-1 max-w-[70%]">
-                    <h3 className={`font-headline text-base md:text-lg italic transition-colors duration-300 truncate
+                    <h3 className={`font-headline text-sm sm:text-base md:text-lg italic transition-colors duration-300 line-clamp-2 min-h-[2.5rem]
                         ${isArchived ? 'text-on-surface-variant' : 'text-on-surface group-hover:text-primary'}`}>
                         {product.name}
                     </h3>
-                    <p className="text-[9px] md:text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">
+                    <p className="text-[8px] md:text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60 truncate">
                         {product.category?.name || 'Main Course'}
                     </p>
                 </div>

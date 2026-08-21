@@ -6,7 +6,7 @@ export default function ProductGrid({ products, auth, title = "Our Menu" }) {
     const items = products.data;
 
     return (
-        <section className="py-12 px-6 md:px-12 max-w-[1920px] mx-auto min-h-[400px]">
+        <section className="py-8 md:py-12 px-4 sm:px-6 md:px-12 max-w-[1920px] mx-auto min-h-[400px]" id="menu">
             {/* GRID HEADER */}
             <div className="flex items-center gap-4 mb-10">
                 <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-outline-variant/30"></div>
@@ -19,7 +19,7 @@ export default function ProductGrid({ products, auth, title = "Our Menu" }) {
             {/* PRODUCT MAPPING */}
             {items.length > 0 ? (
                 <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-10 sm:gap-y-16">
                         {items.map((product) => (
                             <ProductCard
                                 key={product.id}

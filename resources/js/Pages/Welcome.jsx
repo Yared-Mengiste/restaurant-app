@@ -19,6 +19,8 @@ export default function Welcome({
             {/* 1. Only show Hero if on the base Home page */}
             {!isSearching && <RestaurantHero />}
 
+            {!isSearching && <div className="mx-6 md:mx-12 -mt-2 mb-4 grid grid-cols-1 sm:grid-cols-3 gap-2 rounded-2xl border border-outline-variant/20 bg-surface-container-low p-4 text-center text-xs text-on-surface-variant"><span className="font-bold text-tertiary">Open now · 11:00–22:00</span><span>Pickup · 25–35 min</span><span>Delivery · within 10 km</span></div>}
+
             {/* 2. Category List stays visible for easy navigation */}
             <CategoryList
                 categories={categories}
@@ -31,11 +33,11 @@ export default function Welcome({
             )}
 
             {/* 4. The Main Menu / Search Results */}
-            <div id="menu"><ProductGrid
+            <ProductGrid
                 products={products}
                 auth={auth}
                 title={isSearching ? "Search Results" : "Our Menu"}
-            /></div>
+            />
         </AppLayout>
     );
 }

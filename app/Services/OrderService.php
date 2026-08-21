@@ -27,9 +27,7 @@ class OrderService
         }
 
         $subtotal = $this->cartService->calculateSubtotal($cart);
-        $deliveryFee = $cart->delivery_type === 'delivery'
-            ? (float)(Setting::where('key', 'base_delivery_fee')->value('value'))
-            : 0; // business logic
+        $deliveryFee = $this->cartService->getSummary($user)['delivery_fee'];
         $serviceCharge = $subtotal * 0.05;
         $total = $subtotal + $deliveryFee + $serviceCharge;
 

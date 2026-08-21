@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -13,6 +14,19 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Models\Product;
+
+Route::get('/api/search', function (Request $request) {
+    $query = trim((string) $request->input('q'));
+    if ($query === '') return response()->json([]);
+
+    return Product::where('is_available', true)
+        ->where(fn ($builder) => $builder->where('name', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%"))
+        ->limit(6)
+        ->get(['id', 'name', 'image', 'price']);
+})->middleware('throttle:60,1')->name('api.search');
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +87,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 */
 Route::middleware(['auth', 'customer'])->group(function () {
     // Cart Management
+    Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+    Route::delete('/addresses/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
     Route::post('/products/{product}/favorite', [ProductController::class, 'toggleFavorite'])->name('products.favorite')->middleware('auth');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');
@@ -82,6 +98,7 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy')->middleware('throttle:60,1');
     Route::post('/cart/delivery', [CartController::class, 'updateDeliveryType'])->name('cart.update-delivery-type');
     Route::post('/cart/checkout-details', [CartController::class, 'updateCheckoutDetails'])->name('cart.update-checkout-details');
+    Route::post('/cart/address', [CartController::class, 'updateAddress'])->name('cart.update-address');
 
     // Checkout & Payment
     Route::post('/pay', [PaymentController::class, 'pay'])->name('payment.pay')->middleware('throttle:10,1');

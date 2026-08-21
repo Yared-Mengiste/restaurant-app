@@ -1,25 +1,22 @@
 import { Link, usePage, router } from '@inertiajs/react';
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
+import LiveSearchBar from '@/Components/LiveSearchBar';
+import {
+    Sun, Moon, Search, Heart, ShoppingBag,
+    User, History, LogOut, Settings, Home, X, ShoppingCart, ReceiptText
+} from 'lucide-react';
 
 export default function AppLayout({ children }) {
-    const { auth, filters, cart_count: cartCount = 0 } = usePage().props;
+    const { auth, cart_count: cartCount = 0 } = usePage().props;
     const user = auth?.user;
 
-    const [search, setSearch] = useState(filters?.search || '');
     const [showMobileSearch, setShowMobileSearch] = useState(false);
-    const isFirstRender = useRef(true);
-// --- Inside AppLayout Component ---
-
     const [isDark, setIsDark] = useState(false);
 
-// Initial Theme sync
+    // Initial Theme sync
     useEffect(() => {
-        // 1. Check if user has a saved preference
         const savedTheme = localStorage.getItem('theme');
-
-        // 2. Logic: If no saved theme, we DEFAULT to Light (false).
-        // If there is a saved theme, follow it.
         const darkModeEnabled = savedTheme === 'dark';
 
         if (darkModeEnabled) {
@@ -28,7 +25,6 @@ export default function AppLayout({ children }) {
         } else {
             setIsDark(false);
             document.documentElement.classList.remove('dark');
-            // Explicitly set light if it's the first time to avoid system overrides
             if (!savedTheme) localStorage.setItem('theme', 'light');
         }
     }, []);
@@ -36,7 +32,6 @@ export default function AppLayout({ children }) {
     const toggleTheme = () => {
         const newDark = !isDark;
         setIsDark(newDark);
-
         if (newDark) {
             document.documentElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
@@ -45,21 +40,6 @@ export default function AppLayout({ children }) {
             localStorage.setItem('theme', 'light');
         }
     };
-
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
-        const delayDebounceFn = setTimeout(() => {
-            router.get(
-                route('home'),
-                { search, category_id: filters?.category_id },
-                { preserveState: true, replace: true, preserveScroll: true }
-            );
-        }, 300);
-        return () => clearTimeout(delayDebounceFn);
-    }, [search]);
 
     const protectedLink = (e) => {
         if (!user) {
@@ -81,38 +61,34 @@ export default function AppLayout({ children }) {
 
                     <div className="flex items-center gap-3 md:gap-6">
                         {/* THEME TOGGLE (Desktop) */}
-                        <button onClick={toggleTheme} className="hidden md:flex material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors p-2">
-                            {isDark ? 'light_mode' : 'dark_mode'}
+                        <button onClick={toggleTheme} className="hidden md:flex text-on-surface-variant hover:text-primary transition-all p-2">
+                            {isDark ? <Sun size={22} /> : <Moon size={22} />}
                         </button>
 
                         {/* Desktop Search */}
-                        <div className="relative group hidden md:block">
-                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-                            <input
-                                type="text"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                placeholder="Search our menu..."
-                                className="bg-surface-container-highest/30 border border-outline-variant/20 rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-48 lg:w-64 outline-none text-on-surface transition-all"
-                            />
-                        </div>
+                        <LiveSearchBar />
 
-                        <button onClick={() => setShowMobileSearch(!showMobileSearch)} className="md:hidden material-symbols-outlined text-on-surface-variant p-2">
-                            {showMobileSearch ? 'close' : 'search'}
+                        <button onClick={() => setShowMobileSearch(!showMobileSearch)} className="md:hidden text-on-surface-variant p-2">
+                            {showMobileSearch ? <X size={24} /> : <Search size={24} />}
                         </button>
 
                         {/* DESKTOP NAV ITEMS */}
                         <div className="hidden md:flex items-center gap-5 text-on-surface-variant border-l border-outline-variant/20 pl-6">
-                            <Link href={route('favorites.index')} onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">favorite</Link>
+                            <Link href={route('favorites.index')} onClick={protectedLink} className="hover:text-primary transition-colors">
+                                <Heart size={22} />
+                            </Link>
+
                             <div className="relative">
-                                <Link href={route('cart.index')} onClick={protectedLink} className="material-symbols-outlined hover:text-primary transition-colors">shopping_bag</Link>
+                                <Link href={route('cart.index')} onClick={protectedLink} className="hover:text-primary transition-colors">
+                                    <ShoppingBag size={22} />
+                                </Link>
                                 {user && cartCount > 0 && <span className="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center">{cartCount}</span>}
                             </div>
 
                             {user ? (
                                 <Menu as="div" className="relative">
-                                    <Menu.Button className="flex items-center material-symbols-outlined hover:text-primary transition-colors outline-none">
-                                        account_circle
+                                    <Menu.Button className="flex items-center hover:text-primary transition-colors outline-none">
+                                        <User size={24} />
                                     </Menu.Button>
                                     <Transition
                                         as={Fragment}
@@ -132,21 +108,21 @@ export default function AppLayout({ children }) {
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <Link href={route('profile.edit')} className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
-                                                        <span className="material-symbols-outlined text-lg text-primary">person</span> Profile
+                                                        <Settings size={18} className="text-primary" /> Profile
                                                     </Link>
                                                 )}
                                             </Menu.Item>
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <Link href={route('orders.history')} className={`${active ? 'bg-primary/10 text-primary' : 'text-on-surface-variant'} flex items-center gap-3 px-4 py-2 text-sm transition-colors`}>
-                                                        <span className="material-symbols-outlined text-lg text-primary">history</span> Order History
+                                                        <History size={18} className="text-primary" /> Order History
                                                     </Link>
                                                 )}
                                             </Menu.Item>
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <Link href={route('logout')} method="post" as="button" className="w-full flex items-center gap-3 px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors text-left">
-                                                        <span className="material-symbols-outlined text-lg">logout</span> Logout
+                                                        <LogOut size={18} /> Logout
                                                     </Link>
                                                 )}
                                             </Menu.Item>
@@ -154,22 +130,17 @@ export default function AppLayout({ children }) {
                                     </Transition>
                                 </Menu>
                             ) : (
-                                <Link href={route('login')} className="material-symbols-outlined hover:text-primary transition-colors">person</Link>
+                                <Link href={route('login')} className="hover:text-primary transition-colors">
+                                    <User size={24} />
+                                </Link>
                             )}
                         </div>
                     </div>
                 </div>
 
                 {showMobileSearch && (
-                    <div className="md:hidden absolute top-full left-0 w-full bg-surface p-4 border-b border-outline-variant/20 animate-in fade-in slide-in-from-top-2">
-                        <input
-                            autoFocus
-                            type="text"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="What are you craving?"
-                            className="w-full bg-background border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface outline-none focus:border-primary"
-                        />
+                    <div className="md:hidden absolute top-full left-0 w-full bg-surface p-4 border-b border-outline-variant/20 animate-in fade-in slide-in-from-top-2 z-50">
+                        <LiveSearchBar isMobile={true} onClose={() => setShowMobileSearch(false)} />
                     </div>
                 )}
             </nav>
@@ -200,43 +171,37 @@ export default function AppLayout({ children }) {
             </footer>
 
             {/* MOBILE NAVIGATION */}
-            {/* MOBILE NAVIGATION */}
             <nav className="lg:hidden fixed bottom-0 w-full pb-8 flex justify-around items-center z-50 px-6 pointer-events-none">
                 <div className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-outline-variant/30 flex justify-around items-center py-4 px-4 shadow-2xl bg-background/80 backdrop-blur-xl">
 
                     <Link href={route('home')} className={`flex flex-col items-center justify-center transition-all ${route().current('home') ? 'text-primary' : 'text-on-surface/40'}`}>
-                        <span className="material-symbols-outlined">home</span>
+                        <Home size={20} />
                         <span className="font-label text-[8px] font-bold uppercase mt-1">Home</span>
                     </Link>
-                    {/* NEW: THEME TOGGLE ON THE LEFT */}
+
                     <button
                         onClick={toggleTheme}
                         className="flex flex-col items-center justify-center transition-all text-on-surface/40 active:text-primary outline-none"
                     >
-            <span className="material-symbols-outlined transition-transform duration-500">
-                {isDark ? 'light_mode' : 'dark_mode'}
-            </span>
+                        {isDark ? <Sun size={20} /> : <Moon size={20} />}
                         <span className="font-label text-[8px] font-bold uppercase mt-1">
-                {isDark ? 'Light' : 'Dark'}
-            </span>
+                            {isDark ? 'Light' : 'Dark'}
+                        </span>
                     </button>
 
-
-
-                    {/* Central Cart Icon - Kept scale-110 for prominence */}
                     <Link href={route('cart.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all scale-110 ${route().current('cart.*') ? 'text-primary' : 'text-on-surface/40'}`}>
-                        <span className="material-symbols-outlined">shopping_cart</span>
+                        <ShoppingCart size={20} />
                         <span className="font-label text-[8px] font-bold uppercase mt-1">Cart</span>
                     </Link>
 
                     <Link href={route('favorites.index')} onClick={protectedLink} className={`flex flex-col items-center justify-center transition-all ${route().current('favorites.*') ? 'text-primary' : 'text-on-surface/40'}`}>
-                        <span className="material-symbols-outlined">favorite</span>
+                        <Heart size={20} />
                         <span className="font-label text-[8px] font-bold uppercase mt-1">Favs</span>
                     </Link>
 
                     <Menu as="div" className="flex flex-col items-center justify-center">
                         <Menu.Button className="flex flex-col items-center justify-center transition-all text-on-surface/40 outline-none">
-                            <span className="material-symbols-outlined">person</span>
+                            <User size={20} />
                             <span className="font-label text-[8px] font-bold uppercase mt-1">{user ? 'Account' : 'Login'}</span>
                         </Menu.Button>
 
@@ -256,30 +221,28 @@ export default function AppLayout({ children }) {
                                     </div>
                                 )}
 
-                                {/* THEME TOGGLE REMOVED FROM HERE */}
-
                                 {user ? (
                                     <>
                                         <Menu.Item>
                                             <Link href={route('profile.edit')} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10">
-                                                <span className="material-symbols-outlined text-primary">settings</span> Profile
+                                                <Settings size={18} className="text-primary" /> Profile
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item>
                                             <Link href={route('orders.history')} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10">
-                                                <span className="material-symbols-outlined text-primary">receipt_long</span> Orders
+                                                <ReceiptText size={18} className="text-primary" /> Orders
                                             </Link>
                                         </Menu.Item>
                                         <Menu.Item>
                                             <Link href={route('logout')} method="post" as="button" className="flex items-center gap-4 px-5 py-3 text-sm text-error border-t border-outline-variant/10 mt-2 active:bg-error/10 w-full text-left">
-                                                <span className="material-symbols-outlined">logout</span> Logout
+                                                <LogOut size={18} /> Logout
                                             </Link>
                                         </Menu.Item>
                                     </>
                                 ) : (
                                     <Menu.Item>
                                         <Link href={route('login')} className="flex items-center gap-4 px-5 py-3 text-sm text-on-surface active:bg-primary/10">
-                                            <span className="material-symbols-outlined text-primary">login</span> Login
+                                            <User size={18} className="text-primary" /> Login
                                         </Link>
                                     </Menu.Item>
                                 )}
@@ -287,6 +250,7 @@ export default function AppLayout({ children }) {
                         </Transition>
                     </Menu>
                 </div>
-            </nav>   </div>
+            </nav>
+        </div>
     );
 }

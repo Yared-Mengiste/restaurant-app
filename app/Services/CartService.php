@@ -113,13 +113,14 @@ class CartService
             ];
         }
 
-        // subtotal from product items
         $subtotal = $this->calculateSubtotal($cart);
+        $deliveryFee = 0;
 
-        // delivery fee depends on delivery_type
-        $deliveryFee = $cart->delivery_type === 'delivery'
-            ? (float)(Setting::where('key', 'base_delivery_fee')->value('value'))
-            : 0;
+        if ($cart->delivery_type === 'delivery' && $cart->address?->distance_km !== null) {
+            $baseFee = (float) Setting::where('key', 'base_delivery_fee')->value('value');
+            $perKmRate = (float) Setting::where('key', 'per_km_price')->value('value');
+            $deliveryFee = $baseFee + ((float) $cart->address->distance_km * $perKmRate);
+        }
 
         // example: service charge logic
         $serviceCharge = $subtotal * 0.05;

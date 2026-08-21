@@ -29,9 +29,9 @@ export default function Login({ status, canResetPassword }) {
             <Head title="Log in" />
 
             {/* ... Navbar ... */}
-            <nav className="fixed top-0 w-full z-50 bg-[#111316] flex justify-between items-center px-8 py-6 max-w-7xl mx-auto left-0 right-0">
-                <Link href="/" className="font-serif italic text-2xl text-primary">
-                    Bello Restaurant
+            <nav className="fixed top-0 w-full z-50 bg-background flex justify-between items-center px-8 py-6 max-w-7xl mx-auto left-0 right-0">
+                <Link href={route('home')} className="text-2xl md:text-3xl font-serif italic text-primary tracking-tight">
+                    Bello <span className="text-secondary not-italic font-sans text-xs tracking-[0.3em] uppercase block">Ristorante</span>
                 </Link>
                 <div className="flex items-center gap-6">
                     <span className="font-sans font-medium tracking-tight text-gray-400 hover:text-primary transition-colors duration-300 cursor-pointer text-sm">Help</span>

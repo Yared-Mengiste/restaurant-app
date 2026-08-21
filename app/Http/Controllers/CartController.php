@@ -91,7 +91,7 @@ class CartController extends Controller
     public function updateCheckoutDetails(Request $request)
     {
         $data = $request->validate([
-            'address_line' => ['required_if:delivery_type,delivery', 'nullable', 'string', 'max:500'],
+            'address_id' => ['required_if:delivery_type,delivery', 'nullable', 'integer'],
             'phone' => ['required', 'string', 'max:30'],
             'order_notes' => ['nullable', 'string', 'max:1000'],
             'delivery_type' => ['required', 'in:pickup,delivery'],
@@ -103,10 +103,7 @@ class CartController extends Controller
         $cart->order_notes = $data['order_notes'] ?? null;
 
         if ($data['delivery_type'] === 'delivery') {
-            $address = $request->user()->addresses()->updateOrCreate(
-                ['id' => $cart->address_id],
-                ['address_line' => $data['address_line'], 'latitude' => 9.03, 'longitude' => 38.74],
-            );
+            $address = $request->user()->addresses()->findOrFail($data['address_id']);
             $cart->address_id = $address->id;
         } else {
             $cart->address_id = null;
@@ -115,5 +112,18 @@ class CartController extends Controller
         $cart->save();
 
         return back()->with('success', 'Checkout details saved');
+    }
+
+    public function updateAddress(Request $request)
+    {
+        $data = $request->validate(['address_id' => ['required', 'integer']]);
+        $address = $request->user()->addresses()->findOrFail($data['address_id']);
+
+        $this->cartService->getCart($request->user())->update([
+            'address_id' => $address->id,
+            'delivery_type' => 'delivery',
+        ]);
+
+        return back()->with('success', 'Delivery location updated');
     }
 }

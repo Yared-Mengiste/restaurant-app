@@ -71,7 +71,7 @@ export default function Show({ product, relatedProducts }) {
                                 </span>
                             </div>
                             <div className="mt-5 flex flex-wrap gap-2 text-xs">
-                                {product.is_featured && <span className="rounded-full bg-primary/10 text-primary px-3 py-2 font-bold">Popular</span>}
+                                {!!product.is_featured && <span className="rounded-full bg-primary/10 text-primary px-3 py-2 font-bold">Popular</span>}
                                 {product.dietary_labels?.split(',').map((label) => <span key={label} className="rounded-full bg-tertiary/10 text-tertiary px-3 py-2 font-bold">{label.trim()}</span>)}
                                 {!product.is_available && <span className="rounded-full bg-error/10 text-error px-3 py-2 font-bold">Unavailable</span>}
                             </div>
@@ -82,7 +82,7 @@ export default function Show({ product, relatedProducts }) {
                         </section>
 
                         {/* Variants Selection */}
-                        {product.has_variants && product.variants.length > 0 && (
+                        {!!product.has_variants && product.variants.length > 0 && (
                             <section className="space-y-6">
                                 <div className="flex flex-wrap gap-3">
                                     {product.variants.map((variant) => (

@@ -25,7 +25,7 @@ export default function AdminProductCard({ product }) {
                     onError={(e) => { e.target.src = defaultImage; }}
                 />
 
-                {product.is_featured && (
+                {!!product.is_featured && (
                     <div className="absolute top-2 left-2 md:top-4 md:left-4">
                         <span className="bg-primary/90 text-background text-[8px] md:text-[10px] px-2 md:px-2.5 py-1 md:py-1.5 rounded-sm font-label font-bold uppercase tracking-[0.1em] md:tracking-[0.15em] backdrop-blur-sm">
                             Chef's Choice
@@ -45,17 +45,22 @@ export default function AdminProductCard({ product }) {
                     <p className="text-[9px] md:text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">
                         {product.category?.name || 'Main Course'}
                     </p>
+                    {product.description && (
+                        <p className="mt-2 text-xs leading-relaxed text-on-surface-variant line-clamp-2">
+                            {product.description}
+                        </p>
+                    )}
                 </div>
 
                 <div className="text-right shrink-0">
                     <span className="font-body text-sm md:text-base text-primary font-bold">
                         {formatCurrency(product.price)}
                     </span>
-                    {product.has_variants? (
+                    {!!product.has_variants && (
                         <p className="text-[8px] md:text-[9px] text-on-surface-variant/40 uppercase tracking-tighter">
                             Starts at
                         </p>
-                    ): ''}
+                    )}
                 </div>
             </div>
         </Link>

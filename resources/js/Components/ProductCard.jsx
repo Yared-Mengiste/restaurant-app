@@ -72,7 +72,7 @@ export default function ProductCard({ product }) {
 
                 {/* Status Badges */}
                 <div className="absolute top-2 left-2 md:top-4 md:left-4 flex flex-col gap-2">
-                    {product.is_featured && !isArchived && (
+                    {!!product.is_featured && !isArchived && (
                         <span className="bg-primary/90 text-background text-[8px] md:text-[10px] px-2 md:px-2.5 py-1 md:py-1.5 rounded-sm font-label font-bold uppercase tracking-[0.15em] backdrop-blur-sm shadow-xl">
                             Chef's Choice
                         </span>
@@ -105,13 +105,19 @@ export default function ProductCard({ product }) {
                         ${isArchived ? 'text-on-surface-variant/40' : 'text-primary'}`}>
                         {formatCurrency(product.price)}
                     </span>
-                    {product.has_variants && (
+                    {!!product.has_variants && (
                         <p className="text-[8px] md:text-[9px] text-on-surface-variant/40 uppercase tracking-tighter">
                             Starts at
                         </p>
                     )}
                 </div>
             </div>
+
+            {product.description && (
+                <p className="mt-2 px-1 text-xs leading-relaxed text-on-surface-variant line-clamp-2">
+                    {product.description}
+                </p>
+            )}
 
             {/* Admin Quick Indicator */}
             {auth.user?.role === 'admin' && isArchived && (

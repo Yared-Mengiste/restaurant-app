@@ -1,11 +1,23 @@
 {
+  "resources/js/Components/AddressMapSelector.jsx": {
+    "file": "assets/AddressMapSelector-DeOO8eEZ.js",
+    "name": "AddressMapSelector",
+    "src": "resources/js/Components/AddressMapSelector.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
   "resources/js/app.jsx": {
-    "file": "assets/app-DK_OuqSs.js",
+    "file": "assets/app-wyIjd-Up.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Components/AddressMapSelector.jsx"
+    ],
     "css": [
-      "assets/app-B7gL3vxi.css"
+      "assets/app-DZRBhj1J.css"
     ]
   }
 }

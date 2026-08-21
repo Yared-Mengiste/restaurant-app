@@ -141,7 +141,7 @@ export default function Dashboard({ auth, stats, orders, filters }) {
                                                                     <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">{item.quantity}x</span>
                                                                     <div>
                                                                         <p className="text-sm font-headline text-on-surface">{item.product.name}</p>
-                                                                        {item.product_variant_id && (
+                                                                        {!!item.product_variant_id && (
                                                                             <p className="text-[10px] text-tertiary font-bold uppercase tracking-widest mt-0.5">
                                                                                 Variant ID: {item.product_variant_id}
                                                                             </p>

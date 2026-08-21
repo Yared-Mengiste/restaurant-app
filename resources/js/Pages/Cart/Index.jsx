@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
-import AddressMapSelector from '../../Components/AddressMapSelector'; // Import the new component
 import { formatCurrency } from '@/lib/currency';
+
+const AddressMapSelector = lazy(() => import('../../Components/AddressMapSelector'));
 
 export default function CartIndex({ cart, summary, userAddresses = [] }) {
     const { delete: destroy } = useForm();
@@ -217,7 +218,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                 */}
                                                     <div className="flex-grow pr-10">
                                                         <p className="font-bold text-sm line-clamp-1">{addr.address_line}</p>
-                                                        {addr.distance_km && (
+                                                        {addr.distance_km !== null && addr.distance_km !== undefined && addr.distance_km !== 0 && (
                                                             <p className="text-xs text-on-surface-variant">
                                                                 {addr.distance_km} km away
                                                             </p>
@@ -260,7 +261,9 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                         </button>
                                     ) : (
                                         <div className="bg-surface-container-high p-6 rounded-2xl space-y-6">
-                                            <AddressMapSelector onAddressSelect={setNewAddressData} />
+                                            <Suspense fallback={<div className="h-[400px] bg-surface-container-high rounded-xl animate-pulse" aria-label="Loading map" />}>
+                                                <AddressMapSelector onAddressSelect={setNewAddressData} />
+                                            </Suspense>
                                             <div className="flex gap-4">
                                                 <button
                                                     onClick={handleSaveNewAddress}

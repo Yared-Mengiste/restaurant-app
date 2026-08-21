@@ -12,9 +12,7 @@ export default function PaymentFailed() {
 
                     {/* Error Icon */}
                     <div className="mx-auto w-24 h-24 bg-error/10 rounded-full flex items-center justify-center mb-8">
-                        <span className="material-symbols-outlined text-error text-5xl font-bold" style={{ fontVariationSettings: "'FILL' 1" }}>
-                            error
-                        </span>
+                        <Icon name="error" className="text-error text-5xl font-bold" />
                     </div>
 
                     <h1 className="font-headline text-4xl text-on-surface mb-4">

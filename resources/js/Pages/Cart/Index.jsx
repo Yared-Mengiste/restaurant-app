@@ -3,6 +3,7 @@ import { Head, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 import { formatCurrency } from '@/lib/currency';
+import Icon from '@/Components/Icon';
 
 const AddressMapSelector = lazy(() => import('../../Components/AddressMapSelector'));
 
@@ -118,7 +119,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                 Your Selection
                             </h1>
                             <p className="font-body text-on-surface-variant flex items-center gap-2">
-                                <span className="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+                                <Icon name="auto_awesome" className=" text-primary text-sm" />
                                 Your cart is saved and will persist for your next visit.
                             </p>
                         </header>
@@ -154,21 +155,21 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                                     onClick={() => handleUpdateQuantity(item.product_id, item.product_variant_id, item.quantity - 1)}
                                                     className="touch-target text-on-surface-variant hover:text-primary transition-colors"
                                                 >
-                                                    <span className="material-symbols-outlined text-lg">remove</span>
+                                                    <Icon name="remove" className=" text-lg" />
                                                 </button>
                                                 <span className="font-bold w-4 text-center">{item.quantity}</span>
                                                 <button aria-label={`Increase ${item.product.name} quantity`}
                                                     onClick={() => handleUpdateQuantity(item.product_id, item.product_variant_id, item.quantity + 1)}
                                                     className="touch-target text-on-surface-variant hover:text-primary transition-colors"
                                                 >
-                                                    <span className="material-symbols-outlined text-lg">add</span>
+                                                    <Icon name="add" className=" text-lg" />
                                                 </button>
                                             </div>
                                             <button
                                                 onClick={() => handleRemove(item.product_id, item.product_variant_id)}
                                                 className="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-xs uppercase tracking-tighter"
                                             >
-                                                <span className="material-symbols-outlined text-sm">delete</span>
+                                                <Icon name="delete" className=" text-sm" />
                                                 Remove
                                             </button>
                                         </div>
@@ -227,9 +228,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
 
                                                     <div className="flex items-center">
                                                         {cart.address_id === addr.id && (
-                                                            <span className="material-symbols-outlined text-primary text-xl">
-                            check_circle
-                        </span>
+                                                            <Icon name="check_circle" className="text-primary text-xl" />
                                                         )}
                                                     </div>
                                                 </button>
@@ -244,7 +243,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                                     className="absolute right-2 top-1/2 -translate-y-1/2 p-3 text-on-surface-variant hover:text-error active:scale-90 transition-all md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
                                                     title="Delete Address"
                                                 >
-                                                    <span className="material-symbols-outlined text-xl">delete</span>
+                                                    <Icon name="delete" className=" text-xl" />
                                                 </button>
                                             </div>
                                         ))}
@@ -256,7 +255,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                             onClick={() => setShowMap(true)}
                                             className="w-full py-6 border-2 border-dashed border-outline-variant/30 rounded-xl text-on-surface-variant hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2"
                                         >
-                                            <span className="material-symbols-outlined">add_location</span>
+                                            <Icon name="add_location" className="" />
                                             Add New Address via Map
                                         </button>
                                     ) : (
@@ -303,7 +302,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                     <aside className="lg:col-span-5">
                         <div className="sticky top-32 space-y-8">
                             <div className="bg-surface-container-low rounded-xl p-5 md:p-8 border border-outline-variant/10">
-                                <button type="button" onClick={() => setShowSummary(!showSummary)} className="lg:pointer-events-none w-full flex items-center justify-between"><h2 className="font-headline text-2xl md:text-3xl lg:mb-8">Order Summary</h2><span className="lg:hidden material-symbols-outlined">{showSummary ? 'expand_less' : 'expand_more'}</span></button>
+                                <button type="button" onClick={() => setShowSummary(!showSummary)} className="lg:pointer-events-none w-full flex items-center justify-between"><h2 className="font-headline text-2xl md:text-3xl lg:mb-8">Order Summary</h2><Icon name={showSummary ? 'expand_less' : 'expand_more'} className="lg:hidden" /></button>
                                 <div className={`${showSummary ? 'block' : 'hidden'} lg:block space-y-4 my-6 lg:mt-0 lg:mb-8`}>
                                     <div className="flex justify-between items-center">
                                         <span className="text-on-surface-variant font-medium">Subtotal</span>
@@ -340,7 +339,7 @@ export default function CartIndex({ cart, summary, userAddresses = [] }) {
                                     <div className="flex items-center justify-center gap-3">
                                         {isProcessing ? (
                                             <>
-                                                <span className="material-symbols-outlined animate-spin text-xl">progress_activity</span>
+                                                <Icon name="progress_activity" className=" animate-spin text-xl" />
                                                 <span>Connecting...</span>
                                             </>
                                         ) : (

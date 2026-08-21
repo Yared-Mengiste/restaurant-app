@@ -3,6 +3,7 @@ import {usePage, Head, useForm, router} from '@inertiajs/react'; // Added useFor
 import AppLayout from '@/Layouts/AppLayout';
 import { formatCurrency } from '@/lib/currency';
 import ProductCard from '@/Components/ProductCard';
+import Icon from '@/Components/Icon';
 
 export default function Show({ product, relatedProducts }) {
     const { auth } = usePage().props;
@@ -127,7 +128,7 @@ export default function Show({ product, relatedProducts }) {
                                 onClick={() => setData('quantity', Math.max(1, data.quantity - 1))}
                                 className="touch-target rounded-full bg-surface-container-highest text-on-surface hover:bg-primary/20 transition-colors flex items-center justify-center"
                             >
-                                <span className="material-symbols-outlined text-sm md:text-base">remove</span>
+                                <Icon name="remove" className=" text-sm md:text-base" />
                             </button>
                             <span className="text-lg md:text-xl w-6 text-center text-on-surface font-bold">{data.quantity}</span>
                             <button aria-label="Increase quantity"
@@ -135,7 +136,7 @@ export default function Show({ product, relatedProducts }) {
                                 onClick={() => setData('quantity', data.quantity + 1)}
                                 className="touch-target rounded-full bg-surface-container-highest text-on-surface hover:bg-primary/20 transition-colors flex items-center justify-center"
                             >
-                                <span className="material-symbols-outlined text-sm md:text-base">add</span>
+                                <Icon name="add" className=" text-sm md:text-base" />
                             </button>
                         </div>
                     </div>
@@ -159,7 +160,7 @@ export default function Show({ product, relatedProducts }) {
                 </span>
                         ) : (
                             <>
-                                <span className="material-symbols-outlined text-xl md:text-2xl">shopping_cart</span>
+                                <Icon name="shopping_cart" className=" text-xl md:text-2xl" />
                                 <span>{product.is_available ? 'Add to Cart' : 'Unavailable'}</span>
                             </>
                         )}

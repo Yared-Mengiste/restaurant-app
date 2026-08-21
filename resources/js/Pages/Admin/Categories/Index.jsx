@@ -1,5 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
+import Icon from '@/Components/Icon';
 
 export default function Index({ categories }) {
     return (
@@ -42,7 +43,7 @@ export default function Index({ categories }) {
                             </td>
                             <td className="px-8 py-5 text-right">
                                 <Link href={route('admin.categories.edit', cat.id)} className="p-2 text-on-surface-variant hover:text-white">
-                                    <span className="material-symbols-outlined text-lg">edit_note</span>
+                                    <Icon name="edit_note" className=" text-lg" />
                                 </Link>
                             </td>
                         </tr>

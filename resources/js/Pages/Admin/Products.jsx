@@ -2,6 +2,7 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { formatCurrency } from '@/lib/currency';
 import { useState, useEffect, useRef } from 'react';
+import Icon from '@/Components/Icon';
 
 export default function Products({ products, filters }) {
     const [search, setSearch] = useState(filters?.search || '');
@@ -41,7 +42,7 @@ export default function Products({ products, filters }) {
                     href={route('admin.products.create')}
                     className="bg-primary text-black px-8 py-3 rounded-full font-label text-[10px] uppercase font-bold tracking-[0.2em] hover:scale-105 transition-transform shadow-xl flex items-center gap-2"
                 >
-                    <span className="material-symbols-outlined text-sm">add</span>
+                    <Icon name="add" className=" text-sm" />
                     New Entry
                 </Link>
             </div>
@@ -52,7 +53,7 @@ export default function Products({ products, filters }) {
                 {/* Search Bar Area */}
                 <div className="px-8 py-6 border-b border-outline-variant/10">
                     <div className="relative w-full max-w-md">
-                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                        <Icon name="search" className=" absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" />
                         <input
                             type="text"
                             value={search}
@@ -112,13 +113,13 @@ export default function Products({ products, filters }) {
                                             href={route('admin.products.show', product.id)}
                                             className="p-2 text-on-surface-variant hover:text-primary transition-colors"
                                         >
-                                            <span className="material-symbols-outlined text-lg">visibility</span>
+                                            <Icon name="visibility" className=" text-lg" />
                                         </Link>
                                         <Link
                                             href={route('admin.products.edit', product.id)}
                                             className="p-2 text-on-surface-variant hover:text-white transition-colors"
                                         >
-                                            <span className="material-symbols-outlined text-lg">edit_note</span>
+                                            <Icon name="edit_note" className=" text-lg" />
                                         </Link>
                                     </div>
                                 </td>

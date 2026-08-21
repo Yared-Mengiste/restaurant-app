@@ -1,3 +1,4 @@
+import Icon from "@/Components/Icon";
 import { Link, usePage, router, Head } from '@inertiajs/react';
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { Menu, Transition, Dialog } from '@headlessui/react'; // Added Dialog
@@ -50,8 +51,8 @@ export default function AdminProductLayout({ product, children }) {
                     </div>
                     {/* ... Profile / Theme Toggle ... */}
                     <div className="flex items-center gap-6">
-                        <button onClick={toggleTheme} className="hidden md:flex material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors p-2">
-                            {isDark ? 'light_mode' : 'dark_mode'}
+                        <button onClick={toggleTheme} className="hidden md:flex text-on-surface-variant hover:text-primary transition-colors p-2" aria-label="Toggle theme">
+                            <Icon name={isDark ? 'light_mode' : 'dark_mode'} />
                         </button>
                     </div>
                 </div>
@@ -156,15 +157,15 @@ export default function AdminProductLayout({ product, children }) {
             {/* ... MOBILE NAV ... */}
             <nav className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full border border-outline-variant/20 flex justify-around items-center py-4 px-4 bg-background/80 backdrop-blur-xl z-50 shadow-2xl">
                 <Link href={route('admin.dashboard')} className="flex flex-col items-center text-on-surface/40">
-                    <span className="material-symbols-outlined">dashboard</span>
+                    <Icon name="dashboard" className="" />
                     <span className="text-[8px] uppercase font-bold mt-1 tracking-tighter">Dash</span>
                 </Link>
                 <Link href={route('admin.products')} className="flex flex-col items-center text-primary">
-                    <span className="material-symbols-outlined">inventory_2</span>
+                    <Icon name="inventory_2" className="" />
                     <span className="text-[8px] uppercase font-bold mt-1 tracking-tighter">Products</span>
                 </Link>
                 <Link href={route('admin.categories.index')} className="flex flex-col items-center text-on-surface/40">
-                    <span className="material-symbols-outlined">category</span>
+                    <Icon name="category" className="" />
                     <span className="text-[8px] uppercase font-bold mt-1 tracking-tighter">Cats</span>
                 </Link>
             </nav>

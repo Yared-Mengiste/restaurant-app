@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { Head, router, Link } from '@inertiajs/react';
 import { formatCurrency } from '@/lib/currency';
+import Icon from '@/Components/Icon';
 
 export default function OrderHistory({ orders }) {
     const [expandedRow, setExpandedRow] = useState(null);
@@ -53,9 +54,7 @@ export default function OrderHistory({ orders }) {
                                             <StatusBadge status={order.status} />
                                         </td>
                                         <td className="px-8 py-6 text-right">
-                                                <span className={`material-symbols-outlined transition-transform duration-300 ${expandedRow === order.id ? 'rotate-180 text-primary' : 'text-on-surface-variant'}`}>
-                                                    expand_more
-                                                </span>
+                                                <Icon name="expand_more" className={`transition-transform duration-300 ${expandedRow === order.id ? 'rotate-180 text-primary' : 'text-on-surface-variant'}`} />
                                         </td>
                                     </tr>
 

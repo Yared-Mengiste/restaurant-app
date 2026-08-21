@@ -1,3 +1,4 @@
+import Icon from "@/Components/Icon";
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
@@ -15,7 +16,7 @@ export default function Index({ products }) {
                         Saved for Later
                     </h1>
                     <p className="font-body text-on-surface-variant flex items-center gap-2">
-                        <span className="material-symbols-outlined text-primary text-sm">favorite</span>
+                        <Icon name="favorite" className=" text-primary text-sm" />
                         Your personal selection of signature dishes.
                     </p>
                 </header>
@@ -31,9 +32,7 @@ export default function Index({ products }) {
                     /* EMPTY STATE */
                     <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-outline-variant/30 rounded-3xl bg-surface-container-low">
                         <div className="w-20 h-20 rounded-full bg-surface-container-high flex items-center justify-center mb-6">
-                            <span className="material-symbols-outlined text-4xl text-on-surface-variant/30">
-                                heart_broken
-                            </span>
+                            <Icon name="favorite" className="text-4xl text-on-surface-variant/30" />
                         </div>
                         <h2 className="text-2xl font-headline text-on-surface mb-2">No favorites yet</h2>
                         <p className="text-on-surface-variant max-w-xs mb-8">

@@ -1,3 +1,4 @@
+import Icon from "@/Components/Icon";
 import { useEffect } from 'react';
 // 1. Added usePage to the imports
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
@@ -54,7 +55,7 @@ export default function Login({ status, canResetPassword }) {
                         {/* 3. FLASH ERROR ALERT (Accommodates your Catch block) */}
                         {flash?.error && (
                             <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
-                                <span className="material-symbols-outlined text-red-500 text-sm">error</span>
+                                <Icon name="error" className=" text-red-500 text-sm" />
                                 <p className="text-red-500 text-[11px] font-bold uppercase tracking-widest">
                                     {flash.error}
                                 </p>

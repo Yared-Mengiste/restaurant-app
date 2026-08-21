@@ -2,6 +2,7 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { formatCurrency } from '@/lib/currency';
+import Icon from '@/Components/Icon';
 
 export default function Dashboard({ auth, stats, orders, filters }) {
     const [search, setSearch] = useState(filters.search || '');
@@ -61,7 +62,7 @@ export default function Dashboard({ auth, stats, orders, filters }) {
                 <div className="px-8 py-6 border-b border-outline-variant/10 flex flex-col lg:flex-row justify-between items-center gap-6">
                     {/* Search Bar */}
                     <div className="relative w-full lg:w-96">
-                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                        <Icon name="search" className=" absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" />
                         <input
                             type="text"
                             value={search}
@@ -119,9 +120,7 @@ export default function Dashboard({ auth, stats, orders, filters }) {
                                             </span>
                                     </td>
                                     <td className="px-8 py-6 text-right">
-                                            <span className={`material-symbols-outlined transition-transform duration-300 ${expandedRow === order.id ? 'rotate-180 text-primary' : 'text-on-surface-variant'}`}>
-                                                expand_more
-                                            </span>
+                                            <Icon name="expand_more" className={`transition-transform duration-300 ${expandedRow === order.id ? 'rotate-180 text-primary' : 'text-on-surface-variant'}`} />
                                     </td>
                                 </tr>
 
@@ -239,7 +238,7 @@ function StatCard({ label, value, growth, subtext, icon, color, pulse }) {
         <div className="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 group hover:border-primary/30 transition-all duration-500">
             <div className="flex justify-between items-start mb-6">
                 <div className={`p-3 rounded-lg ${colorClasses[color]}`}>
-                    <span className="material-symbols-outlined">{icon}</span>
+                    <Icon name={icon} />
                 </div>
                 {growth && <span className="text-primary text-xs font-bold">{growth}</span>}
                 {subtext && <span className="text-tertiary text-xs font-bold">{subtext}</span>}

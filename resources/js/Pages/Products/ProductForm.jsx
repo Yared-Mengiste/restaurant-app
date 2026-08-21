@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
+import Icon from '@/Components/Icon';
 
 export default function ProductForm({ product = null, categories = [] }) {
     const isEditing = !!product;
@@ -54,7 +55,7 @@ export default function ProductForm({ product = null, categories = [] }) {
                         href={route('admin.products')}
                         className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 font-label text-[10px] uppercase tracking-[0.2em] mb-4"
                     >
-                        <span className="material-symbols-outlined text-sm">arrow_back</span>
+                        <Icon name="arrow_back" className=" text-sm" />
                         Back to Catalogue
                     </Link>
                     <h1 className="font-headline text-5xl font-light text-on-surface tracking-tight">
@@ -163,7 +164,7 @@ export default function ProductForm({ product = null, categories = [] }) {
                                     onClick={handleAddVariant}
                                     className="text-[10px] font-label uppercase tracking-widest text-outline hover:text-primary transition-colors flex items-center gap-1"
                                 >
-                                    <span className="material-symbols-outlined text-sm">add</span> Add Variant
+                                    <Icon name="add" className=" text-sm" /> Add Variant
                                 </button>
                             </div>
 
@@ -198,7 +199,7 @@ export default function ProductForm({ product = null, categories = [] }) {
                                         />
                                         </div>
                                         <button type="button" onClick={() => handleRemoveVariant(index)} className="text-error/60 hover:text-error transition-colors">
-                                            <span className="material-symbols-outlined text-lg">delete</span>
+                                            <Icon name="delete" className=" text-lg" />
                                         </button>
                                     </div>
                                 )))}

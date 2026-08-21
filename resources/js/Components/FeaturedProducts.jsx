@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import ProductCard from './ProductCard';
+import Icon from './Icon';
 
 export default function FeaturedProducts({ products = [], auth }) {
     const scrollRef = useRef(null);
@@ -39,13 +40,13 @@ export default function FeaturedProducts({ products = [], auth }) {
                         onClick={() => scroll('left')}
                         className="w-10 h-10 rounded-full border border-outline-variant/20 flex items-center justify-center text-white/60 hover:border-primary hover:text-primary transition-all active:scale-90"
                     >
-                        <span className="material-symbols-outlined text-xl">chevron_left</span>
+                        <Icon name="chevron_left" className=" text-xl" />
                     </button>
                     <button
                         onClick={() => scroll('right')}
                         className="w-10 h-10 rounded-full border border-outline-variant/20 flex items-center justify-center text-white/60 hover:border-primary hover:text-primary transition-all active:scale-90"
                     >
-                        <span className="material-symbols-outlined text-xl">chevron_right</span>
+                        <Icon name="chevron_right" className=" text-xl" />
                     </button>
                 </div>
             </div>

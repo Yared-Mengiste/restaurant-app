@@ -1,3 +1,4 @@
+import Icon from "@/Components/Icon";
 import AppLayout from '@/Layouts/AppLayout.jsx';
 import { Head } from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';
@@ -15,7 +16,7 @@ export default function Edit({ mustVerifyEmail, status }) {
                         Account Settings
                     </h1>
                     <p className="font-body text-on-surface-variant flex items-center gap-2">
-                        <span className="material-symbols-outlined text-primary text-sm">settings</span>
+                        <Icon name="settings" className=" text-primary text-sm" />
                         Manage your profile, security, and account preferences.
                     </p>
                 </header>

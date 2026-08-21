@@ -1,3 +1,4 @@
+import Icon from "@/Components/Icon";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -77,7 +78,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                     </PrimaryButton>
                     <Transition show={recentlySuccessful} enter="transition ease-in-out" enterFrom="opacity-0" leave="transition ease-in-out" leaveTo="opacity-0">
                         <p className="text-sm text-primary font-bold flex items-center gap-1">
-                            <span className="material-symbols-outlined text-sm">lock_reset</span> Updated
+                            <Icon name="lock_reset" className=" text-sm" /> Updated
                         </p>
                     </Transition>
                 </div>

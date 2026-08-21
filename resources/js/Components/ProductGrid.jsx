@@ -1,4 +1,5 @@
 import ProductCard from './ProductCard';
+import Icon from './Icon';
 import { Link } from '@inertiajs/react';
 
 export default function ProductGrid({ products, auth, title = "Our Menu" }) {
@@ -63,9 +64,7 @@ export default function ProductGrid({ products, auth, title = "Our Menu" }) {
             ) : (
                 /* EMPTY STATE */
                 <div className="flex flex-col items-center justify-center py-24 text-center">
-                    <span className="material-symbols-outlined text-4xl text-primary/30 mb-4 font-light">
-                        restaurant_menu
-                    </span>
+                    <Icon name="restaurant_menu" className="text-4xl text-primary/30 mb-4 font-light" />
                     <h4 className="font-headline text-2xl italic text-on-surface-variant mb-2">
                         A Rare Absence
                     </h4>
